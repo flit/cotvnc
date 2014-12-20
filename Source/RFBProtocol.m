@@ -32,6 +32,7 @@
 #import "RFBHandshaker.h"
 #import "KeyCodes.h"
 #import "ConnectionMetrics.h"
+#import <CoreAudio/CoreAudio.h>
 
 @interface RFBProtocol ()
 
@@ -254,6 +255,8 @@
 {
 	[target setReader:self];
 //	[target queueUpdateRequest];
+
+//    [self requestIncrementalFrameBufferUpdateForVisibleRect];
     
     if (isStopped && _continueUpdatesWhenComplete)
     {
@@ -261,6 +264,19 @@
         [self continueUpdate];
     }
 }
+
+- (void)throttleTimerFired:(id)sender
+{
+//    NSLog(@"throttle timer fired");
+    [self requestIncrementalFrameBufferUpdateForVisibleRect];
+}
+
+#define UPDATE_REQUEST_COUNT 1
+
+#define THROTTLE_REQUESTS 0
+#define MAX_UPDATES_PER_SECOND (30)
+#define MAX_INTERVAL_BETWEEN_UPDATES (1.0/(MAX_UPDATES_PER_SECOND))
+#define MAX_INTERVAL_BETWEEN_UPDATES_NANOS ((uint64_t)(MAX_INTERVAL_BETWEEN_UPDATES * 1.0e9))
 
 - (void)requestIncrementalFrameBufferUpdateForVisibleRect
 {
@@ -270,11 +286,42 @@
         return;
     }
     
-    #define UPDATE_REQUEST_COUNT 1
-    for (int i=0; i < UPDATE_REQUEST_COUNT; ++i)
+#if THROTTLE_REQUESTS
+    uint64_t now = AudioConvertHostTimeToNanos(AudioGetCurrentHostTime());
+    uint64_t sinceLastUpdate = now - _lastUpdateRequestTimestamp;
+//    NSLog(@"now = %llu, _lastUpdateRequestTimestamp = %llu", now, _lastUpdateRequestTimestamp);
+    if (sinceLastUpdate >= MAX_INTERVAL_BETWEEN_UPDATES_NANOS)
     {
-        [self requestUpdate:[_connection.controller visibleRect] incremental:YES];
+        // Get rid of the throttle timer.
+        if (_throttledUpdateRequestTimer)
+        {
+//            NSLog(@"killing throttle timer");
+            [_throttledUpdateRequestTimer invalidate];
+            [_throttledUpdateRequestTimer release];
+            _throttledUpdateRequestTimer = nil;
+        }
+#endif // THROTTLE_REQUESTS
+
+        for (int i=0; i < UPDATE_REQUEST_COUNT; ++i)
+        {
+            [self requestUpdate:[_connection.controller visibleRect] incremental:YES];
+        }
+
+#if THROTTLE_REQUESTS
+        // Take a timestamp.
+        _lastUpdateRequestTimestamp = AudioConvertHostTimeToNanos(AudioGetCurrentHostTime());
     }
+    else if (!_throttledUpdateRequestTimer)
+    {
+        float intervalTilNextRequest = ((double)(MAX_INTERVAL_BETWEEN_UPDATES_NANOS - sinceLastUpdate)) / 1.0e9;
+        
+//        NSLog(@"sinceLastUpdate = %llu, intervalTilNextRequest=%f", sinceLastUpdate, intervalTilNextRequest);
+        
+        // Create a timer to fire later.
+        _throttledUpdateRequestTimer = [[NSTimer timerWithTimeInterval:intervalTilNextRequest target:self selector:@selector(throttleTimerFired:) userInfo:nil repeats:NO] retain];
+        [[NSRunLoop mainRunLoop] addTimer:_throttledUpdateRequestTimer forMode:NSRunLoopCommonModes];
+    }
+#endif
 }
 
 - (void)requestFullFrameBufferUpdate

@@ -236,6 +236,11 @@ id g_sharedConnectionManager = nil;
 			}
 			profile = [profileManager profileNamed: profileName];
 		}
+        else if ([arg hasPrefix:@"-NSDocumentRevisionsDebugMode"])
+        {
+            ++i; // skip argument value (YES or NO)
+            continue;
+        }
 		else if ([arg hasPrefix:@"-"])
 			[self cmdlineUsage];
 		else if ([arg hasPrefix:@"-?"] || [arg hasPrefix:@"-help"] || [arg hasPrefix:@"--help"])

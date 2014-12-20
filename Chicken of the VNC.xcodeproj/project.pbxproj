@@ -243,6 +243,7 @@
 		029ECCAF10E934B2003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/SetTitle.xib; sourceTree = "<group>"; };
 		029ECCB010E934B8003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/OptionPanel.xib; sourceTree = "<group>"; };
 		029ECCB110E934BF003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/SetTitle.xib; sourceTree = "<group>"; };
+		02A05AF714994F4F00800FEF /* Chicken of the VNC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Chicken of the VNC.entitlements"; sourceTree = "<group>"; };
 		02C0F2230F47925F00708BE8 /* RichCursorEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichCursorEncodingReader.h; sourceTree = "<group>"; };
 		02C0F2240F47925F00708BE8 /* RichCursorEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichCursorEncodingReader.m; sourceTree = "<group>"; };
 		02CF0C5C10C33154009E03A7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
@@ -623,6 +624,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				02A05AF714994F4F00800FEF /* Chicken of the VNC.entitlements */,
 				0255F0FF10E1A22300779200 /* dsa_pub.pem */,
 				02DCD4CF10BCE0EA007497B6 /* todo.txt */,
 				E291FAD4088161DA0061216E /* cursors.plist */,
@@ -889,6 +891,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = E20426EA087531990026AA26 /* Build configuration list for PBXProject "Chicken of the VNC" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -1181,13 +1186,13 @@
 		E20426E7087531990026AA26 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Immo Code Signing";
+				CODE_SIGN_ENTITLEMENTS = "Chicken of the VNC.entitlements";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -1208,14 +1213,14 @@
 		E20426E8087531990026AA26 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Immo Code Signing";
+				CODE_SIGN_ENTITLEMENTS = "Chicken of the VNC.entitlements";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -1235,18 +1240,18 @@
 		E20426EB087531990026AA26 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_ENABLE_SSE41_EXTENSIONS = YES;
 				GCC_ENABLE_SSE42_EXTENSIONS = YES;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 1;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				__VERSION__ = 2.5b4;
 			};
 			name = Development;
@@ -1254,21 +1259,21 @@
 		E20426EC087531990026AA26 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				DEAD_CODE_STRIPPING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_ENABLE_SSE41_EXTENSIONS = YES;
 				GCC_ENABLE_SSE42_EXTENSIONS = YES;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Deployment;
 		};

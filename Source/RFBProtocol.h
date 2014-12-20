@@ -60,6 +60,8 @@
     uint16_t _altKeyCode;
     uint16_t _commandKeyCode;
     BOOL _isAppleVNCServer; //!< True if we think the server is Apple VNC (i.e., Apple Remote Desktop).
+    uint64_t _lastUpdateRequestTimestamp;
+    NSTimer * _throttledUpdateRequestTimer;
 }
 
 @property(readonly) NSString * serverVersion;

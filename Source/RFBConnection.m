@@ -501,8 +501,8 @@ BufferPool * g_sharedBuffers = nil;
 
 - (void)drawRectList:(id)aList
 {
-    dispatch_async(_drawQueue,
-        ^{
+//    dispatch_async(_drawQueue,
+//        ^{
             NSAutoreleasePool * pool;
             
             @try
@@ -519,7 +519,7 @@ BufferPool * g_sharedBuffers = nil;
             {
                 [pool release];
             }
-        });
+//        });
 }
 
 //! Used to postpone drawing until all the rectangles within one update are
@@ -535,8 +535,8 @@ BufferPool * g_sharedBuffers = nil;
 //! also queues another update request from the server.
 - (void)flushDrawing
 {
-    dispatch_async(_drawQueue,
-        ^{
+//    dispatch_async(_drawQueue,
+//        ^{
             NSAutoreleasePool * pool;
             
             @try
@@ -553,7 +553,7 @@ BufferPool * g_sharedBuffers = nil;
             {
                 [pool release];
             }
-        });
+//        });
 }
 
 #if DUMP_CONNECTION_TO_FILE
@@ -721,8 +721,9 @@ handle_err: if (socketError)
 #endif
             
             // Put a block to process this chunk of data into this connection's serial dispatch queue.
-            dispatch_async(_processQueue,
-                ^{
+//            dispatch_async(_processQueue,
+//                ^
+                {
                     NSAutoreleasePool * pool;
                     
                     @try
@@ -748,7 +749,7 @@ handle_err: if (socketError)
                         [g_sharedBuffers releaseBuffer:buf];
                         [pool release];
                     }
-                });
+                }//);
             
 		}
 	}

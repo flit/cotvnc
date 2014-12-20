@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.geekspiff.chickenofthevnc</string>
+	<string>com.immosw.chickenofthevnc</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -36,15 +36,17 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$__VERSION__</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
-	<key>SUFeedURL</key>
-	<string>http://immosw.com/versions/cotvnc/appcast.xml</string>
-	<key>SUPublicDSAKeyFile</key>
-	<string>dsa_pub.pem</string>
 	<key>NSMainNibFile</key>
 	<string>OSX_RFBViewer</string>
 	<key>NSPrincipalClass</key>
 	<string>MyApp</string>
+	<key>SUFeedURL</key>
+	<string>http://immosw.com/versions/cotvnc/appcast.xml</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 </dict>
 </plist>

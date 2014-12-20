@@ -113,7 +113,7 @@
 	{
 		// Force the window to rebuild its cursor rects. This will cause our new cursor to
         // be set.
-        [[self window] resetCursorRects];
+        [[self window] performSelectorOnMainThread:@selector(resetCursorRects) withObject:nil waitUntilDone:NO];
 	}
 }
 
