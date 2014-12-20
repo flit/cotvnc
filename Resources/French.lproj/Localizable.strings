@@ -1,0 +1,46 @@
+/* Common Strings */
+"Okay" = "OK";
+"Cancel" = "Annuler";
+
+/* Servers */
+"RFBDefaultServerName" = "Nouveau serveur";
+"RFBUntitledServerName" = "Serveur sans titre";
+"Connecting..." = "Connexion en cours…";
+
+/* Error Actions */
+"OpenConnection" = "Ouvrir une connexion";
+"NoNamedServer" = "Impossible de trouver un serveur avec le nom \"%@\"";
+"NoConnection" = "Impossible de se connecter au serveur %@:%d";
+"UnknownAuthType" = "Type d'authentification inconnu %@";
+"UnknownAuthResult" = "Resultat d'authentification inconnu %@";
+"AuthenticationFailed" = "Echec de l'authentification";
+"AuthenticationFailedTooMany" = "Echec de l'authentification (trop d'echecs)";
+"UnknownMessageType" = "Message de type inconnu %@\n";
+"ServerReports" = "Le serveur a répondu";
+"ARDAuthWarning" = "\nVeuillez configurer Apple Remote Desktop pour autoriser les clients VNC à contrôler l'écran\n";
+
+/* Profiles */
+"defaultProfileName" = "Profile par défaut";
+
+/* Connection Terminated */
+"ConnectionTerminated" = "Connexion interrompue";
+"Reconnect" = "Reconnecter";
+"ServerClosed" = "Le serveur a fermé la connexion";
+"ServerError" = "Ecrire au serveur: %s";
+
+/* Fullscreen */
+"FullscreenHeader" = "Vous allez passer en mode plein écran";
+"Fullscreen" = "Plein écran";
+"FullscreenReason" = "Vous pouvez retourner en mode fenêtre en appellant le raccourci clavier à tout moment.  Vous pouvez changer ce raccourci clavier dans les préférences.";
+
+/* Listener */
+"listenStart" = "Démarrer";
+"listenStop" = "Arrêter";
+"listenRunning" = "En écoute";
+"listenStopped" = "Hors écoute";
+"listenAcceptMessage" = "Connexion depuis %@:%d";
+
+/* Rendezvous */
+"AddressResolveFailed" = "Echec de la résolution d'adresse";
+"Resolving" = "Résolution d'adresse…";
+

@@ -1,0 +1,14 @@
+// file URLHandler.scriptSuite:
+
+{
+    Name = "CotVNC";
+    AppleEventCode = "CVnC";
+
+    Commands = {
+        "GetURL" = {
+            CommandClass = "URLHandlerCommand";
+            AppleEventCode = "GURL";
+            AppleEventClassCode = "GURL";
+         };
+    };
+}

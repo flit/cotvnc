@@ -1,0 +1,45 @@
+// Common Strings
+"Okay" = "Okay";
+"Cancel" = "Cancel";
+
+// Servers
+"RFBDefaultServerName" = "New Server";
+"RFBUntitledServerName" = "Untitled Server";
+"Connecting..." = "Connecting...";
+
+// Error Actions
+"OpenConnection" = "Open Connection";
+"NoNamedServer" = "Could not find a server with the name \"%@\"";
+"NoConnection" = "Could not connect to server %@:%d";
+"UnknownAuthType" = "Unknown authType %@";
+"UnknownAuthResult" = "Unknown authResult %@";
+"AuthenticationFailed" = "Authentication Failed";
+"AuthenticationFailedTooMany" = "Authentication Failed (too many failures)";
+"UnknownMessageType" = "Unknown message type %@\n";
+"ServerReports" = "Server Reports";
+"ARDAuthWarning" = "\nPlease configure Apple Remote Desktop to allow VNC Viewers to control the screen.\n";
+
+// Profiles
+"defaultProfileName" = "Default Profile";
+
+// Connection Terminated
+"ConnectionTerminated" = "Connection Terminated";
+"Reconnect" = "Reconnect";
+"ServerClosed" = "The server closed the connection";
+"ServerError" = "Write to server: %s";
+
+// Fullscreen
+"FullscreenHeader" = "Your connection is entering fullscreen mode";
+"Fullscreen" = "Fullscreen";
+"FullscreenReason" = "You may return to windowed mode by pressing the proper key equivalent at any time.  You can change this key equivalent in the Preferences if necessary.";
+
+// Listener
+"listenStart" = "Start";
+"listenStop" = "Stop";
+"listenRunning" = "Listening is on";
+"listenStopped" = "Listening is off";
+"listenAcceptMessage" = "Connection from %@:%d";
+
+// Rendezvous
+"AddressResolveFailed" = "address resolve failed";
+"Resolving" = "resolving...";
