@@ -26,30 +26,58 @@
 #import "vncauth.h"
 #import "ServerDataViewController.h"
 #import "ServerFromPrefs.h"
+#import "ServerFromRendezvous.h"
 #import "ServerStandAlone.h"
 #import "ServerDataManager.h"
+#import "RFBConnectionController.h"
+
+id g_sharedConnectionManager = nil;
+
+@interface RFBConnectionManager ()
+
+- (void)connectSelectedServer:(id)sender;
+
+@end
 
 @implementation RFBConnectionManager
 
 + (id)sharedManager
 { 
-	static id sInstance = nil;
-	if ( ! sInstance )
+	if ( ! g_sharedConnectionManager )
 	{
-		sInstance = [[self alloc] initWithWindowNibName: @"ConnectionDialog"];
-		NSParameterAssert( sInstance != nil );
+		g_sharedConnectionManager = [[self alloc] initWithWindowNibName: @"ConnectionDialog"];
+		NSParameterAssert( g_sharedConnectionManager != nil );
 		
-		[sInstance wakeup];
+		[g_sharedConnectionManager wakeup];
 		
-		[[NSNotificationCenter defaultCenter] addObserver:sInstance
+		[[NSNotificationCenter defaultCenter] addObserver:g_sharedConnectionManager
 												 selector:@selector(applicationWillTerminate:)
 													 name:NSApplicationWillTerminateNotification object:NSApp];
 	}
-	return sInstance;
+	return g_sharedConnectionManager;
 }
 
+//! Terminate all connections. We do this explicitly, even though NSApp will close all open
+//! windows for us, to prevent an issue caused by the order of objects being released. Because
+//! we get this app termination notification before all windows are closed, the connections
+//! are released when we release the connections list due to releasing ourself. That leaves only
+//! each connections' auto reconnect timer holding a retain on its connection. When the
+//! connection's window is closed, it releases the timer, which releases the connection, which
+//! wants to remove itself from the connections list, so bang!. Thus we have this solution, for
+//! the time being. There's got to be a nicer way.
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
+    _isTerminating = YES;
+    
+    // We don't just iterate over the connection list because each connection will remove
+    // itself from the connection list, thus mutating the array while enumerating.
+    RFBConnectionController * connection = [connections lastObject];
+    while ([connections count])
+    {
+        [connection terminateConnection:nil];
+        connection = [connections lastObject];
+    }
+
 	[self release];
 }
 
@@ -70,12 +98,21 @@
 - (void)wakeup
 {
 	// make sure our window is loaded
-	[self window];
-	[self setWindowFrameAutosaveName: @"login"];
-	
-	mDisplayGroups = NO;
+	@try
+    {
+		[self window];
+		[self setWindowFrameAutosaveName: @"login"];
+	}
+	@catch (NSException * e)
+    {
+		NSLog(@"exception = %@", e);
+	}
+//	mDisplayGroups = NO;
 	mLaunchedByURL = NO;
 	
+    // The .nib shows the server pane by default.
+    _isServerPaneVisible = YES;
+    
 	mOrderedServerNames = [[NSMutableArray alloc] init];
 	[self reloadServerArray];
 	
@@ -91,40 +128,52 @@
 	[serverCtrlerBox removeFromSuperview];
 	
     // figure out whether the size has changed in order to ease localization
-    NSSize originalSize = [serverDataBoxLocal frame].size;
-    NSSize newSize = [serverCtrlerBox frame].size;
-    NSSize deltaSize = NSMakeSize( newSize.width - originalSize.width, newSize.height - originalSize.height );
+//    NSSize originalSize = [serverDataBoxLocal frame].size;
+//    NSSize newSize = [serverCtrlerBox frame].size;
+//    NSSize deltaSize = NSMakeSize( newSize.width - originalSize.width, newSize.height - originalSize.height );
     
 	// I'm hardcoding the border so that I can use a real border at design time so it can be seen easily
 	[serverDataBoxLocal setBorderType:NSNoBorder];
-    [serverDataBoxLocal setFrameSize: newSize];
+//    [serverDataBoxLocal setFrameSize: newSize];
 	[serverDataBoxLocal setContentView:serverCtrlerBox];
 	[serverCtrlerBox release];
 	
     // resize our window if necessary
-    NSWindow *window = [serverDataBoxLocal window];
-    NSRect oldFrame = [window frame];
-    NSSize newFrameSize = {oldFrame.size.width + deltaSize.width, oldFrame.size.height + deltaSize.height };
-    NSRect newFrame = { oldFrame.origin, newFrameSize };
-    NSView *contentView = [window contentView];
-    BOOL didAutoresize = [contentView autoresizesSubviews];
-    [contentView setAutoresizesSubviews: NO];
-    [window setFrame: newFrame display: NO];
-    [contentView setAutoresizesSubviews: didAutoresize];
+//    NSWindow *window = [serverDataBoxLocal window];
+//    NSRect oldFrame = [window frame];
+//    NSSize newFrameSize = {oldFrame.size.width + deltaSize.width, oldFrame.size.height + deltaSize.height };
+//    NSRect newFrame = { oldFrame.origin, newFrameSize };
+//    NSView *contentView = [window contentView];
+//    BOOL didAutoresize = [contentView autoresizesSubviews];
+//    [contentView setAutoresizesSubviews: NO];
+//    [window setFrame: newFrame display: NO];
+//    [contentView setAutoresizesSubviews: didAutoresize];
 
-    [serverListBox retain];
-	[serverListBox removeFromSuperview];
-	[serverListBox setBorderType:NSNoBorder];
-	[splitView addSubview:serverListBox];
-	// we now own serverListBox and are responsible for releasing it
-	
-	[serverGroupBox retain];
-	[serverGroupBox removeFromSuperview];
-	[serverGroupBox setBorderType:NSNoBorder];
-	// we now own serverGroupBox and are responsible for releasing it
-	
-	[splitView adjustSubviews];
+    [serverList setDoubleAction:@selector(connectSelectedServer:)];
+    [serverList setTarget:self];
+
 	[self useRendezvous: [[PrefController sharedController] usesRendezvous]];
+    
+    // Restore the server pane to the way it was in the last session.
+    _isServerPaneVisible = [[NSUserDefaults standardUserDefaults] boolForKey:@"isServerPaneVisible"];
+    
+    // Hide the server pane if it was not visible last session. The window is already the correct
+    // size, we just have to adjust the server list width and server editor pane position.
+    if (!_isServerPaneVisible)
+    {
+        NSRect windowFrame = [[self window] frame];
+        
+        NSRect newListFrame = [serverListBox frame];
+        newListFrame.size.width = windowFrame.size.width;
+        
+        NSRect newEditorFrame = [serverDataBoxLocal frame];
+        newEditorFrame.origin.x = NSMaxX(newListFrame) + 20.0;
+        
+        [serverListBox setFrame:newListFrame];
+        [serverDataBoxLocal setFrame:newEditorFrame];
+        
+        [toggleServerEditButton setImage:[NSImage imageNamed:@"NSGoRightTemplate"]];
+    }
 }
 
 - (BOOL)runFromCommandLine
@@ -154,7 +203,7 @@
 		{
 			if (i + 1 >= argCount) [self cmdlineUsage];
 			NSString *passwordFile = [args objectAtIndex:++i];
-			char *decrypted_password = vncDecryptPasswdFromFile((char*)[passwordFile cString]);
+			char *decrypted_password = vncDecryptPasswdFromFile((char*)[passwordFile UTF8String]);
 			if (decrypted_password == NULL)
 			{
 				NSLog(@"Cannot read password from file.");
@@ -162,7 +211,7 @@
 			} 
 			else
 			{
-				[cmdlineServer setPassword: [NSString stringWithCString:decrypted_password]];
+				[cmdlineServer setPassword: [NSString stringWithCString:decrypted_password encoding:NSASCIIStringEncoding]];
 				free(decrypted_password);
 			}
 		}
@@ -203,7 +252,7 @@
 	{
 		if ( nil == profile )
 			profile = [profileManager defaultProfile];	
-		[self createConnectionWithServer:cmdlineServer profile:profile owner:self];
+		[self createConnectionWithServer:cmdlineServer profile:profile];
 		return YES;
 	}
 	return NO;
@@ -211,11 +260,11 @@
 
 - (void)runNormally
 {
-    NSString* lastHostName = [[PrefController sharedController] lastHostName];
+//    NSString* lastHostName = [[PrefController sharedController] lastHostName];
 
-	if( nil != lastHostName )
-	    [serverList setStringValue: lastHostName];
-	[self selectedHostChanged];
+//	if( nil != lastHostName )
+//	    [serverList setStringValue: lastHostName];
+//	[self selectedHostChanged];
 	
 	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver: self 
@@ -265,7 +314,7 @@
 
 - (void)showConnectionDialog: (id)sender
 {
-	[[self window] makeFirstResponder: serverListBox];
+	[[self window] makeFirstResponder: serverList];
 	[[self window] makeKeyAndOrderFront:self];
 }
 
@@ -275,8 +324,6 @@
     [connections release];
 	[mServerCtrler release];
 	[mOrderedServerNames release];
-	[serverListBox release];
-	[serverGroupBox release];
     [super dealloc];
 }
 
@@ -335,64 +382,91 @@
 
 - (void)removeConnection:(id)aConnection
 {
-    [aConnection retain];
-    [connections removeObject:aConnection];
-    [aConnection autorelease];
-    if ( mRunningFromCommandLine ) 
+    // Don't retain and autorelease the connection object if it isn't in our array of
+    // objects. This prevents a problem where the connection controller calls removeConnection:
+    // as a result of terminating itself in its dealloc method. It would be bad if we were to
+    // autorelease the connection again in this case. This can only happen if the
+    // connection list array doesn't contain the connection (thus retaining it).
+    if ([connections containsObject:aConnection])
+    {
+        [aConnection retain];
+        [connections removeObject:aConnection];
+        [aConnection autorelease];
+    }
+    
+    if (mRunningFromCommandLine)
+    {
 		[NSApp terminate:self];
+    }
+	else if (0 == [connections count] && !_isTerminating)
+    {
+		[self showConnectionDialog:nil];
+    }
+}
+
+//! @brief Open a connection to the selected server.
+//!
+//! This method is invoked when a cell is double-clicked in the server list table.
+- (void)connectSelectedServer:(id)sender
+{
+    [self connect:[self selectedServer]];
 }
 
 - (bool)connect:(id<IServerData>)server;
 {
     Profile* profile = [[ProfileManager sharedManager] profileNamed:[server lastProfile]];
-    
-    // Only close the open dialog of the connection was successful
-	bool bRetVal = [self createConnectionWithServer:server profile:profile owner:self];
-    if( YES == bRetVal && server == [self selectedServer])
-	{
-        [[self window] orderOut:self];
-    }
-	
+	bool bRetVal = [self createConnectionWithServer:server profile:profile];
 	return bRetVal;
 }
 
-/* Do the work of creating a new connection and add it to the list of connections. */
-- (BOOL)createConnectionWithServer:(id<IServerData>) server profile:(Profile *) someProfile owner:(id) someOwner
+- (void)connection:(RFBConnectionController *)connection didCompleteWithStatus:(BOOL)status
 {
-	/* change */
-    RFBConnection* theConnection;
-    bool returnVal = YES;
+    if (status)
+	{
+        // Add the new connection to the list.
+        [connections addObject:connection];
+        
+        // Hide the connection manager window.
+        if (connection.server == [self selectedServer])
+        {
+            [[self window] orderOut:self];
+        }
+    }
 
-    theConnection = [[[RFBConnection alloc] initWithServer:server profile:someProfile owner:someOwner] autorelease];
-    if(theConnection) {
-        [theConnection setManager:self];
-        [connections addObject:theConnection];
-    }
-    else {
-        returnVal = NO;
-    }
-    
-    return returnVal;
+    // Release the connection object. It's either just been added to our list, or it failed
+    // and needs to go away.
+    [connection autorelease];
 }
 
-- (BOOL)createConnectionWithFileHandle:(NSFileHandle*)file server:(id<IServerData>) server profile:(Profile *) someProfile owner:(id) someOwner
+//! Do the work of creating a new connection and add it to the list of connections.
+- (BOOL)createConnectionWithServer:(id<IServerData>)server profile:(Profile *)someProfile
 {
-	/* change */
-    RFBConnection* theConnection;
-    bool returnVal = YES;
-
-    theConnection = [[[RFBConnection alloc] initWithFileHandle:file server:server profile:someProfile owner:someOwner] autorelease];
-    if(theConnection) {
-        [theConnection setManager:self];
-        [connections addObject:theConnection];
-    }
-    else {
-        returnVal = NO;
+    RFBConnectionController * theConnection = [[RFBConnectionController alloc] initWithServer:server profile:someProfile owner:self];
+    if (!theConnection)
+    {
+        return NO;
     }
     
-    return returnVal;
+    // Start connecting.
+    [theConnection connectWithCompletionTarget:self];
+    
+    return YES;
 }
 
+//! Used to create a connection from the listening socket.
+- (BOOL)createConnectionWithFileHandle:(NSFileHandle*)file server:(id<IServerData>)server profile:(Profile *)someProfile
+{
+    RFBConnectionController * theConnection = [[RFBConnectionController alloc] initWithFileHandle:file server:server profile:someProfile owner:self];
+    if (!theConnection)
+    {
+        return NO;
+    }
+    
+    // Start connecting.
+    [theConnection connectWithCompletionTarget:self];
+    
+    return YES;
+}
 
 - (IBAction)addServer:(id)sender
 {
@@ -401,21 +475,26 @@
 	NSString *newName = [newServer name];
 	NSParameterAssert( newName != nil );
 	
-	NSEnumerator *serverEnumerator = [mOrderedServerNames objectEnumerator];
 	[self reloadServerArray];
 	
 	int index = 0;
 	NSString *name;
-	while ( name = [serverEnumerator nextObject] )
+	for ( name in mOrderedServerNames )
 	{
 		if ( name && [name isEqualToString: newName] )
 		{
-			[serverList selectRow: index byExtendingSelection: NO];
+			[serverList selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection: NO];
 			[serverList editColumn: 0 row: index withEvent: nil select: YES];
 			break;
 		}
 		index++;
 	}
+    
+    // Make sure the edit page is visible.
+    if (!_isServerPaneVisible)
+    {
+        [self toggleServerEditPane:nil];
+    }
 }
 
 - (IBAction)deleteSelectedServer:(id)sender
@@ -433,12 +512,9 @@
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-    // Don't bother caching - this won't happen often enough to matter.
-    // If you  want to cache this, make a class so we can refactor it from everywhere else
-    BOOL gIsJaguar = [NSString instancesRespondToSelector: @selector(decomposedStringWithCanonicalMapping)];
-
-    // [[NSApp windows] count] is the best option, but it don't work pre-jaguar
-    if ((gIsJaguar && ([[NSApp windows] count] == 0)) || ((!gIsJaguar) && (![self haveAnyConnections]))) {
+    // Bring the connection manager to front if there are no other windows open.
+    if ([[NSApp windows] count] == 0)
+    {
         [[self window] makeKeyAndOrderFront:self];
     }
 }
@@ -452,21 +528,90 @@
 }
 
 // Jason added the following for full-screen windows
-- (void)makeAllConnectionsWindowed {
-	NSEnumerator *connectionEnumerator = [connections objectEnumerator];
-	RFBConnection *thisConnection;
-
-	while (thisConnection = [connectionEnumerator nextObject]) {
-		if ([thisConnection connectionIsFullscreen])
+- (void)makeAllConnectionsWindowed
+{
+	RFBConnectionController *thisConnection;
+    for (thisConnection in connections)
+    {
+		if (thisConnection.isFullscreen)
+        {
 			[thisConnection makeConnectionWindowed: self];
-	}
+        }
+    }
 }
 
-- (BOOL)haveMultipleConnections {
+- (RFBConnectionController *)connectionForWindow:(NSWindow *)theWindow
+{
+	if (!theWindow)
+	{
+		return nil;
+	}
+	
+	RFBConnectionController * thisConnection;
+    for (thisConnection in connections)
+	{
+		if (thisConnection.window == theWindow)
+		{
+			return thisConnection;
+		}
+	}
+	
+	// No matching connection for the window.
+	return nil;
+}
+
+- (RFBConnectionController *)nextConnection:(RFBConnectionController *)theConnection
+{
+	if (!theConnection)
+	{
+		return nil;
+	}
+	
+	NSUInteger index = [connections indexOfObject:theConnection];
+	if (index == NSNotFound)
+	{
+		return nil;
+	}
+	return [connections objectAtIndex:((++index) % [connections count])];
+}
+
+- (RFBConnectionController *)previousConnection:(RFBConnectionController *)theConnection
+{
+	if (!theConnection)
+	{
+		return nil;
+	}
+	
+	NSUInteger index = [connections indexOfObject:theConnection];
+	if (index == NSNotFound)
+	{
+		return nil;
+	}
+	
+	// Decrement the index.
+	if (index == 0)
+	{
+		index = [connections count] - 1;
+	}
+	else
+	{
+		--index;
+	}
+	return [connections objectAtIndex:index];
+}
+
+- (NSArray *)connections
+{
+	return connections;
+}
+
+- (BOOL)haveMultipleConnections
+{
     return [connections count] > 1;
 }
 
-- (BOOL)haveAnyConnections {
+- (BOOL)haveAnyConnections
+{
     return [connections count] > 0;
 }
 
@@ -476,10 +621,6 @@
 	{
 		return [mOrderedServerNames count];
 	}
-	else if( groupList == aTableView )
-	{
-		return [[ServerDataManager sharedInstance] groupCount];
-	}
 	
 	return 0;
 }
@@ -488,12 +629,24 @@
 {
 	if( serverList == aTableView )
 	{
-		return [mOrderedServerNames objectAtIndex:rowIndex];
-	}
-	else if( groupList == aTableView )
-	{
-		// note - this isn't very efficient - jason
-		return [[[[ServerDataManager sharedInstance] getGroupNameEnumerator] allObjects] objectAtIndex:rowIndex];
+        id colIdent = [aTableColumn identifier];
+        if ([colIdent isEqualToString:@"servers"])
+        {
+            return [mOrderedServerNames objectAtIndex:rowIndex];
+        }
+        else if ([colIdent isEqualToString:@"type"])
+        {
+            id<IServerData> server = [[ServerDataManager sharedInstance] getServerWithName:[mOrderedServerNames objectAtIndex:rowIndex]];
+            
+            if ([server isKindOfClass:[ServerFromRendezvous class]])
+            {
+                return [NSImage imageNamed:@"NSBonjour"];
+            }
+            else
+            {
+                return nil;
+            }
+        }
 	}
 	
 	return NULL;	
@@ -501,55 +654,23 @@
 
 - (BOOL)tableView:(NSTableView *)aTableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
-	if( serverList == aTableView )
-	{
-		id<IServerData> server = [[ServerDataManager sharedInstance] getServerWithName:[mOrderedServerNames objectAtIndex:row]];
-		
-		return [server doYouSupport:EDIT_NAME];
-	}
-	else if( groupList == aTableView )
-	{
-		return NO;
-	}
-	
 	return NO;	
 }
 
 - (void)afterSort:(id<IServerData>)server
 {
-	[[self window] makeFirstResponder:[self window]];
-	
 	[self reloadServerArray];
-	NSEnumerator *serverEnumerator = [mOrderedServerNames objectEnumerator];
 	
 	int index = 0;
 	NSString *name;
-	while ( name = [serverEnumerator nextObject] )
+	for ( name in mOrderedServerNames )
 	{
 		if ( name && [name isEqualToString: [server name]] )
 		{
-			[serverList selectRow: index byExtendingSelection: NO];
+			[serverList selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection: NO];
 			break;
 		}
 		index++;
-	}
-}
-
-- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(int)row
-{
-	if( serverList == aTableView )
-	{
-		NSString* serverName = object;
-		id<IServerData> server = [[ServerDataManager sharedInstance] getServerWithName:[mOrderedServerNames objectAtIndex:row]];
-		
-		if( NO == [serverName isEqualToString:[server name]] )
-		{
-			[[self window] makeFirstResponder:[self window]];
-			[server setName:serverName];
-			
-			// This insanity overrides the default select next behavior in the table
-			[self performSelector:@selector(afterSort:) withObject:server afterDelay:0.0];
-		}
 	}
 }
 
@@ -559,10 +680,6 @@
 	if( serverList == view )
 	{
 		[self selectedHostChanged];
-	}
-	else if( groupList == view )
-	{
-		[serverList reloadData];
 	}
 }
 
@@ -575,7 +692,16 @@
 {
 	[self reloadServerArray];
 	[serverList reloadData];
-	[self selectedHostChanged];
+    [self selectedHostChanged];
+}
+
+// The user edited the name of a server. We want to try to keep the same server selected even if
+// it moves around in the list due to sorting.
+- (void)serverNameDidChange:(id<IServerData>)server
+{
+	[self reloadServerArray];
+	[serverList reloadData];
+    [self afterSort:server];
 }
 
 - (void)useRendezvous:(BOOL)useRendezvous
@@ -585,34 +711,16 @@
 	NSParameterAssert( [[ServerDataManager sharedInstance] getUseRendezvous] == useRendezvous );
 }
 
-- (void)displayGroups:(bool)display
-{
-	if( display != mDisplayGroups )
-	{
-		mDisplayGroups = display;
-		
-		if( display )
-		{
-			[splitView addSubview:serverGroupBox positioned:NSWindowBelow relativeTo:serverListBox];
-		}
-		else
-		{	
-			[serverGroupBox removeFromSuperview];
-		}
-		
-		[splitView adjustSubviews];
-	}
-}
-
 - (void)setFrontWindowUpdateInterval: (NSTimeInterval)interval
 {
-	NSEnumerator *connectionEnumerator = [connections objectEnumerator];
-	RFBConnection *thisConnection;
+	RFBConnectionController *thisConnection;
 	NSWindow *keyWindow = [NSApp keyWindow];
 	
-	while (thisConnection = [connectionEnumerator nextObject]) {
-		if ([thisConnection window] == keyWindow) {
-			[thisConnection setFrameBufferUpdateSeconds: interval];
+    for (thisConnection in connections)
+    {
+		if (thisConnection.window == keyWindow)
+        {
+			[thisConnection.connection setFrameBufferUpdateSeconds: interval];
 			break;
 		}
 	}
@@ -620,13 +728,14 @@
 
 - (void)setOtherWindowUpdateInterval: (NSTimeInterval)interval
 {
-	NSEnumerator *connectionEnumerator = [connections objectEnumerator];
-	RFBConnection *thisConnection;
+	RFBConnectionController *thisConnection;
 	NSWindow *keyWindow = [NSApp keyWindow];
 	
-	while (thisConnection = [connectionEnumerator nextObject]) {
-		if ([thisConnection window] != keyWindow) {
-			[thisConnection setFrameBufferUpdateSeconds: interval];
+    for (thisConnection in connections)
+    {
+		if (thisConnection.window != keyWindow)
+        {
+			[thisConnection.connection setFrameBufferUpdateSeconds: interval];
 		}
 	}
 }
@@ -639,6 +748,61 @@
 - (void)setLaunchedByURL:(bool)launchedByURL
 {
 	mLaunchedByURL = launchedByURL;
+}
+
+- (NSString *)windowFrameAutosaveName
+{
+    return @"vnc_login";
+}
+
+- (IBAction)toggleServerEditPane:(id)sender
+{
+    NSWindow * window = [self window];
+    NSView * contentView = [window contentView];
+    NSRect oldFrame = [window frame];
+    NSSize newFrameSize;
+    NSRect newFrame = oldFrame;
+    NSImage * newToggleImage;
+
+    if (_isServerPaneVisible)
+    {
+        // Hide the server edit pane.
+        newFrameSize = NSMakeSize([serverListBox frame].size.width, oldFrame.size.height);
+        newFrame.size = newFrameSize;
+        
+        newToggleImage = [NSImage imageNamed:@"NSGoRightTemplate"];
+    }
+    else
+    {
+        // Show the server edit pane.
+        newFrameSize = NSMakeSize(NSMaxX([serverDataBoxLocal frame]) + 20.0, oldFrame.size.height);
+        newFrame.size = newFrameSize;
+        
+        newToggleImage = [NSImage imageNamed:@"NSGoLeftTemplate"];
+    }
+    
+    [contentView setAutoresizesSubviews: NO];
+    
+    // Animate the window resize.
+    const float kAnimationDuration = 0.1;
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:kAnimationDuration];
+    
+    [[window animator] setFrame: newFrame display: NO];
+    
+    [NSAnimationContext endGrouping];
+    
+    // Wait until the animation is over.
+    //! \todo Figure out the preferred way to wait until an animation is finished.
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kAnimationDuration + 0.1]];
+
+    [contentView setAutoresizesSubviews: YES];
+    
+    [toggleServerEditButton setImage:newToggleImage];
+    
+    // Update flag and save current pane state into prefs.
+    _isServerPaneVisible = !_isServerPaneVisible;
+    [[NSUserDefaults standardUserDefaults] setBool:_isServerPaneVisible forKey:@"isServerPaneVisible"];
 }
 
 @end

@@ -83,46 +83,46 @@ typedef struct {
 
 typedef struct {
 
-    CARD8 bitsPerPixel;		/* 8,16,32 only */
+    CARD8 bitsPerPixel;         /* 8,16,32 only */
 
-    CARD8 depth;		/* 8 to 32 */
+    CARD8 depth;                /* 8 to 32 */
 
-    CARD8 bigEndian;		/* True if multi-byte pixels are interpreted
-				   as big endian, or if single-bit-per-pixel
-				   has most significant bit of the byte
-				   corresponding to first (leftmost) pixel. Of
-				   course this is meaningless for 8 bits/pix */
+    CARD8 bigEndian;            /* True if multi-byte pixels are interpreted
+                                   as big endian, or if single-bit-per-pixel
+                                   has most significant bit of the byte
+                                   corresponding to first (leftmost) pixel. Of
+                                   course this is meaningless for 8 bits/pix */
 
-    CARD8 trueColour;		/* If false then we need a "colour map" to
-				   convert pixels to RGB.  If true, xxxMax and
-				   xxxShift specify bits used for red, green
-				   and blue */
+    CARD8 trueColour;           /* If false then we need a "colour map" to
+                                   convert pixels to RGB.  If true, xxxMax and
+                                   xxxShift specify bits used for red, green
+                                   and blue */
 
     /* the following fields are only meaningful if trueColour is true */
 
-    CARD16 redMax;		/* maximum red value (= 2^n - 1 where n is the
-				   number of bits used for red). Note this
-				   value is always in big endian order. */
+    CARD16 redMax;              /* maximum red value (= 2^n - 1 where n is the
+                                   number of bits used for red). Note this
+                                   value is always in big endian order. */
 
-    CARD16 greenMax;		/* similar for green */
+    CARD16 greenMax;            /* similar for green */
 
-    CARD16 blueMax;		/* and blue */
+    CARD16 blueMax;             /* and blue */
 
-    CARD8 redShift;		/* number of shifts needed to get the red
-				   value in a pixel to the least significant
-				   bit. To find the red value from a given
-				   pixel, do the following:
-				   1) Swap pixel value according to bigEndian
-				      (e.g. if bigEndian is false and host byte
-				      order is big endian, then swap).
-				   2) Shift right by redShift.
-				   3) AND with redMax (in host byte order).
-				   4) You now have the red value between 0 and
-				      redMax. */
+    CARD8 redShift;             /* number of shifts needed to get the red
+                                   value in a pixel to the least significant
+                                   bit. To find the red value from a given
+                                   pixel, do the following:
+                                   1) Swap pixel value according to bigEndian
+                                      (e.g. if bigEndian is false and host byte
+                                      order is big endian, then swap).
+                                   2) Shift right by redShift.
+                                   3) AND with redMax (in host byte order).
+                                   4) You now have the red value between 0 and
+                                      redMax. */
 
-    CARD8 greenShift;		/* similar for green */
+    CARD8 greenShift;           /* similar for green */
 
-    CARD8 blueShift;		/* and blue */
+    CARD8 blueShift;            /* and blue */
 
     CARD8 pad1;
     CARD16 pad2;
@@ -131,6 +131,31 @@ typedef struct {
 
 #define sz_rfbPixelFormat 16
 
+
+/*-----------------------------------------------------------------------------
+ * Structure used to describe protocol options such as tunneling methods,
+ * authentication schemes and message types (protocol versions 3.7t, 3.8t).
+ */
+
+typedef struct _rfbCapabilityInfo {
+
+    CARD32 code;		/* numeric identifier */
+    CARD8 vendorSignature[4];	/* vendor identification */
+    CARD8 nameSignature[8];	/* abbreviated option name */
+
+} rfbCapabilityInfo;
+
+#define sz_rfbCapabilityInfoVendor 4
+#define sz_rfbCapabilityInfoName 8
+#define sz_rfbCapabilityInfo 16
+
+/*
+ * Vendors known by TightVNC: standard VNC/RealVNC, TridiaVNC, and TightVNC.
+ */
+
+#define rfbStandardVendor "STDV"
+#define rfbTridiaVncVendor "TRDV"
+#define rfbTightVncVendor "TGHT"
 
 
 /*****************************************************************************
@@ -145,8 +170,8 @@ typedef struct {
  * The server always sends 12 bytes to start which identifies the latest RFB
  * protocol version number which it supports.  These bytes are interpreted
  * as a string of 12 ASCII characters in the format "RFB xxx.yyy\n" where
- * xxx and yyy are the major and minor version numbers (for version 3.3
- * this is "RFB 003.003\n").
+ * xxx and yyy are the major and minor version numbers (e.g. for version 3.8
+ * this is "RFB 003.008\n").
  *
  * The client then replies with a similar 12-byte message giving the version
  * number of the protocol which should actually be used (which may be different
@@ -189,32 +214,36 @@ typedef char rfbProtocolVersionMsg[13];	/* allow extra byte for null */
 // Defined (but unsupported Authentication Protocols)
 #define rfbRA2     5
 #define rfbRA2ne   6
+#define rfbSSPI    7
+#define rfbSSPIne  8
 #define rfbTight   16
 #define rfbUltra   17
 #define rfbTLS     18
 
+#define rfbMacAuth 30
+
 #define rfbJAMF    32
 
 /*
- * rfbConnFailed:	For some reason the connection failed (e.g. the server
- *			cannot support the desired protocol version).  This is
- *			followed by a string describing the reason (where a
- *			string is specified as a 32-bit length followed by that
- *			many ASCII characters).
+ * rfbConnFailed:       For some reason the connection failed (e.g. the server
+ *                      cannot support the desired protocol version).  This is
+ *                      followed by a string describing the reason (where a
+ *                      string is specified as a 32-bit length followed by that
+ *                      many ASCII characters).
  *
- * rfbNoAuth:		No authentication is needed.
+ * rfbNoAuth:           No authentication is needed.
  *
- * rfbVncAuth:		The VNC authentication scheme is to be used.  A 16-byte
- *			challenge follows, which the client encrypts as
- *			appropriate using the password and sends the resulting
- *			16-byte response.  If the response is correct, the
- *			server sends the 32-bit word rfbVncAuthOK.  If a simple
- *			failure happens, the server sends rfbVncAuthFailed and
- *			closes the connection. If the server decides that too
- *			many failures have occurred, it sends rfbVncAuthTooMany
- *			and closes the connection.  In the latter case, the
- *			server should not allow an immediate reconnection by
- *			the client.
+ * rfbVncAuth:          The VNC authentication scheme is to be used.  A 16-byte
+ *                      challenge follows, which the client encrypts as
+ *                      appropriate using the password and sends the resulting
+ *                      16-byte response.  If the response is correct, the
+ *                      server sends the 32-bit word rfbVncAuthOK.  If a simple
+ *                      failure happens, the server sends rfbVncAuthFailed and
+ *                      closes the connection. If the server decides that too
+ *                      many failures have occurred, it sends rfbVncAuthTooMany
+ *                      and closes the connection.  In the latter case, the
+ *                      server should not allow an immediate reconnection by
+ *                      the client.
  */
 
 #define rfbVncAuthOK 0
@@ -285,7 +314,7 @@ typedef struct {
 #define rfbSetColourMapEntries 1
 #define rfbBell 2
 #define rfbServerCutText 3
-
+#define rfbReSizeFrameBuffer 0xF
 
 /* client -> server */
 
@@ -297,7 +326,12 @@ typedef struct {
 #define rfbPointerEvent 5
 #define rfbClientCutText 6
 
+#define rfbSetScaleFactorULTRA 8
+#define rfbSetScaleFactor 0xF
 
+#define rfbRichClipboardAvailable   0x83
+#define rfbRichClipboardRequest     0x84
+#define rfbRichClipboardData        0x85
 
 
 /*****************************************************************************
@@ -314,9 +348,42 @@ typedef struct {
 #define rfbEncodingZlib 6
 #define rfbEncodingTight 7
 #define rfbEncodingZlibHex 8
+#define rfbEncodingUltra 9
+
+#define rfbStatsRichCursor         10
+#define rfbStatsCursorPosition     11
+#define rfbStatsDesktopResize      12
+
 #define rfbEncodingZRLE 16
 
-/*
+/* Redstone Software
+
+   Special Encodings
+
+   rfbImmediateUpdate
+    Sending this encoding asks the server to respond immediately 
+    upon seeing a FBU request and not wait to consolidate events
+    and not to wait for an update to occur
+   rfbPasteboardError
+    Asks that OSXvnc should send an error message (in the form of a cut message)
+    if the pasteboard is not accessible.
+
+*/
+#define rfbImmediateUpdate   0x80000000
+#define rfbPasteboardRequest 0x80010000
+#define rfbRichPasteboard    0x80010001
+
+//! \name Apple VNC encodings
+//@{
+#define rfbAppleEncoding1 0x3f3 //!< (1011) Used for first full frame buffer update.
+#define rfbAppleEncoding2 0x3ea //!< (1002) ???
+#define rfbAppleEncoding3 0x450 //!< (1104) ???
+#define rfbAppleEncoding4 0x44c //!< (1100) Maybe cursor position? Has no data but the update frame.
+#define rfbAppleEncoding5 0x44d //!< (1101) Looks like this is a screen definition encoding.
+//@}
+
+/* TightVNC
+ *
  * Special encoding numbers:
  *   0xFFFFFF00 .. 0xFFFFFF0F -- encoding-specific compression levels;
  *   0xFFFFFF10 .. 0xFFFFFF1F -- mouse cursor shape data;
@@ -339,8 +406,10 @@ typedef struct {
 
 #define rfbEncodingXCursor         0xFFFFFF10
 #define rfbEncodingRichCursor      0xFFFFFF11
+#define rfbEncodingPointerPos      0xFFFFFF18
 
 #define rfbEncodingLastRect        0xFFFFFF20
+#define rfbEncodingDesktopResize   0xFFFFFF21
 
 #define rfbEncodingQualityLevel0   0xFFFFFFE0
 #define rfbEncodingQualityLevel1   0xFFFFFFE1
@@ -485,13 +554,13 @@ typedef struct {
  * the two bytes.
  */
 
-#define rfbHextileRaw			(1 << 0)
-#define rfbHextileBackgroundSpecified	(1 << 1)
-#define rfbHextileForegroundSpecified	(1 << 2)
-#define rfbHextileAnySubrects		(1 << 3)
-#define rfbHextileSubrectsColoured	(1 << 4)
-#define rfbHextileZlibRaw		(1 << 5)
-#define rfbHextileZlibHex		(1 << 6)
+#define rfbHextileRaw                   (1 << 0)
+#define rfbHextileBackgroundSpecified   (1 << 1)
+#define rfbHextileForegroundSpecified   (1 << 2)
+#define rfbHextileAnySubrects           (1 << 3)
+#define rfbHextileSubrectsColoured      (1 << 4)
+#define rfbHextileZlibRaw               (1 << 5)
+#define rfbHextileZlibHex               (1 << 6)
 
 #define rfbHextilePackXY(x,y) (((x) << 4) | (y))
 #define rfbHextilePackWH(w,h) ((((w)-1) << 4) | ((h)-1))
@@ -502,18 +571,179 @@ typedef struct {
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Tight Encoding.  FIXME: Add more documentation.
+ * zlib - zlib compressed Encoding.  We have an rfbZlibHeader structure
+ * giving the number of bytes following.  Finally the data follows is
+ * zlib compressed version of the raw pixel data as negotiated.
+ */
+
+typedef struct {
+    CARD32 nBytes;
+} rfbZlibHeader;
+
+#define sz_rfbZlibHeader 4
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ZRLE - encoding combining Zlib compression, tiling, palettisation and
+ * run-length encoding.
+ */
+
+typedef struct {
+    CARD32 length;
+} rfbZRLEHeader;
+
+#define sz_rfbZRLEHeader 4
+
+#define rfbZRLETileWidth 64
+#define rfbZRLETileHeight 64
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Tight Encoding.
+ *
+ *-- The first byte of each Tight-encoded rectangle is a "compression control
+ *   byte". Its format is as follows (bit 0 is the least significant one):
+ *
+ *   bit 0:    if 1, then compression stream 0 should be reset;
+ *   bit 1:    if 1, then compression stream 1 should be reset;
+ *   bit 2:    if 1, then compression stream 2 should be reset;
+ *   bit 3:    if 1, then compression stream 3 should be reset;
+ *   bits 7-4: if 1000 (0x08), then the compression type is "fill",
+ *             if 1001 (0x09), then the compression type is "jpeg",
+ *             if 0xxx, then the compression type is "basic",
+ *             values greater than 1001 are not valid.
+ *
+ * If the compression type is "basic", then bits 6..4 of the
+ * compression control byte (those xxx in 0xxx) specify the following:
+ *
+ *   bits 5-4:  decimal representation is the index of a particular zlib
+ *              stream which should be used for decompressing the data;
+ *   bit 6:     if 1, then a "filter id" byte is following this byte.
+ *
+ *-- The data that follows after the compression control byte described
+ * above depends on the compression type ("fill", "jpeg" or "basic").
+ *
+ *-- If the compression type is "fill", then the only pixel value follows, in
+ * client pixel format (see NOTE 1). This value applies to all pixels of the
+ * rectangle.
+ *
+ *-- If the compression type is "jpeg", the following data stream looks like
+ * this:
+ *
+ *   1..3 bytes:  data size (N) in compact representation;
+ *   N bytes:     JPEG image.
+ *
+ * Data size is compactly represented in one, two or three bytes, according
+ * to the following scheme:
+ *
+ *  0xxxxxxx                    (for values 0..127)
+ *  1xxxxxxx 0yyyyyyy           (for values 128..16383)
+ *  1xxxxxxx 1yyyyyyy zzzzzzzz  (for values 16384..4194303)
+ *
+ * Here each character denotes one bit, xxxxxxx are the least significant 7
+ * bits of the value (bits 0-6), yyyyyyy are bits 7-13, and zzzzzzzz are the
+ * most significant 8 bits (bits 14-21). For example, decimal value 10000
+ * should be represented as two bytes: binary 10010000 01001110, or
+ * hexadecimal 90 4E.
+ *
+ *-- If the compression type is "basic" and bit 6 of the compression control
+ * byte was set to 1, then the next (second) byte specifies "filter id" which
+ * tells the decoder what filter type was used by the encoder to pre-process
+ * pixel data before the compression. The "filter id" byte can be one of the
+ * following:
+ *
+ *   0:  no filter ("copy" filter);
+ *   1:  "palette" filter;
+ *   2:  "gradient" filter.
+ *
+ *-- If bit 6 of the compression control byte is set to 0 (no "filter id"
+ * byte), or if the filter id is 0, then raw pixel values in the client
+ * format (see NOTE 1) will be compressed. See below details on the
+ * compression.
+ *
+ *-- The "gradient" filter pre-processes pixel data with a simple algorithm
+ * which converts each color component to a difference between a "predicted"
+ * intensity and the actual intensity. Such a technique does not affect
+ * uncompressed data size, but helps to compress photo-like images better. 
+ * Pseudo-code for converting intensities to differences is the following:
+ *
+ *   P[i,j] := V[i-1,j] + V[i,j-1] - V[i-1,j-1];
+ *   if (P[i,j] < 0) then P[i,j] := 0;
+ *   if (P[i,j] > MAX) then P[i,j] := MAX;
+ *   D[i,j] := V[i,j] - P[i,j];
+ *
+ * Here V[i,j] is the intensity of a color component for a pixel at
+ * coordinates (i,j). MAX is the maximum value of intensity for a color
+ * component.
+ *
+ *-- The "palette" filter converts true-color pixel data to indexed colors
+ * and a palette which can consist of 2..256 colors. If the number of colors
+ * is 2, then each pixel is encoded in 1 bit, otherwise 8 bits is used to
+ * encode one pixel. 1-bit encoding is performed such way that the most
+ * significant bits correspond to the leftmost pixels, and each raw of pixels
+ * is aligned to the byte boundary. When "palette" filter is used, the
+ * palette is sent before the pixel data. The palette begins with an unsigned
+ * byte which value is the number of colors in the palette minus 1 (i.e. 1
+ * means 2 colors, 255 means 256 colors in the palette). Then follows the
+ * palette itself which consist of pixel values in client pixel format (see
+ * NOTE 1).
+ *
+ *-- The pixel data is compressed using the zlib library. But if the data
+ * size after applying the filter but before the compression is less then 12,
+ * then the data is sent as is, uncompressed. Four separate zlib streams
+ * (0..3) can be used and the decoder should read the actual stream id from
+ * the compression control byte (see NOTE 2).
+ *
+ * If the compression is not used, then the pixel data is sent as is,
+ * otherwise the data stream looks like this:
+ *
+ *   1..3 bytes:  data size (N) in compact representation;
+ *   N bytes:     zlib-compressed data.
+ *
+ * Data size is compactly represented in one, two or three bytes, just like
+ * in the "jpeg" compression method (see above).
+ *
+ *-- NOTE 1. If the color depth is 24, and all three color components are
+ * 8-bit wide, then one pixel in Tight encoding is always represented by
+ * three bytes, where the first byte is red component, the second byte is
+ * green component, and the third byte is blue component of the pixel color
+ * value. This applies to colors in palettes as well.
+ *
+ *-- NOTE 2. The decoder must reset compression streams' states before
+ * decoding the rectangle, if some of bits 0,1,2,3 in the compression control
+ * byte are set to 1. Note that the decoder must reset zlib streams even if
+ * the compression type is "fill" or "jpeg".
+ *
+ *-- NOTE 3. The "gradient" filter and "jpeg" compression may be used only
+ * when bits-per-pixel value is either 16 or 32, not 8.
+ *
+ *-- NOTE 4. The width of any Tight-encoded rectangle cannot exceed 2048
+ * pixels. If a rectangle is wider, it must be split into several rectangles
+ * and each one should be encoded separately.
+ *
  */
 
 #define rfbTightExplicitFilter         0x04
 #define rfbTightFill                   0x08
 #define rfbTightJpeg                   0x09
-#define rfbTightMaxSubencoding         0x08
+#define rfbTightMaxSubencoding         0x09
 
 /* Filters to improve compression efficiency */
 #define rfbTightFilterCopy             0x00
 #define rfbTightFilterPalette          0x01
 #define rfbTightFilterGradient         0x02
+
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * ZLIBHEX - zlib compressed Hextile Encoding.  Essentially, this is the
+ * hextile encoding with zlib compression on the tiles that can not be
+ * efficiently encoded with one of the other hextile subencodings.  The
+ * new zlib subencoding uses two bytes to specify the length of the
+ * compressed tile and then the compressed data follows.  As with the
+ * raw sub-encoding, the zlib subencoding invalidates the other
+ * values, if they are also set.
+ */
+
+#define rfbHextileZlibRaw		(1 << 5)
+#define rfbHextileZlibHex		(1 << 6)
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -544,6 +774,20 @@ typedef struct {
 } rfbXCursorColors;
 
 #define sz_rfbXCursorColors 6
+
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * RichCursor encoding. This is a special encoding used to transmit cursor
+ * shapes from server to clients. It is similar to the XCursor encoding but
+ * uses client pixel format instead of two RGB colors to represent cursor
+ * image. For this encoding, coordinates in rfbFramebufferUpdateRectHeader
+ * structure hold hotspot position (r.x, r.y) and cursor size (r.w, r.h).
+ * After header, two pixmaps follow: first one with cursor image in current
+ * client pixel format (like in raw encoding), second with transparency data
+ * (1 bit per pixel, exactly the same format as used for transparency bitmap
+ * in the XCursor encoding). If (w * h == 0), cursor should be hidden (or
+ * default local cursor should be set by the client).
+ */
 
 
 /*-----------------------------------------------------------------------------
@@ -596,6 +840,25 @@ typedef struct {
 
 #define sz_rfbServerCutTextMsg 8
 
+/*-----------------------------------------------------------------------------
+ * ReSizeFrameBuffer - tell the RFB client to alter its framebuffer, either
+ * due to a resize of the server desktop or a client-requested scaling factor.
+ * The pixel format remains unchanged.
+ */
+
+typedef struct {
+    CARD8 type;			/* always rfbReSizeFrameBuffer */
+	CARD8 pad1;
+	CARD16 desktop_w;	/* Desktop width */
+	CARD16 desktop_h;	/* Desktop height */
+	CARD16 buffer_w;	/* FrameBuffer width */
+	CARD16 buffer_h;	/* Framebuffer height */
+    CARD16 pad2;
+
+} rfbReSizeFrameBufferMsg;
+
+#define sz_rfbReSizeFrameBufferMsg (12)
+
 
 /*-----------------------------------------------------------------------------
  * Union of all server->client messages.
@@ -607,6 +870,7 @@ typedef union {
     rfbSetColourMapEntriesMsg scme;
     rfbBellMsg b;
     rfbServerCutTextMsg sct;
+    rfbReSizeFrameBufferMsg rsfb;
 } rfbServerToClientMsg;
 
 
@@ -669,6 +933,18 @@ typedef struct {
 
 #define sz_rfbSetEncodingsMsg 4
 
+/*-----------------------------------------------------------------------------
+ * SetScaleFactor - tell the RFB server to alter the scale factor for the
+ * client buffer.
+ */
+
+typedef struct {
+    CARD8 type;			/* always rfbSetScaleFactor */
+    CARD8 scale;		/* Scale factor (positive non-zero integer) */
+    CARD16 pad2;
+} rfbSetScaleFactorMsg;
+
+#define sz_rfbSetScaleFactorMsg (4)
 
 /*-----------------------------------------------------------------------------
  * FramebufferUpdateRequest - request for a framebuffer update.  If incremental
@@ -695,28 +971,28 @@ typedef struct {
  * For most ordinary keys, the keysym is the same as the corresponding ASCII
  * value.  Other common keys are:
  *
- * BackSpace		0xff08
- * Tab			0xff09
- * Return or Enter	0xff0d
- * Escape		0xff1b
- * Insert		0xff63
- * Delete		0xffff
- * Home			0xff50
- * End			0xff57
- * Page Up		0xff55
- * Page Down		0xff56
- * Left			0xff51
- * Up			0xff52
- * Right		0xff53
- * Down			0xff54
- * F1			0xffbe
- * F2			0xffbf
- * ...			...
- * F12			0xffc9
- * Shift		0xffe1
- * Control		0xffe3
- * Meta			0xffe7
- * Alt			0xffe9
+ * BackSpace            0xff08
+ * Tab                  0xff09
+ * Return or Enter      0xff0d
+ * Escape               0xff1b
+ * Insert               0xff63
+ * Delete               0xffff
+ * Home                 0xff50
+ * End                  0xff57
+ * Page Up              0xff55
+ * Page Down            0xff56
+ * Left                 0xff51
+ * Up                   0xff52
+ * Right                0xff53
+ * Down                 0xff54
+ * F1                   0xffbe
+ * F2                   0xffbf
+ * ...                  ...
+ * F12                  0xffc9
+ * Shift                0xffe1
+ * Control              0xffe3
+ * Meta                 0xffe7
+ * Alt                  0xffe9
  */
 
 typedef struct {
@@ -745,6 +1021,9 @@ typedef struct {
 #define rfbButton3Mask 4
 #define rfbButton4Mask 8
 #define rfbButton5Mask 16
+#define rfbWheelUpMask rfbButton4Mask
+#define rfbWheelDownMask rfbButton5Mask
+#define rfbWheelMask (rfbWheelUpMask | rfbWheelDownMask)
 
 #define sz_rfbPointerEventMsg 6
 
@@ -773,6 +1052,7 @@ typedef struct {
 typedef union {
     CARD8 type;
     rfbSetPixelFormatMsg spf;
+    rfbSetScaleFactorMsg ssf;
     rfbFixColourMapEntriesMsg fcme;
     rfbSetEncodingsMsg se;
     rfbFramebufferUpdateRequestMsg fur;

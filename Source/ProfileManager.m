@@ -407,7 +407,7 @@ static NSString *kProfileDragEntry = @"com.geekspiff.cotvnc.ProfileDragEntry";
 			NSMutableArray* encodings = [profile objectForKey: kProfile_Encodings_Key];
 			NSParameterAssert( row >= 0 && row <= [encodings count] );
 			
-			int oldIndex = [encodings indexOfObject: encoding];
+			NSUInteger oldIndex = [encodings indexOfObject: encoding];
 			NSParameterAssert( NSNotFound != oldIndex );
 			
 			[encodings insertObject: encoding atIndex: row];

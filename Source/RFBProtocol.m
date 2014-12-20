@@ -28,38 +28,105 @@
 #import "RFBConnection.h"
 #import "ServerCutTextReader.h"
 #import "SetColorMapEntriesReader.h"
+#import "NLTStringReader.h"
+#import "RFBHandshaker.h"
+#import "KeyCodes.h"
+#import "ConnectionMetrics.h"
+
+@interface RFBProtocol ()
+
+- (void)setServerVersion:(NSString*)aVersion;
+- (void)start:(ServerInitMessage*)info;
+
+@end
 
 @implementation RFBProtocol
 
-- (id)initTarget:(id)aTarget serverInfo:(id)info
+@synthesize serverVersion, serverMajorVersion, serverMinorVersion;
+@synthesize isAppleVNCServer = _isAppleVNCServer;
+
+- (id)initTarget:(id)aTarget
 {
-    if (self = [super initTarget:aTarget action:NULL]) {
-		rfbPixelFormat	myFormat;
-	
-		memcpy(&myFormat, (rfbPixelFormat*)[info pixelFormatData], sizeof(myFormat));
-		[self setPixelFormat:&myFormat];
-		[aTarget setDisplaySize:[info size] andPixelFormat:&myFormat];
-		[aTarget setDisplayName:[info name]];
-		[self setEncodings];
+    if (self = [super initTarget:aTarget action:NULL])
+    {
+        // Our target is always the connection object.
+        assert([aTarget isKindOfClass:[RFBConnection class]]);
+        _connection = aTarget;
+        
+        // Get key codes from the profile.
+        Profile * profile = _connection.profile;
+        _shiftKeyCode = [profile shiftKeyCode];
+        _controlKeyCode = [profile controlKeyCode];
+        _altKeyCode = [profile altKeyCode];
+        _commandKeyCode = [profile commandKeyCode];
+        
+        // Create readers for initial handshaking.
+        versionReader = [[NLTStringReader alloc] initTarget:self action:@selector(setServerVersion:)];
+        handshaker = [[RFBHandshaker alloc] initTarget:self action:@selector(start:)];
+        handshaker.connection = _connection;
+
+        // The RFB protocol starts with the server sending its version.
+        [target setReader:versionReader];
+
+        // Create message reader objects.
 		typeReader = [[CARD8Reader alloc] initTarget:self action:@selector(receiveType:)];
 		msgTypeReader[rfbFramebufferUpdate] = [[FrameBufferUpdateReader alloc] initTarget:self action:@selector(frameBufferUpdateComplete:)];
 		msgTypeReader[rfbSetColourMapEntries] = [[SetColorMapEntriesReader alloc] initTarget:self action:@selector(setColormapEntries:)];
 		msgTypeReader[rfbBell] = nil;
 		msgTypeReader[rfbServerCutText] = [[ServerCutTextReader alloc] initTarget:self action:@selector(serverCutText:)];
-		[self requestUpdate:[aTarget visibleRect] incremental:NO];
 	}
     return self;
 }
 
 - (void)dealloc
 {
-    int i;
-
     [typeReader release];
-    for(i=0; i<=MAX_MSGTYPE; i++) {
+    [versionReader release];
+    [handshaker release];
+    
+    int i;
+    for(i=0; i<=MAX_MSGTYPE; i++)
+    {
         [msgTypeReader[i] release];
     }
     [super dealloc];
+}
+
+//! The next action in the open connection sequence is -start:.
+- (void)setServerVersion:(NSString*)aVersion
+{
+    serverVersion = [aVersion copy];
+	sscanf([serverVersion UTF8String], rfbProtocolVersionFormat, &serverMajorVersion, &serverMinorVersion);
+	
+    NSLog(@"Server reports Version %@", aVersion);
+    
+	// ARD sends this bogus 889 version#, at least for ARD 2.2 they actually comply with version
+    // 003.007 so we'll force that.
+	if (serverMinorVersion == 889)
+    {
+		NSLog(@"\tBogus RFB Protocol Version Number from AppleRemoteDesktop, switching to protocol 003.007");
+		serverMinorVersion = 7;
+        _isAppleVNCServer = YES;
+	}
+	
+    // Next step is the authentication and hello handshake.
+    [target setReader:handshaker];
+}
+
+//! Tell the connection what the remote display size and name is.
+- (void)start:(ServerInitMessage*)info
+{
+    rfbPixelFormat myFormat;
+    memcpy(&myFormat, (rfbPixelFormat*)[info pixelFormatData], sizeof(myFormat));
+    [self setPixelFormat:&myFormat];
+    [self setEncodings];
+
+    [target setReader:typeReader];
+    
+    // Let the connection know we're finished handshaking and authentication, and update it with
+    // the remote display information.
+    [_connection setDisplaySize:[info size] andPixelFormat:&myFormat];
+    [_connection setDisplayName:[info name]];
 }
 
 - (CARD16)numberOfEncodings
@@ -78,15 +145,19 @@
     rfbSetEncodingsMsg msg;
     CARD32	enc[64];
 
-    numberOfEncodings = l;
-    msg.type = rfbSetEncodings;
-    msg.nEncodings = htons(l);
-    [target writeBytes:(unsigned char*)&msg length:sizeof(msg)];
-    for(i=0; i<l; i++) {
-        encodings[i] = newEncodings[i];
-        enc[i] = htonl(encodings[i]);
+    if ([_connection lockForWriting])
+    {
+        numberOfEncodings = l;
+        msg.type = rfbSetEncodings;
+        msg.nEncodings = htons(l);
+        [_connection writeBytes:(unsigned char*)&msg length:sizeof(msg)];
+        for(i=0; i<l; i++) {
+            encodings[i] = newEncodings[i];
+            enc[i] = htonl(encodings[i]);
+        }
+        [_connection writeBytes:(unsigned char*)&enc length:numberOfEncodings * sizeof(CARD32)];
+        [_connection unlockWriteLock];
     }
-    [target writeBytes:(unsigned char*)&enc length:numberOfEncodings * sizeof(CARD32)];
 }
 
 - (void)setEncodings
@@ -103,15 +174,31 @@
 
 - (void)requestUpdate:(NSRect)frame incremental:(BOOL)aFlag
 {
-    rfbFramebufferUpdateRequestMsg	msg;
+    // Update metrics.
+    [_connection.metrics addUpdateRequest];
+    
+    if ([_connection lockForWriting])
+    {
+        rfbFramebufferUpdateRequestMsg	msg;
 
-    msg.type = rfbFramebufferUpdateRequest;
-    msg.incremental = aFlag;
-    msg.x = frame.origin.x; msg.x = htons(msg.x);
-    msg.y = frame.origin.y; msg.y = htons(msg.y);
-    msg.w = frame.size.width; msg.w = htons(msg.w);
-    msg.h = frame.size.height; msg.h = htons(msg.h);
-    [target writeBytes:(unsigned char*)&msg length:sz_rfbFramebufferUpdateRequestMsg];
+        msg.type = rfbFramebufferUpdateRequest;
+        msg.incremental = aFlag;
+        msg.x = frame.origin.x; msg.x = htons(msg.x);
+        msg.y = frame.origin.y; msg.y = htons(msg.y);
+        msg.w = frame.size.width; msg.w = htons(msg.w);
+        msg.h = frame.size.height; msg.h = htons(msg.h);
+        [_connection writeBytes:(unsigned char*)&msg length:sz_rfbFramebufferUpdateRequestMsg];
+        
+        [_connection unlockWriteLock];
+    }
+    
+    // If not incremental, then we want to hold off on further updates until this update
+    // is finished.
+    if (!aFlag)
+    {
+        isStopped = YES;
+        _continueUpdatesWhenComplete = YES;
+    }
 }
 
 - (void)setPixelFormat:(rfbPixelFormat*)aFormat
@@ -145,7 +232,12 @@
     msg.format.redMax = htons(msg.format.redMax);
     msg.format.greenMax = htons(msg.format.greenMax);
     msg.format.blueMax = htons(msg.format.blueMax);
-    [target writeBytes:(unsigned char*)&msg length:sz_rfbSetPixelFormatMsg];
+
+    if ([_connection lockForWriting])
+    {
+        [_connection writeBytes:(unsigned char*)&msg length:sz_rfbSetPixelFormatMsg];
+        [_connection unlockWriteLock];
+    }
 }
 
 - (FrameBufferUpdateReader*)frameBufferUpdateReader
@@ -161,16 +253,39 @@
 - (void)frameBufferUpdateComplete:(id)aReader
 {
 	[target setReader:self];
-	[target queueUpdateRequest];
+//	[target queueUpdateRequest];
+    
+    if (isStopped && _continueUpdatesWhenComplete)
+    {
+        _continueUpdatesWhenComplete = NO;
+        [self continueUpdate];
+    }
 }
 
-- (void)requestIncrementalFrameBufferUpdateForVisibleRect:(id)aReader
+- (void)requestIncrementalFrameBufferUpdateForVisibleRect
 {
-    if(isStopped) {
+    if (isStopped)
+    {
         shouldUpdate = YES;
-    } else {
-		[self requestUpdate:[target visibleRect] incremental:YES];
-	}
+        return;
+    }
+    
+    #define UPDATE_REQUEST_COUNT 1
+    for (int i=0; i < UPDATE_REQUEST_COUNT; ++i)
+    {
+        [self requestUpdate:[_connection.controller visibleRect] incremental:YES];
+    }
+}
+
+- (void)requestFullFrameBufferUpdate
+{
+    if (isStopped)
+    {
+        shouldUpdate = YES;
+        return;
+    }
+    
+    [self requestUpdate:[_connection displayRect] incremental:NO];
 }
 
 - (void)setColormapEntries:(id)aReader
@@ -195,7 +310,7 @@
     if(t > MAX_MSGTYPE) {
 		NSString *errorStr = NSLocalizedString( @"UnknownMessageType", nil );
 		errorStr = [NSString stringWithFormat:errorStr, type];
-        [target terminateConnection:errorStr];
+        @throw [NSException exceptionWithName:kRFBConnectionException reason:errorStr userInfo:nil];
     } else if(t == rfbBell) {
         [target ringBell];
         [target setReader:self];
@@ -206,10 +321,18 @@
 
 - (void)continueUpdate
 {
-    if(isStopped) {
+    if (isStopped)
+    {
+        // Don't actually continue updates if we're stopped waiting for the next update to finish.
+        if (_continueUpdatesWhenComplete)
+        {
+            return;
+        }
+        
         isStopped = NO;
-        if(shouldUpdate) {
-            [self requestIncrementalFrameBufferUpdateForVisibleRect: nil];
+        if (shouldUpdate)
+        {
+            [self requestIncrementalFrameBufferUpdateForVisibleRect];
             shouldUpdate = NO;
         }
     }
@@ -222,4 +345,108 @@
     }
 }
 
+- (void)sendMouse:(NSPoint)thePoint mask:(uint32_t)mask
+{
+    rfbPointerEventMsg msg;
+    msg.type = rfbPointerEvent;
+    msg.buttonMask = mask;
+    msg.x = htons(thePoint.x);
+    msg.y = htons(thePoint.y);
+    
+    if ([_connection lockForWriting])
+    {
+        [_connection writeBytes:(unsigned char*)&msg length:sizeof(msg)];
+        [_connection unlockWriteLock];
+    }
+}
+
+- (void)sendModifier:(unsigned int)m pressed: (BOOL)pressed
+{
+/*	NSString *modifierStr =nil;
+	switch (m)
+	{
+		case NSShiftKeyMask:
+			modifierStr = @"NSShiftKeyMask";		break;
+		case NSControlKeyMask:
+			modifierStr = @"NSControlKeyMask";		break;
+		case NSAlternateKeyMask:
+			modifierStr = @"NSAlternateKeyMask";	break;
+		case NSCommandKeyMask:
+			modifierStr = @"NSCommandKeyMask";		break;
+		case NSAlphaShiftKeyMask:
+			modifierStr = @"NSAlphaShiftKeyMask";	break;
+	}
+	NSLog(@"modifier %@ %s", modifierStr, pressed ? "pressed" : "released"); */
+	
+    uint16_t kc;
+    if( NSShiftKeyMask == m )
+        kc = _shiftKeyCode;
+	else if( NSControlKeyMask == m )
+        kc = _controlKeyCode;
+	else if( NSAlternateKeyMask == m )
+        kc = _altKeyCode;
+	else if( NSCommandKeyMask == m )
+        kc = _commandKeyCode;
+    else if(NSAlphaShiftKeyMask == m)
+        kc = CAPSLOCK;
+    else if(NSHelpKeyMask == m)		// this is F1
+        kc = F1_KEYCODE;
+	else //if (NSNumericPadKeyMask == m) // don't know how to handle, eat it
+		return;
+	
+    [self sendRawKey:kc pressed:pressed];
+}
+
+- (void)sendKey:(unichar)c pressed:(BOOL)pressed
+{
+    uint16_t kc;
+	if(c < 256) {
+        kc = k_page_0[c & 0xff];
+    } else if((c & 0xff00) == 0xf700) {
+        kc = k_page_f7[c & 0xff];
+    } else {
+		kc = c;
+    }
+
+/*	unichar _kc = (unichar)kc;
+	NSString *keyStr = [NSString stringWithCharacters: &_kc length: 1];
+	NSLog(@"key '%@' %s", keyStr, pressed ? "pressed" : "released"); */
+
+    [self sendRawKey:kc pressed:pressed];
+}
+
+//! However, the key code is swizzled into network byte order if necessary.
+//!
+- (void)sendRawKey:(uint16_t)keycode pressed:(BOOL)isPressed
+{
+    rfbKeyEventMsg msg = {
+        .type = rfbKeyEvent,
+        .down = isPressed,
+        .key = htonl(keycode)
+    };
+
+    if ([_connection lockForWriting])
+    {
+        [_connection writeBytes:(unsigned char*)&msg length:sizeof(msg)];
+        [_connection unlockWriteLock];
+    }
+}
+
+- (void)sendClientCutText:(NSString *)text
+{
+    NSData * encodedText = [text dataUsingEncoding:NSWindowsCP1252StringEncoding allowLossyConversion:YES];
+    unsigned len = [encodedText length];
+    rfbClientCutTextMsg msg = { 0 };
+    msg.type = rfbClientCutText;
+	msg.length = htonl(len);
+    
+    if ([_connection lockForWriting])
+    {
+        [_connection writeBytes:(unsigned char *)&msg length:sizeof(msg)];
+        [_connection writeBytes:(unsigned char *)[encodedText bytes] length:len];
+        [_connection unlockWriteLock];
+    }
+}
+
 @end
+

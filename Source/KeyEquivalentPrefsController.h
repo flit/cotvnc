@@ -10,7 +10,8 @@
 @class KeyEquivalentScenario, KeyEquivalentTextView;
 
 
-@interface KeyEquivalentPrefsController : NSObject {
+@interface KeyEquivalentPrefsController : NSObject <NSWindowDelegate>
+{
 	IBOutlet NSPopUpButton *mConnectionType;
 	IBOutlet NSOutlineView *mOutlineView;
 	NSMutableArray *mSelectedScenario;

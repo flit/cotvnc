@@ -77,6 +77,9 @@ typedef unsigned char	FrameBufferPaletteIndex;
 - (void)getRGB:(float*)rgb fromPixel:(unsigned char*)pixValue;
 - (NSSize)size;
 - (void)setPixelFormat:(rfbPixelFormat*)theFormat;
+- (rfbPixelFormat *)getServerPixelFormat;
+- (void *)pixelData;
+- (size_t)pixelDataSize;
 
 - (void)fillColor:(FrameBufferColor*)fbc fromPixel:(unsigned char*)pixValue;
 - (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue;
@@ -95,7 +98,7 @@ typedef unsigned char	FrameBufferPaletteIndex;
 - (void)putRect:(NSRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette;
 - (void)putRun:(FrameBufferColor*)fbc ofLength:(int)length at:(NSRect)aRect pixelOffset:(int)offset;
 - (void)putRect:(NSRect)aRect fromRGBBytes:(unsigned char*)rgb;
-
+- (void)putRect:(NSRect)aRect fromARGBBytes:(unsigned char*)argb;
 @end
 
 #endif /* __FRAMEBUFFER_H_INCLUDED__ */

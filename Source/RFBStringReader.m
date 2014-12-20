@@ -50,8 +50,10 @@
     unsigned canConsume = MIN(aLength, (length - bytesRead));
 
     memcpy(buffer + bytesRead, theBytes, canConsume);
-    if((bytesRead += canConsume) == length) {
-        [target performSelector:action withObject:[NSString stringWithCString:buffer length:length]];
+    if((bytesRead += canConsume) == length)
+    {
+        NSString * s = [[[NSString alloc] initWithBytes:buffer length:length encoding:NSWindowsCP1252StringEncoding] autorelease];
+        [target performSelector:action withObject:s];
     }
     return canConsume;
 }
@@ -63,6 +65,12 @@
         free(buffer);
     }
     buffer = malloc(length);
+    
+    // - Prevent the DOS attack on http://www.securityfocus.com/archive/1/458907/100/0/threaded
+    
+    if (!buffer)
+        [NSException raise: NSGenericException format: @"Invalid computer name size sent by server, Chicken will bail out"];
+    
     [target setReaderWithoutReset:self];
     bytesRead = 0;
 }

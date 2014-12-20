@@ -135,15 +135,14 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
         [target setReader:backPixReader];
         return;
     }
-#ifdef SUPPORT_JPEG
+#if APPLE_JPEG || SUPPORT_JPEG
 	if(cntl == rfbTightJpeg) {
 		[target setReader:zipLengthReader];
 		return;
 	}
 #endif
     if(cntl > rfbTightMaxSubencoding) {
-		[connection terminateConnection:@"Tight encoding: bad subencoding value received.\n"];
-        return;
+        @throw [NSException exceptionWithName:kRFBConnectionException reason:@"Tight encoding: bad subencoding value received.\n" userInfo:nil];
     }
     if(cntl & rfbTightExplicitFilter) {
         [target setReader:filterIdReader];
@@ -179,8 +178,7 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
             break;
         default:
             currentFilter = nil;
-	    [connection terminateConnection:[NSString stringWithFormat:@"Tight encoding: unknown filter code %@ received.\n", aByte]];
-            return;
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"Tight encoding: unknown filter code %@ received.\n", aByte] userInfo:nil];
     }
     [target setReader:currentFilter];
 }
@@ -193,8 +191,7 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
     bytesTransferred += [theFilter bytesTransferred];
 #endif
     if((pixelBits = [theFilter bitsPerPixel]) == 0) {
-        [connection terminateConnection:@"Tight encoding: palette with length 0 received\n"];
-        return;
+        @throw [NSException exceptionWithName:kRFBConnectionException reason:@"Tight encoding: palette with length 0 received\n" userInfo:nil];
     }
     rowSize = (frame.size.width * pixelBits + 7) / 8;
 	NSParameterAssert( rowSize <= Z_BUFSIZE );
@@ -232,7 +229,7 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
 		bytesTransferred += 3;
     }
 #endif
-#ifdef SUPPORT_JPEG
+#if APPLE_JPEG || SUPPORT_JPEG
 	if(cntl == rfbTightJpeg) {
 		[zippedDataReader setBufferSize:[zl unsignedIntValue]];
 		[target setReader:zippedDataReader];
@@ -250,11 +247,10 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
         error = inflateInit(stream);
         if(error != Z_OK) {
             if(stream->msg != NULL) {
-                [connection terminateConnection:[NSString stringWithFormat:@"InflateInit error: %s.\n", stream->msg]];
+                @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"InflateInit error: %s.\n", stream->msg] userInfo:nil];
             } else {
-                [connection terminateConnection:@"InflateInit error\n"];
+                @throw [NSException exceptionWithName:kRFBConnectionException reason:@"InflateInit error\n" userInfo:nil];
             }
-            return;
         }
         zStreamActive[streamId] = YES;
 	}
@@ -281,7 +277,7 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
 #ifdef COLLECT_STATS
     bytesTransferred += [data length];
 #endif
-#ifdef SUPPORT_JPEG
+#if SUPPORT_JPEG
 	if(cntl == rfbTightJpeg) {
 		struct jpeg_decompress_struct cinfo;
 		struct jpeg_error_mgr jerr;
@@ -297,9 +293,8 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
 		cinfo.out_color_space = JCS_RGB;
 		jpeg_start_decompress(&cinfo);
 		if(cinfo.output_width != frame.size.width || cinfo.output_height != frame.size.height || cinfo.output_components != 3) {
-			[connection terminateConnection:[NSString stringWithFormat:@"Tight Encoding: Wrong JPEG data received.\n"]];
 			jpeg_destroy_decompress(&cinfo);
-			return;
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"Tight Encoding: Wrong JPEG data received.\n"] userInfo:nil];
 		}
 		buffer = malloc(3 * frame.size.width);
 		rowPointer[0] = (JSAMPROW)buffer;
@@ -316,6 +311,40 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
         [target performSelector:action withObject:self];
 		return;
 	}
+#else
+    if (cntl == rfbTightJpeg)
+    {
+        // Create the JPEG image.
+        CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);
+        CGImageRef image = CGImageCreateWithJPEGDataProvider(provider, NULL, false, kCGRenderingIntentDefault);
+        CFRelease(provider);
+        
+        // Create a bitmap context.
+        size_t bytesPerRow = (int)frame.size.width * sizeof(uint32_t);
+        void * bitmapBuffer = malloc(bytesPerRow * (int)frame.size.height);
+        CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+        CGContextRef context = CGBitmapContextCreate(bitmapBuffer, frame.size.width, frame.size.height, 8, bytesPerRow, space, kCGImageAlphaNoneSkipFirst);
+        CFRelease(space);
+        
+        // Draw the JPEG into the bitmap context.
+        CGRect r;
+        r.origin.x = 0;
+        r.origin.y = 0;
+        r.size.width = frame.size.width;
+        r.size.height = frame.size.height;
+        CGContextDrawImage(context, r, image);
+        
+        // Draw the image into the frame buffer.
+        [frameBuffer putRect:frame fromARGBBytes:bitmapBuffer];
+        
+        // Release everything.
+        CFRelease(context);
+        CFRelease(image);
+        free(bitmapBuffer);
+        
+        [target performSelector:action withObject:self];
+        return;
+    }
 #endif
     stream = zStream + (cntl & 0x03);
     stream->next_in = (unsigned char*)[data bytes];
@@ -328,11 +357,10 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
 			break;
         if((error != Z_OK) && (error != Z_STREAM_END)) {
             if(stream->msg != NULL) {
-                [connection terminateConnection:[NSString stringWithFormat:@"Inflate error: %s.\n", stream->msg]];
+                @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"Inflate error: %s.\n", stream->msg] userInfo:nil];
             } else {
-                [connection terminateConnection:@"Inflate error\n"];
+                @throw [NSException exceptionWithName:kRFBConnectionException reason:@"Inflate error\n" userInfo:nil];
             }
-            return;
         }
         numRows = (Z_BUFSIZE - stream->avail_out) / rowSize;
         filtered = [currentFilter filter:zBuffer rows:numRows];

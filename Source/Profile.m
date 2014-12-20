@@ -47,7 +47,6 @@ ButtonNumberToArrayIndex( unsigned int buttonNumber )
 {
     if (self = [super init]) {
 		NSArray* enc;
-		int i;
 
 		info = [[d deepMutableCopy] retain];
 		[info setObject: name forKey: @"ProfileName"];
@@ -67,16 +66,19 @@ ButtonNumberToArrayIndex( unsigned int buttonNumber )
 		
 		enc = [info objectForKey: kProfile_Encodings_Key];
 		if( YES == [[info objectForKey: kProfile_EnableCopyrect_Key] boolValue] ) {
-			numberOfEnabledEncodings = 1;
+			numberOfEnabledEncodings = 2;
 			enabledEncodings[0] = rfbEncodingCopyRect;
+			enabledEncodings[1] = rfbEncodingQualityLevel6; // hardcoding in jpeg support, this should be a selection
 		} else {
 			numberOfEnabledEncodings = 0;
 		}
-		for(i=0; i<[enc count]; i++) {
-			NSDictionary *e = [enc objectAtIndex:i];
+		for(NSDictionary *e in enc) {
 			if ( [[e objectForKey: kProfile_EncodingEnabled_Key] boolValue] )
 				enabledEncodings[numberOfEnabledEncodings++] = [[e objectForKey: kProfile_EncodingValue_Key] intValue];
 		}
+		
+		// Add rich cursor encoding
+		enabledEncodings[numberOfEnabledEncodings++] = rfbEncodingRichCursor;
 		
 		_button2EmulationScenario = (EventFilterEmulationScenario)[[info objectForKey: kProfile_Button2EmulationScenario_Key] intValue];
 		
@@ -176,43 +178,78 @@ ButtonNumberToArrayIndex( unsigned int buttonNumber )
 
     format->bigEndian = [FrameBuffer bigEndian];
     format->trueColour = YES;
-    switch(i) {
-        case 0:
+    switch (i)
+    {
+        case kProfilePixelFormat_Server:
+            // Use the server's default pixel format.
             break;
-        case 1:
+            
+        case kProfilePixelFormat_RGB323:
             format->bitsPerPixel = 8;
             format->depth = 8;
-            format->redMax = format->greenMax = format->blueMax = 3;
-            format->redShift = 6;
-            format->greenShift = 4;
-            format->blueShift = 2;
+            format->redMax = format->blueMax = 7; //3;
+			format->greenMax = 3;
+			
+            format->redShift = 5;
+            format->greenShift = 3;
+            format->blueShift = 0;
             break;
-        case 2:
+            
+        // RGBA 5:5:5:1
+        case kProfilePixelFormat_RGB555:
             format->bitsPerPixel = 16;
             format->depth = 16;
-            format->redMax = format->greenMax = format->blueMax = 15;
-            if(format->bigEndian) {
-                format->redShift = 12;
-                format->greenShift = 8;
-                format->blueShift = 4;
-            } else {
-                format->redShift = 4;
-                format->greenShift = 0;
-                format->blueShift = 12;
+            format->redMax = format->greenMax = format->blueMax = 31; //15;
+            if (format->bigEndian)
+            {
+                format->redShift = 0; //12;
+                format->greenShift = 5; //8;
+                format->blueShift = 10; //4;
+            }
+            else
+            {
+                format->redShift = 10; //4;
+                format->greenShift = 5; //0;
+                format->blueShift = 0; //12;
             }
             break;
-        case 3:
+
+        // RGBA 5:6:5
+        case kProfilePixelFormat_RGB565:
+            format->bitsPerPixel = 16;
+            format->depth = 16;
+            format->redMax = format->blueMax = 31;
+			format->greenMax = 63;
+			
+            if (format->bigEndian)
+			{
+                format->redShift = 0; //11;
+                format->greenShift = 5;
+                format->blueShift = 11; //0;
+            }
+			else
+			{
+                format->redShift = 11; //0;
+                format->greenShift = 5;
+                format->blueShift = 0; //11;
+            }
+            break;
+            
+        case kProfilePixelFormat_RGB888:
             format->bitsPerPixel = 32;
-            format->depth = 24;
+            format->depth = 32; //24; //!< @todo Should this be 32 instead?
             format->redMax = format->greenMax = format->blueMax = 255;
-            if(format->bigEndian) {
-                format->redShift = 16;
+            if(format->bigEndian)
+            {
+                format->redShift = 0; //16;
                 format->greenShift = 8;
-                format->blueShift = 0;
-            } else {
-                format->redShift = 0;
+                format->blueShift = 16; //0;
+            }
+            else
+            {
+                format->redShift = 16; //0;
                 format->greenShift = 8;
-                format->blueShift = 16;
+                format->blueShift = 0; //16;
             }
             break;
     }

@@ -25,6 +25,7 @@
 
 @interface RFBHandshaker : ByteReader
 {
+    RFBConnection * _connection;
 	id  authCountReader;
 	id  authTypeArrayReader;
     id	authTypeReader;
@@ -33,5 +34,7 @@
     id	authResultReader;
     id	serverInitReader;
 }
+
+@property(nonatomic, assign) RFBConnection * connection;
 
 @end

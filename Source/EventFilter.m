@@ -12,7 +12,8 @@
 #import "QueuedEvent.h"
 #import "RFBConnection.h"
 #import "RFBView.h"
-
+#import "RFBConnectionController.h"
+#import <ApplicationServices/ApplicationServices.h>
 
 static inline unsigned int
 ButtonNumberToArrayIndex( unsigned int buttonNumber )
@@ -28,6 +29,11 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 
 
 @implementation EventFilter
+
+@synthesize controller = _controller;
+@synthesize connection = _connection;
+@synthesize protocol = _protocol;
+@synthesize view = _view;
 
 #pragma mark Creation/Destruction
 
@@ -75,6 +81,10 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 		_pendingEvents = [[NSMutableArray alloc] init];
 		_pressedKeys = [[NSMutableSet alloc] init];
 		_emulationButton = 1;
+	    _mouseTimer = nil;
+        _unsentMouseMoveExists = NO;
+		_lastMousePoint.x = -1;
+		_lastMousePoint.y = -1;
 		
 		[[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(applicationDidBecomeActive:) name: NSApplicationDidBecomeActiveNotification object: nil];
 	}
@@ -99,31 +109,19 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 #pragma mark -
 #pragma mark Talking to the server
 
-
-- (RFBConnection *)connection
-{  return _connection;  }
-
-- (void)setConnection: (RFBConnection *)connection
+- (void)setController:(RFBConnectionController *)controller
 {
-	_connection = connection;
-	_viewOnly = [connection viewOnly];
-	
-	Profile *profile = [connection profile];
-	if ( profile )
+    _controller = controller;
+    
+    _viewOnly = controller.isViewOnly;
+
+	Profile * profile = controller.profile;
+	if (profile)
 	{
 		[self setButton2EmulationScenario: [profile button2EmulationScenario]];
 		[self setButton3EmulationScenario: [profile button3EmulationScenario]];
 	}
 }
-
-
-- (RFBView *)view
-{  return _view;  }
-
-
-- (void)setView: (RFBView *)view
-{  _view = view;  }
-
 
 #pragma mark -
 #pragma mark Local Mouse Events
@@ -161,62 +159,133 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 
 - (void)scrollWheel: (NSEvent *)theEvent
 {
-	if ( _viewOnly )
+	if (_viewOnly)
+    {
 		return;
-
-	[self sendAllPendingQueueEntriesNow];
-	int addMask;
-    NSPoint	p = [_view convertPoint: [[_view window] convertScreenToBase: [NSEvent mouseLocation]] 
-						  fromView: nil];
-    if ( [theEvent deltaY] > 0.0 )
+    }
+    
+    // Get the vertical scroll amount.
+    CGEventRef cgEvent = [theEvent CGEvent];
+    int64_t pixy = CGEventGetIntegerValueField(cgEvent, kCGScrollWheelEventPointDeltaAxis1);
+    
+    // Detect the scroll direction and convert to a button mask.
+	int addMask = 0;
+    if (pixy > 0)
+    {
+        // Scroll up
 		addMask = rfbButton4Mask;
-	else
+    }
+	else if (pixy < 0)
+    {
+        // Scroll down
 		addMask = rfbButton5Mask;
-    [_connection mouseAt: p buttons: _pressedButtons | addMask];	// 'Mouse button down'
-    [_connection mouseAt: p buttons: _pressedButtons];			// 'Mouse button up'
+    }
+    
+    if (addMask)
+    {
+        NSPoint	p = [_view convertPoint:[theEvent locationInWindow] fromView: nil];
+
+        [self sendAllPendingQueueEntriesNow];
+        [self clearUnpublishedMouseMove];
+        
+        // Send the scroll on and off events.
+        [_connection mouseAt: p buttons: _pressedButtons | addMask];	// 'Mouse button down'
+        [_connection mouseAt: p buttons: _pressedButtons];			// 'Mouse button up'
+    }
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
 	if ( _viewOnly )
 		return;
+	
+	if( nil != _mouseTimer )
+	{
+        [_mouseTimer invalidate];
+		[_mouseTimer release];
+        _mouseTimer = nil;
+    }
 
-	// send this out of order, in front of anything we've got pending
-    NSPoint	p = [_view convertPoint: [theEvent locationInWindow] fromView: nil];
-    [_connection mouseAt: p buttons: _pressedButtons];
+	NSPoint currentPoint = [_view convertPoint: [theEvent locationInWindow] fromView: nil];
+
+	//#define CHANGE_DIFF 5
+	#define IGNORE_COUNT 10
+	
+//	static int ct = IGNORE_COUNT;
+    bool bSendEventImmediately = NO;
+	
+//	if( IGNORE_COUNT == ct )
+//	{
+	//	if( (_lastMousePoint.x - currentPoint.x <= CHANGE_DIFF && _lastMousePoint.x - currentPoint.x >= -CHANGE_DIFF) &&
+	//		(_lastMousePoint.y - currentPoint.y <= CHANGE_DIFF && _lastMousePoint.y - currentPoint.y >= -CHANGE_DIFF) )
+	//	{
+            bSendEventImmediately = YES;
+	//	}
+		
+//		ct = 0;
+//	}
+//	else
+//	{
+//		++ct;
+//	}
+    
+    _unsentMouseMoveExists = YES;
+    _lastMousePoint = currentPoint;
+    
+    if( YES == bSendEventImmediately )
+    {
+//        NSLog( @"Forced Mouse Move." );
+        [self sendUnpublishedMouseMove];
+    }
+    else
+    {
+//        NSLog( @"Ignored Mouse Move." );
+        _mouseTimer = [NSTimer scheduledTimerWithTimeInterval: 0.05
+                                                       target: self
+                                                     selector: @selector(handleMouseTimer:)
+                                                     userInfo: nil
+                                                      repeats: NO];
+		[_mouseTimer retain];
+    }
+}
+
+- (void)handleMouseTimer: (NSTimer *) timer
+{
+	[_mouseTimer release];
+    _mouseTimer = nil;
+    
+    [self sendUnpublishedMouseMove];
+    
+//    NSLog( @"Sent Mouse Move." );
+}
+
+- (void)clearUnpublishedMouseMove
+{
+	_unsentMouseMoveExists = NO;
+}
+
+- (void)sendUnpublishedMouseMove
+{
+    if( YES == _unsentMouseMoveExists )
+    {
+        [self clearUnpublishedMouseMove];
+        [_connection mouseAt: _lastMousePoint buttons: _pressedButtons];
+    }
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	if ( _viewOnly )
-		return;
-
-	// getting this implies that we've gotten a mouse down, so we can just send it directly
-    NSPoint	p = [_view convertPoint: [theEvent locationInWindow] fromView: nil];
-    [_connection mouseAt: p buttons: _pressedButtons];
+	[self mouseMoved:theEvent];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
-	if ( _viewOnly )
-		return;
-
-	// getting this implies that we've gotten a mouse down, so we can just send it directly
-    NSPoint	p = [_view convertPoint: [theEvent locationInWindow] fromView: nil];
-    [_connection mouseAt: p buttons: _pressedButtons];
+	[self mouseMoved:theEvent];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
-	if ( _viewOnly )
-		return;
-
-	// getting this implies that we've gotten a mouse down, so we can just send it directly
-	if ( 2 == [theEvent buttonNumber] )
-	{
-		NSPoint	p = [_view convertPoint: [theEvent locationInWindow] fromView: nil];
-		[_connection mouseAt: p buttons: _pressedButtons];
-	}
+	[self mouseMoved:theEvent];
 }
 
 
@@ -570,13 +639,16 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	}
 	
 	if ( _pressedButtons != oldPressedButtons )
+    {
+        [self clearUnpublishedMouseMove];
 		[_connection mouseAt: [event locationInWindow] buttons: _pressedButtons];
+    }
 }
 
 
 - (void)_sendKeyEvent: (QueuedEvent *)event
 {
-	unichar character = [event character];
+	unichar character;
 	unichar characterIgnoringModifiers = [event characterIgnoringModifiers];
 	NSNumber *encodedChar = [NSNumber numberWithInt: (int)characterIgnoringModifiers];
 	unichar sendKey;
@@ -596,13 +668,15 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	
 	if ( kQueuedKeyDownEvent == [event type] )
 	{
+        [self sendUnpublishedMouseMove];
 		[_pressedKeys addObject: encodedChar];
-		[_connection sendKey: sendKey pressed: YES];
+		[_protocol sendKey: sendKey pressed: YES];
 	}
 	else if ( [_pressedKeys containsObject: encodedChar] )
 	{
+        [self sendUnpublishedMouseMove];
 		[_pressedKeys removeObject: encodedChar];
-		[_connection sendKey: sendKey pressed: NO];
+		[_protocol sendKey: sendKey pressed: NO];
 	}
 }
 
@@ -613,13 +687,15 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	
 	if ( kQueuedModifierDownEvent == [event type] )
 	{
+        [self sendUnpublishedMouseMove];
 		_pressedModifiers |= modifier;
-		[_connection sendModifier: modifier pressed: YES];
+		[_protocol sendModifier: modifier pressed: YES];
 	}
 	else if ( _pressedModifiers & modifier )
 	{
+        [self sendUnpublishedMouseMove];
 		_pressedModifiers &= ~modifier;
-		[_connection sendModifier: modifier pressed: NO];
+		[_protocol sendModifier: modifier pressed: NO];
 	}
 }
 
@@ -852,6 +928,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 				NSPoint	p = [_view convertPoint: [[_view window] convertScreenToBase: [NSEvent mouseLocation]] 
 									  fromView: nil];
 				unsigned int rfbButton = ButtonNumberToRFBButtomMask( button );
+                [self clearUnpublishedMouseMove];
 				[_connection mouseAt: p buttons: _pressedButtons | rfbButton];	// 'Mouse button down'
 				[_connection mouseAt: p buttons: _pressedButtons];				// 'Mouse button up'
 				return 0;
@@ -937,7 +1014,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 - (void)_updateConfigurationForButton: (unsigned int)button
 {
 	unsigned int buttonIndex = ButtonNumberToArrayIndex( button );
-	Profile *profile = [_connection profile];
+	Profile *profile = _controller.profile;
 	
 	switch (_buttonEmulationScenario[buttonIndex])
 	{

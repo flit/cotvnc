@@ -59,4 +59,9 @@
     return 0;
 }
 
+- (ConnectionMetrics *)metrics
+{
+    return [target metrics];
+}
+
 @end

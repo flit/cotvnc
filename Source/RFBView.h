@@ -17,25 +17,40 @@
  */
 
 #import "FrameBuffer.h"
-@class EventFilter, RFBConnection;
+@class EventFilter, RFBConnectionController;
 
-
+/*!
+ * \brief View that draws the remote screen.
+ *
+ * The view must have its delegate, event filter, and frame buffer all set before it is
+ * truly initialized.
+ */
 @interface RFBView : NSView
 {
-    RFBConnection *_delegate;
+    RFBConnectionController *_delegate;
 	EventFilter *_eventFilter;
-    NSCursor *_cursor;
+    NSCursor *_cursor;	//!< Not retained.
+	NSCursor * _remoteCursor;	//!< Retained.
     FrameBuffer *fbuf;
 }
 
-- (void)setFrameBuffer:(id)aBuffer;
-- (void)setDelegate:(RFBConnection *)delegate;
-- (RFBConnection *)delegate;
++ (NSCursor *)_cursorForName: (NSString *)name;
+
+//! Filter which transforms local events into messages to the remote server.
+@property(nonatomic, assign) EventFilter * eventFilter;
+
+//! The parent connection that owns this view.
+@property(nonatomic, assign) RFBConnectionController * delegate;
+
+//! The framebuffer that is drawn into this view.
+@property(nonatomic, retain) FrameBuffer * frameBuffer;
+
 - (void)drawRect:(NSRect)aRect;
 - (void)displayFromBuffer:(NSRect)aRect;
 - (void)drawRectList:(id)aList;
 
 - (void)setCursorTo: (NSString *)name;
+- (void)setRemoteCursor:(NSCursor *)newCursor;
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
 - (unsigned int)draggingEntered:(id <NSDraggingInfo>)sender;

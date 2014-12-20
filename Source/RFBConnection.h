@@ -22,98 +22,112 @@
 #import "Profile.h"
 #import "rfbproto.h"
 #import "RFBProtocol.h"
+#import "AppDelegate.h"
 
+//! Set to 1 to write an I/O to a file.
+#define DUMP_CONNECTION_TO_FILE 0
+
+@class RFBConnectionController;
 @class EventFilter;
+@class ConnectionMetrics;
 @protocol IServerData;
 
-#define RFB_HOST		@"Host"
-#define RFB_PASSWORD		@"Password"
-#define RFB_REMEMBER		@"RememberPassword"
-#define RFB_DISPLAY		@"Display"
-#define RFB_SHARED		@"Shared"
-#define RFB_FULLSCREEN          @"Fullscreen"
-#define RFB_PORT		5900
-
+//! Host to use if none is specified.
 #define	DEFAULT_HOST	@"localhost"
 
-#define NUM_BUTTON_EMU_KEYS	2
+//! @brief Exception to signal a failure during communications.
+extern NSString * const kRFBConnectionException;
 
-// jason added the following constants for fullscreen display
-#define kTrackingRectThickness		10.0
-#define kAutoscrollInterval			0.05
+//! @brief Types of special keys and key combinations.
+enum
+{
+    kCommandOptionEscapeKeyCombination,
+    kControlAltDeleteKeyCombination,
+    kPauseKey,
+    kBreakKey,
+    kPrintKey,
+    kExecuteKey,
+    kInsertKey,
+    kDeleteKey
+};
 
+/*!
+ * @brief Manages communications with the remote server.
+ *
+ * Handles all of the network related tasks with talking to the server, from opening the
+ * connection to reading and writing data. Also provides an interface for performing remote
+ * operations such as sending mouse and keyboard events. The actual message content is
+ * handled by an RFBProtocol instance.
+ *
+ * Each connection object works together with the RFBConnectionController instance associated
+ * with it to operate the local display of the remote screen.
+ *
+ * @sa RFBConnectionController
+ * @sa RFBProtocol
+ */
 @interface RFBConnection : ByteReader
 {
-    id rfbView;
-    NSWindow *window;
-    FrameBuffer* frameBuffer;
-    id manager;
-    id socketHandler;
-	EventFilter *_eventFilter;
-    id currentReader;
-    id versionReader;
-    id handshaker;
+    RFBConnectionController * _controller;
+    FrameBuffer * frameBuffer;
+    RFBProtocol * rfbProtocol;
+    NSFileHandle * socketHandler;
+	EventFilter * _eventFilter;
     id<IServerData> server_;
-    id serverVersion;
-    RFBProtocol *rfbProtocol;
-    id scrollView;
-    id newTitleField;
-    NSPanel *newTitlePanel;
-    NSString *titleString;
-    id statisticField;
+    Profile *_profile;
+    id currentReader;
+    BOOL _isConnected;
+    BOOL _didReceiveData;   //!< Set to YES after receiving the first byte from the server.
     BOOL terminating;
+    BOOL _readerThreadDidExit;   //!< True when the reader thread has exited.
     NSPoint	_mouseLocation;
 	unsigned int _lastMask;
-    NSSize _maxSize;
-
-    BOOL	horizontalScroll;
-    BOOL	verticalScroll;
-
-    id optionPanel;
-    id infoField;
-    Profile *_profile;
-		
-    BOOL	updateRequested;	// Has someone already requested an update?
-    
-    NSString *realDisplayName;
+    BOOL updateRequested;	//!< Has someone already requested an update?
     NSString *host;
-	
-    NSTimer *_reconnectTimer;
-	BOOL _autoReconnect;
-
-	id _owner; // jason added for fullscreen display
-	BOOL _isFullscreen; // jason added for fullscreen display
-	NSRect _windowedFrame; // jason added for fullscreen display
-	unsigned int _styleMask; // jason added for fullscreen display
-	NSTrackingRectTag _leftTrackingTag; // jason added for fullscreen display
-	NSTrackingRectTag _topTrackingTag; // jason added for fullscreen display
-	NSTrackingRectTag _rightTrackingTag; // jason added for fullscreen display
-	NSTrackingRectTag _bottomTrackingTag; // jason added for fullscreen display
-	NSTrackingRectTag _currentTrackingTag; // jason added for fullscreen display
-	NSTimer *_autoscrollTimer; // jason added for fullscreen display
-	NSTrackingRectTag _mouseMovedTrackingTag;
 	float _frameBufferUpdateSeconds;
 	NSTimer *_frameUpdateTimer;
+    BOOL _hasMaximumFrameBufferUpdates;
 	BOOL _hasManualFrameBufferUpdates;
-	
-	int serverMajorVersion;
-	int serverMinorVersion;
+    BOOL _sendClientPasteboardUpdates;  //!< Whether we should send client cut messages.
+    ConnectionMetrics * _metrics;   //!< Metrics computer.
+    NSRecursiveLock * _writeLock;    //!< Lock to protect writing from multiple threads so messages aren't mixed.
+    BOOL _didAuthenticate; //!< Indicates that authentication has succeeded.
+    dispatch_queue_t _processQueue; //!< Serial dispatch queue to process incoming data.
+    dispatch_queue_t _drawQueue;    //!< Serial dispatch queue to draw from the framebuffer.
+    NSCondition * _receivedDataCondition;   //!< Signalled when we first receive data from the server.
+    
+#if DUMP_CONNECTION_TO_FILE
+    int _dump_fd;   //!< File descriptor for data log.
+#endif
 }
 
-// jason added 'owner' for fullscreen display
-- (id)initWithServer:(id<IServerData>)server profile:(Profile*)p owner:(id)owner;
-- (id)initWithFileHandle:(NSFileHandle*)file server:(id<IServerData>)server profile:(Profile*)p owner:(id)owner;
+@property(nonatomic, assign) RFBConnectionController * controller;
 
-- (void)setManager:(id)aManager;
-- (void)dealloc;
+@property(nonatomic, retain) EventFilter * eventFilter;
+@property(nonatomic, retain) FrameBuffer * frameBuffer;
+@property(nonatomic, retain) id<IServerData> server;
+@property(nonatomic, retain) Profile * profile;
+@property(nonatomic, readonly) NSFileHandle * connectionHandle;
+@property(nonatomic, readonly) RFBProtocol * protocol;
+@property(nonatomic, retain) ConnectionMetrics * metrics;
 
-- (void)paste:(id)sender;
-- (BOOL)pasteFromPasteboard:(NSPasteboard*)pb;
-- (void)setServerVersion:(NSString*)aVersion;
+@property(readonly) BOOL isConnected;
+@property(readonly) BOOL didAuthenticate;
+@property(readonly) BOOL isTerminating;
+@property(nonatomic, retain) NSString * host;
+@property(readonly) NSSize displaySize; //!< The full size of the remote display.
+@property(readonly) NSRect displayRect; //!< Rect with origin 0,0 and size \a displaySize.
+@property(readonly) BOOL sendClientPasteboardUpdates;
+
+- (id)initWithServer:(id<IServerData>)server profile:(Profile*)p;
+- (id)initWithFileHandle:(NSFileHandle*)file server:(id<IServerData>)server profile:(Profile*)p;
+
+//! @brief Initiate the connection; start talking to the server.
+- (BOOL)connectReturningError:(NSError **)error;
+
 - (void)terminateConnection:(NSString*)aReason;
+- (void)connectionHasTerminated;
+
 - (void)setDisplaySize:(NSSize)aSize andPixelFormat:(rfbPixelFormat*)pixf;
-- (void)openNewTitlePanel:(id)sender;
-- (void)setNewTitle:(id)sender;
 - (void)setDisplayName:(NSString*)aName;
 - (void)ringBell;
 
@@ -124,60 +138,18 @@
 - (void)queueUpdateRequest;
 - (void)requestFrameBufferUpdate:(id)sender;
 - (void)cancelFrameBufferUpdateRequest;
-
-- (void)clearAllEmulationStates;
-- (void)mouseAt:(NSPoint)thePoint buttons:(unsigned int)mask;
-- (void)sendKey:(unichar)key pressed:(BOOL)pressed;
-- (void)sendModifier:(unsigned int)m pressed:(BOOL)pressed;
-- (void)writeBytes:(unsigned char*)bytes length:(unsigned int)length;
-- (void)writeRFBString:(NSString *)aString;
-
-- (id)connectionHandle;
-- (Profile*)profile;
-- (NSString*)serverVersion;
-- (int) serverMajorVersion;
-- (int) serverMinorVersion;
-- (NSString*)password;
-- (BOOL)connectShared;
-- (BOOL)viewOnly;
-- (NSRect)visibleRect;
-- (id)frameBuffer;
-- (NSWindow *)window;
-- (EventFilter *)eventFilter;
-
-- (void)windowDidBecomeKey:(NSNotification *)aNotification;
-- (void)windowDidResignKey:(NSNotification *)aNotification;
-- (void)windowDidDeminiaturize:(NSNotification *)aNotification;
-- (void)windowDidMiniaturize:(NSNotification *)aNotification;
-- (void)windowWillClose:(NSNotification *)aNotification;
-- (void)windowDidResize:(NSNotification *)aNotification;
-- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
-
-- (void)openOptions:(id)sender;
-- (void)updateStatistics:(id)sender;
-
-// Jason added the following for full-screen windows
-- (BOOL)connectionIsFullscreen;
-- (IBAction)toggleFullscreenMode: (id)sender;
-- (IBAction)makeConnectionWindowed: (id)sender;
-- (IBAction)makeConnectionFullscreen: (id)sender;
-- (void)installMouseMovedTrackingRect;
-- (void)installFullscreenTrackingRects;
-- (void)removeFullscreenTrackingRects;
-- (void)removeMouseMovedTrackingRect;
-- (void)mouseEntered:(NSEvent *)theEvent;
-- (void)mouseExited:(NSEvent *)theEvent;
-- (void)beginFullscreenScrolling;
-- (void)endFullscreenScrolling;
-- (void)scrollFullscreenView: (NSTimer *)timer;
-
 - (float)frameBufferUpdateSeconds;
 - (void)setFrameBufferUpdateSeconds: (float)seconds;
-- (void)manuallyUpdateFrameBuffer: (id)sender;
 
-// For autoReconnect
-- (void)resetReconnectTimer;
-- (void)startReconnectTimer;
-- (void)reconnectTimerTimeout:(id)sender;
+- (void)clearAllEmulationStates;
+- (void)releaseAllModifierKeys;
+- (void)mouseAt:(NSPoint)thePoint buttons:(unsigned int)mask;
+- (void)sendSpecialKey:(int)keyType;
+
+- (BOOL)lockForWriting;
+- (void)unlockWriteLock;
+- (void)writeBytes:(unsigned char*)bytes length:(unsigned int)length;
+
+- (void)setRemoteCursor:(NSCursor *)remoteCursor;
 
 @end

@@ -42,6 +42,7 @@
 		[self setShared:          NO];
 		[self setFullscreen:      NO];
 		[self setViewOnly:      NO];
+        [self setComment:[[@"" copy] autorelease]];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(profileListUpdate:)
@@ -63,6 +64,7 @@
 	[_hostAndPort release];
 	[_password release];
 	[_lastProfile release];
+    [_comment release];
 	[super dealloc];
 }
 
@@ -132,6 +134,26 @@
 - (NSString*)lastProfile
 {
 	return _lastProfile;
+}
+
+- (NSString *)comment
+{
+    return _comment;
+}
+
+- (void)setComment:(NSString *)theComment
+{
+    [_comment autorelease];
+    if (theComment == nil)
+    {
+        _comment = [@"" copy];
+    }
+    else
+    {
+        _comment = [theComment copy];
+    }
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg object:self];
 }
 
 - (void)setName: (NSString*)name
@@ -307,6 +329,7 @@
 	[self setFullscreen:[server fullscreen]];
 	[self setViewOnly:[server viewOnly]];
 	[self setLastProfile:[server lastProfile]];
+    [self setComment:[server comment]];
 }
 
 - (bool)addToServerListOnConnect

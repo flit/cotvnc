@@ -23,13 +23,14 @@
 #import "ServerBase.h"
 #import "IServerData.h"
 
-@interface ServerFromRendezvous : ServerBase {
+@interface ServerFromRendezvous : ServerBase <NSNetServiceDelegate>
+{
 	NSNetService* service_;
 	bool bHasResolved;
 	bool bResloveSucceeded;
 }
 
-+ (id<IServerData>)createWithNetService:(NSNetService*)service;
++ (ServerFromRendezvous *)createWithNetService:(NSNetService*)service;
 
 - (id)initWithNetService:(NSNetService*)service;
 - (void)dealloc;

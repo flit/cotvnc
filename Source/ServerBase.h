@@ -22,7 +22,8 @@
 #import <Foundation/Foundation.h>
 #import "IServerData.h"
 
-@interface ServerBase : NSObject <IServerData> {
+@interface ServerBase : NSObject <IServerData>
+{
 	NSString* _name;
 	NSString* _host;
 	NSString* _hostAndPort;
@@ -34,6 +35,7 @@
 	bool      _fullscreen;
 	bool      _viewOnly;	
 	NSString* _lastProfile;
+    NSString * _comment;
 	id<IServerDataDelegate> _delegate;
 }
 
@@ -59,6 +61,7 @@
 - (bool)viewOnly;
 - (NSString*)lastProfile;
 - (bool)addToServerListOnConnect;
+- (NSString *)comment;
 
 - (void)setName: (NSString*)name;
 - (void)setHost: (NSString*)host;
@@ -72,6 +75,7 @@
 - (void)setViewOnly: (bool)viewOnly;
 - (void)setLastProfile: (NSString*)lastProfile;
 - (void)setAddToServerListOnConnect: (bool)addToServerListOnConnect;
+- (void)setComment:(NSString *)comment;
 
 - (void)setDelegate: (id<IServerDataDelegate>)delegate;
 

@@ -10,7 +10,7 @@
 #import "KeyEquivalentManager.h"
 #import "RFBConnection.h"
 #import "RFBView.h"
-
+#import "RFBConnectionController.h"
 
 @implementation MyApp
 
@@ -34,19 +34,19 @@
 		NSScrollViewClass = [NSScrollView class];
 	}
 
-	// if the frontmost window isn't a VNC connection, let's just skip all this and let things
-	// proceed normally.  Note that if we add new scenarios at some point, we might need to 
-	// change this.
-	KeyEquivalentManager *keyManager = [KeyEquivalentManager defaultManager];
-	NSString *currentScenario = [keyManager currentScenarioName];
-	if ( currentScenario && ! [currentScenario isEqualToString: kNonConnectionWindowFrontmostScenario] )
-	{
-		// we only care about keyboard events.  flagsChanged events get passed fine, so we'll 
-		// let them be handled normally.
-		NSEventType eventType = [anEvent type];
-		if ( NSKeyDown == eventType || NSKeyUp == eventType )
-		{
-			RFBView *rfbView = [keyManager keyRFBView];;
+    // we only care about keyboard events.  flagsChanged events get passed fine, so we'll 
+    // let them be handled normally.
+    NSEventType eventType = [anEvent type];
+    if ( NSKeyDown == eventType || NSKeyUp == eventType )
+    {
+        // if the frontmost window isn't a VNC connection, let's just skip all this and let things
+        // proceed normally.  Note that if we add new scenarios at some point, we might need to 
+        // change this.
+        KeyEquivalentManager *keyManager = [KeyEquivalentManager defaultManager];
+        NSString *currentScenario = [keyManager currentScenarioName];
+        if ( currentScenario && ! [currentScenario isEqualToString: kNonConnectionWindowFrontmostScenario] )
+        {
+			RFBView *rfbView = [keyManager keyRFBView];
 			NSParameterAssert( rfbView != nil );
 			static NSString *lastCharacters = nil;
 			NSString *characters = [anEvent charactersIgnoringModifiers];
@@ -62,8 +62,8 @@
 				if ( [keyManager performEquivalentWithCharacters: characters modifiers: modifiers] )
 				{
 					lastCharacters = [characters retain];
-					RFBConnection *delegate = [rfbView delegate];
-					[delegate clearAllEmulationStates];
+					RFBConnectionController *delegate = [rfbView delegate];
+					[delegate.connection clearAllEmulationStates];
 				}
 				else
 				{

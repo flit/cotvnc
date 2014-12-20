@@ -250,13 +250,13 @@
 	KeyEquivalentEntry *entry;
 	KeyEquivalentScenario *scenario;
 	NSDictionary *selectedItem;
-	NSMenuItem *menuItem;
+//	NSMenuItem *menuItem;
 	NSString *selectedScenarioName;
 	NSAttributedString *keyEquivalentDisplayString;
 	NSString *characters;
 	
 	selectedItem = [mOutlineView itemAtRow: [mOutlineView selectedRow]];
-	menuItem = [selectedItem objectForKey: @"menuItem"];
+//	menuItem = [selectedItem objectForKey: @"menuItem"];
 
 	keyEquivalentManager = [KeyEquivalentManager defaultManager];
 	text = (KeyEquivalentTextView *)[mOutlineView currentEditor];

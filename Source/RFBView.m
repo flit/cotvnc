@@ -24,6 +24,10 @@
 
 @implementation RFBView
 
+@synthesize eventFilter = _eventFilter;
+@synthesize delegate = _delegate;
+@synthesize frameBuffer = fbuf;
+
 + (NSCursor *)_cursorForName: (NSString *)name
 {
 	static NSDictionary *sMapping = nil;
@@ -55,15 +59,67 @@
 	return [sMapping objectForKey: name];
 }
 
-
-- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
+- (id)initWithFrame:(NSRect)frameRect
 {
-    return NO;
+    if (self = [super initWithFrame:frameRect])
+    {
+        // Indicate that this view can draw on a background thread.
+        [self setCanDrawConcurrently:YES];
+    }
+    
+    return self;
 }
 
-- (BOOL)acceptsFirstResponder
+- (void)dealloc
 {
-    return YES;
+    [fbuf release];
+	[_remoteCursor release];
+    [super dealloc];
+}
+
+- (void)setCursorTo: (NSString *)name
+{
+	// Don't allow overriding a remote cursor.
+	if (_remoteCursor)
+	{
+		return;
+	}
+	
+	if (!name)
+	{
+		name = @"rfbCursor";
+	}
+
+	// The cursor doesn't need to be retained an extra time; it is already
+	// retained by being stored in the name dict.
+	_cursor = [[self class] _cursorForName: name];
+    [[self window] invalidateCursorRectsForView: self];
+}
+
+- (void)setRemoteCursor:(NSCursor *)newCursor
+{
+	NSCursor * prev = _remoteCursor;
+	_remoteCursor = [newCursor retain];
+	[prev release];
+	
+	_cursor = _remoteCursor;
+
+	if (!newCursor)
+	{
+		// Pass nil to set to default cursor.
+		[self setCursorTo:nil];
+	}
+	else
+	{
+		// Force the window to rebuild its cursor rects. This will cause our new cursor to
+        // be set.
+        [[self window] resetCursorRects];
+	}
+}
+
+- (void)resetCursorRects
+{
+    [self addCursorRect:[self visibleRect] cursor: _cursor];
 }
 
 - (void)setFrameBuffer:(id)aBuffer;
@@ -76,42 +132,56 @@
     [self setFrame:f];
 }
 
-- (void)dealloc
-{
-    [fbuf release];
-    [super dealloc];
-}
-
-- (void)setCursorTo: (NSString *)name
-{
-	if ( ! name )
-		name = @"rfbCursor";
-	_cursor = [[self class] _cursorForName: name];
-    [[self window] invalidateCursorRectsForView: self];
-}
-
-- (void)setDelegate:(RFBConnection *)delegate
+- (void)setDelegate:(RFBConnectionController *)delegate
 {
     _delegate = delegate;
-	_eventFilter = [_delegate eventFilter];
+    
 	[self setCursorTo: nil];
 	[self setPostsFrameChangedNotifications: YES];
 	[[NSNotificationCenter defaultCenter] addObserver: _delegate selector: @selector(viewFrameDidChange:) name: NSViewFrameDidChangeNotification object: self];
 }
 
-- (RFBConnection *)delegate
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
 {
-	return _delegate;
+    return NO;
+}
+
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
+- (BOOL)wantsDefaultClipping
+{
+    return NO;
 }
 
 - (void)drawRect:(NSRect)destRect
 {
     NSRect b = [self bounds];
-    NSRect r = destRect;
 
+#if 1
+    NSRect r = destRect;
     r.origin.y = b.size.height - NSMaxY(r);
     [fbuf drawRect:r at:destRect.origin];
-    //[delegate queueUpdateRequest];
+#else    
+    const NSRect * rects;
+    int rectCount;
+    [self getRectsBeingDrawn:&rects count:&rectCount];
+    
+    // Draw each of the individual dirty rects making up destRect instead of drawing the whole thing.
+    for (int i=0; i < rectCount; ++i)
+    {
+        NSRect r = rects[i];
+        r.origin.y = b.size.height - NSMaxY(r);
+        [fbuf drawRect:r at:rects[i].origin];
+    }
+#endif
 }
 
 - (void)displayFromBuffer:(NSRect)aRect
@@ -120,21 +190,28 @@
     NSRect r = aRect;
 
     r.origin.y = b.size.height - NSMaxY(r);
-    [self displayRect:r];
+
+	// Try to draw immediately instead of going through the normal update mechanism.
+    if ([self canDraw])
+    {
+        [self displayRect:r];
+    }
+	else
+	{
+		// Can't lock focus, but we don't want to miss this update, so mark the
+		// rectangle as invalid so it will be redrawn from the main event loop.
+		[self setNeedsDisplayInRect:aRect];
+	}
 }
 
 - (void)drawRectList:(id)aList
 {
-    [self lockFocus];
-    [aList drawRectsInRect:[self bounds]];
-    [self unlockFocus];
-}
-
-- (void)resetCursorRects
-{
-    NSRect cursorRect;
-    cursorRect = [self visibleRect];
-    [self addCursorRect: cursorRect cursor: _cursor];
+	unsigned count = [aList rectCount];
+	unsigned i;
+	for (i=0; i < count; ++i)
+	{
+		[self displayFromBuffer:[aList rectAtIndex:i]];
+	}
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
@@ -156,22 +233,52 @@
 {  [_eventFilter otherMouseUp: theEvent];  }
 
 - (void)mouseEntered:(NSEvent *)theEvent
-{  [[self window] setAcceptsMouseMovedEvents: YES];  }
+{
+	[[self window] setAcceptsMouseMovedEvents: YES];
+}
 
 - (void)mouseExited:(NSEvent *)theEvent
-{  [[self window] setAcceptsMouseMovedEvents: NO];  }
+{
+	[[self window] setAcceptsMouseMovedEvents: NO];
+}
 
 - (void)mouseMoved:(NSEvent *)theEvent
-{  [_eventFilter mouseMoved: theEvent];  }
+{
+	[_eventFilter mouseMoved: theEvent];
+}
 
 - (void)mouseDragged:(NSEvent *)theEvent
-{  [_eventFilter mouseDragged: theEvent];  }
+{
+	[_eventFilter mouseDragged: theEvent];
+	
+	// Pass the drag event to the delegate as a mouse moved event, if it wants them.
+	if ([_delegate wantsMouseMovedOnDrag])
+	{
+		[_delegate mouseMoved:theEvent];
+	}
+}
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
-{  [_eventFilter rightMouseDragged: theEvent];  }
+{
+	[_eventFilter rightMouseDragged: theEvent];
+	
+	// Pass the drag event to the delegate as a mouse moved event, if it wants them.
+	if ([_delegate wantsMouseMovedOnDrag])
+	{
+		[_delegate mouseMoved:theEvent];
+	}
+}
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
-{  [_eventFilter otherMouseDragged: theEvent];  }
+{
+	[_eventFilter otherMouseDragged: theEvent];
+	
+	// Pass the drag event to the delegate as a mouse moved event, if it wants them.
+	if ([_delegate wantsMouseMovedOnDrag])
+	{
+		[_delegate mouseMoved:theEvent];
+	}
+}
 
 // jason - this doesn't work, I think because the server I'm testing against doesn't support
 // rfbButton4Mask and rfbButton5Mask (8 & 16).  They're not a part of rfbProto, so that ain't
@@ -191,6 +298,30 @@
 - (void)flagsChanged:(NSEvent *)theEvent
 {  [_eventFilter flagsChanged: theEvent];  }
 
+- (void)swipeWithEvent:(NSEvent *)event
+{
+//    NSLog(@"swipe event: %@", event);
+    
+    // The deltaX of the swipe event will be -1 or 1 for left and right swipes, respectively.
+    // Same for deltaY and up or down swipes.
+    float dx = [event deltaX];
+    float dy = [event deltaY];
+    if (dx < 0.0)
+    {
+        // Swipe left
+        [NSApp sendAction:@selector(showPreviousConnection:) to:nil from:self];
+    }
+    else if (dx > 0.0)
+    {
+        // Swipe right
+        [NSApp sendAction:@selector(showNextConnection:) to:nil from:self];
+    }
+    else if (dy < 0.0 || dy > 0.0)
+    {
+        // Swipe up or down
+        [NSApp sendAction:@selector(toggleFullscreenMode:) to:nil from:self];
+    }
+}
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender {}
 

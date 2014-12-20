@@ -20,14 +20,7 @@
 	{
 		mProfiles = (NSMutableDictionary *)[[PrefController sharedController] profileDict];
 		NSParameterAssert( mProfiles != nil );
-		mProfiles = [[mProfiles deepMutableCopy] retain];
-		NSString* key;
-		NSEnumerator* keys = [mProfiles keyEnumerator];
-
-		while((key = [keys nextObject]) != nil) {
-			NSMutableDictionary* d = [[[mProfiles objectForKey:key] mutableCopy] autorelease];
-			[mProfiles setObject:d forKey:key];
-		}
+		mProfiles = [mProfiles deepMutableCopy];
 		
 		[self updateAllProfiles]; // for the new EventFilter stuff
 	}

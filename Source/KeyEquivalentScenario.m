@@ -30,10 +30,9 @@
 	if ( self = [super init] )
 	{
 		mEquivalentToEntryMapping = [[NSMutableDictionary alloc] init];
-		NSEnumerator *entryEnumerator = [array objectEnumerator];
 		NSDictionary *plistEntry;
 		
-		while ( plistEntry = [entryEnumerator nextObject] )
+		for ( plistEntry in array )
 		{
 			NSString *characters = [plistEntry objectForKey: @"Characters"];
 			unsigned int modifiers = [[plistEntry objectForKey: @"Modifiers"] unsignedIntValue];

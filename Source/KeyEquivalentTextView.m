@@ -28,9 +28,8 @@
 	[mKeyEquivalent autorelease];
 	NSString *characters = @"";
 	unsigned int modifiers = 0;
-	NSEnumerator *eventEnumerator = [eventArray objectEnumerator];
 	NSEvent *theEvent;
-	while (theEvent = [eventEnumerator nextObject])
+	for (theEvent in eventArray)
 	{
 		characters = [characters stringByAppendingString: [theEvent charactersIgnoringModifiers]];
 		modifiers |= [theEvent modifierFlags];

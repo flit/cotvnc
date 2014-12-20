@@ -34,7 +34,8 @@
  *  This is a singleton class. Always access the class through the sharedInstance
  *  function. Do not create an instance yourself.
  */
-@interface ServerDataManager : NSObject <NSCoding,IServerDataDelegate> {
+@interface ServerDataManager : NSObject <NSCoding,IServerDataDelegate,NSNetServiceBrowserDelegate>
+{
 	
 	NSMutableDictionary* mServers;
 	NSMutableDictionary* mGroups;

@@ -19,14 +19,18 @@
     if (self = [super initTarget:aTarget action:anAction]) {
 		int inflateResult;
 	
-		capacity = 4096;
+		capacity = kZlibInitialOutputBufferSize;
 		pixels = malloc(capacity);
+        assert(pixels);
+        
 		numBytesReader = [[CARD32Reader alloc] initTarget:self action:@selector(setNumBytes:)];
 		pixelReader = [[ByteBlockReader alloc] initTarget:self action:@selector(setCompressedData:)];
 		connection = [aTarget topTarget];
+        
 		inflateResult = inflateInit(&stream);
-		if (inflateResult != Z_OK) {
-			[connection terminateConnection:[NSString stringWithFormat:@"Zlib encoding: inflateInit: %s.\n", stream.msg]];
+		if (inflateResult != Z_OK)
+        {
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"Zlib encoding: inflateInit: %s", stream.msg] userInfo:nil];
 		}
 	}
     return self;
@@ -57,29 +61,42 @@
 
 - (void)setCompressedData:(NSData*)data
 {
-	int inflateResult;
-	unsigned s = [frameBuffer bytesPerPixel] * frame.size.width * frame.size.height;
-	if(s > capacity) {
-		free(pixels);
-		pixels = malloc(s);
-		NSParameterAssert( pixels != NULL );
-		capacity = s;
-	}
-	stream.next_in   = (unsigned char*)[data bytes];
-	stream.avail_in  = [data length];
-	stream.next_out  = pixels;
-	stream.avail_out = capacity;
-	stream.data_type = Z_BINARY;
-	inflateResult = inflate(&stream, Z_SYNC_FLUSH);
-    if(inflateResult == Z_NEED_DICT ) {
-		[connection terminateConnection:@"Zlib inflate needs a dictionary.\n"];
-		return;
+    // Set up the stream with the new input data.
+    stream.next_in   = (unsigned char*)[data bytes];
+    stream.avail_in  = [data length];
+    stream.next_out  = pixels;
+    stream.avail_out = capacity;
+    stream.data_type = Z_BINARY;
+    
+    // Decompress input data until it is all used up. If the inflate function returns with
+    // input data remaining unprocessed, we have to grow our output buffer and continue.
+    uint32_t startTotalOutputLength = stream.total_out;
+    while (stream.avail_in)
+    {
+        int inflateResult = inflate(&stream, Z_SYNC_FLUSH);
+        if (inflateResult == Z_NEED_DICT)
+        {
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:NSLocalizedString(@"Zlib inflate needs a dictionary.", nil) userInfo:nil];
+        }
+        else if (inflateResult < 0)
+        {
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:NSLocalizedString(@"Zlib inflate error: %s", nil), stream.msg] userInfo:nil];
+        }
+        
+        // If there is still input data but no more room in the output buffer, we have to expand it.
+        if (inflateResult == Z_OK && stream.avail_in && !stream.avail_out)
+        {
+            uint32_t offset = stream.next_out - pixels;
+            capacity += kZlibOutputBufferChunkSize;
+            pixels = realloc(pixels, capacity);
+            assert(pixels);
+            stream.next_out = pixels + offset;
+            stream.avail_out = capacity - offset;
+        }
     }
-    if(inflateResult < 0) {
-		[connection terminateConnection:[NSString stringWithFormat:@"Zlib inflate error: %s\n", stream.msg]];
-		return;
-    }
-	[self setUncompressedData:pixels length:capacity - stream.avail_out];
+    
+    uint32_t decompressedLength = stream.total_out - startTotalOutputLength;
+	[self setUncompressedData:pixels length:decompressedLength];
 }
 
 - (void)setUncompressedData:(unsigned char*)data length:(int)length

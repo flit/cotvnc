@@ -16,9 +16,13 @@
 	BOOL isArray = [self isKindOfClass: [NSArray class]];
 	id dest;
 	if ( isArray )
-		dest = [NSMutableArray array];
+	{
+		dest = [[NSMutableArray alloc] init];
+	}
 	else
-		dest = [NSMutableDictionary dictionary];
+	{
+		dest = [[NSMutableDictionary alloc] init];
+	}
 	
 	NSEnumerator *keyEnumerator = isArray ? 
 									[(NSArray *)self objectEnumerator] : 
@@ -29,14 +33,27 @@
 	{
 		id object = isArray ? key : [(NSDictionary *)self objectForKey: key];
 		id newObject = object;
+		BOOL releaseNewObject = NO;
 		
 		if ( [object isKindOfClass: [NSDictionary class]] || [object isKindOfClass: [NSArray class]] )
+		{
 			newObject = [object deepMutableCopy];
+			releaseNewObject = YES;
+		}
 		
 		if ( isArray )
+		{
 			[dest addObject: newObject];
+		}
 		else
+		{
 			[dest setObject: newObject forKey: key];
+		}
+		
+		if (releaseNewObject)
+		{
+			[newObject release];
+		}
 	}
 	return dest;
 }

@@ -17,26 +17,32 @@
  */
 
 #import <AppKit/AppKit.h>
+#import "ServerDataViewController.h"
+#import "RFBConnectionController.h"
+
 @class Profile, ProfileManager;
 @class ServerDataViewController;
-@protocol ConnectionDelegate, IServerData;
+@class RFBConnection;
+@class RFBConnectionController;
+@protocol IServerData;
 
-
-@interface RFBConnectionManager : NSWindowController<ConnectionDelegate>
+/*!
+ * \brief Manages the list of open connections.
+ */
+@interface RFBConnectionManager : NSWindowController <ConnectionDelegate, RFBConnectionCompleting>
 {
 	IBOutlet NSTableView *serverList;
-	IBOutlet NSTableView *groupList;
+    IBOutlet NSBox * serverListBox;     //!< Box view holding the server list side of the window.
 	IBOutlet NSBox *serverDataBoxLocal;
-	IBOutlet NSBox *serverListBox;
-	IBOutlet NSBox *serverGroupBox;
-	IBOutlet NSSplitView *splitView;
     IBOutlet NSButton *serverDeleteBtn;
+    IBOutlet NSButton * toggleServerEditButton;
     NSMutableArray*	connections;
 	ServerDataViewController* mServerCtrler;
-	BOOL mDisplayGroups;
 	BOOL mRunningFromCommandLine;
 	BOOL mLaunchedByURL;
 	NSMutableArray* mOrderedServerNames;
+    BOOL _isTerminating;    //!< True if the application is terminating.
+    BOOL _isServerPaneVisible;  //!< True if the server editor pane is visible in the window.
 }
 
 + (id)sharedManager;
@@ -57,15 +63,20 @@
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost;
 - (void)setDisplayNameTranslation:(NSString*)translation forName:(NSString*)aName forHost:(NSString*)aHost;
 
-- (BOOL)createConnectionWithServer:(id<IServerData>) server profile:(Profile *) someProfile owner:(id) someOwner;
+- (BOOL)createConnectionWithServer:(id<IServerData>)server profile:(Profile *)someProfile;
 - (BOOL)createConnectionWithFileHandle:(NSFileHandle*)file 
-    server:(id<IServerData>) server profile:(Profile *) someProfile owner:(id) someOwner;
+    server:(id<IServerData>)server profile:(Profile *)someProfile;
 
 - (IBAction)addServer:(id)sender;
 - (IBAction)deleteSelectedServer:(id)sender;
 
 - (void)makeAllConnectionsWindowed;
 
+- (RFBConnectionController *)connectionForWindow:(NSWindow *)theWindow;
+- (RFBConnectionController *)nextConnection:(RFBConnectionController *)theConnection;
+- (RFBConnectionController *)previousConnection:(RFBConnectionController *)theConnection;
+
+- (NSArray *)connections;
 - (BOOL)haveMultipleConnections; // True if there is more than one connection open.
 - (BOOL)haveAnyConnections;      // True if there are any connections open.
 
@@ -75,12 +86,12 @@
 
 - (void)useRendezvous:(BOOL)useRendezvous;
 
-- (void)displayGroups:(bool)display;
-
 - (void)setFrontWindowUpdateInterval: (NSTimeInterval)interval;
 - (void)setOtherWindowUpdateInterval: (NSTimeInterval)interval;
 
 - (BOOL)launchedByURL;
 - (void)setLaunchedByURL:(bool)launchedByURL;
+
+- (IBAction)toggleServerEditPane:(id)sender;
 
 @end

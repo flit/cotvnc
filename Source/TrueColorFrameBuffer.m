@@ -66,6 +66,16 @@ typedef	unsigned int			FBColor;
    aFormat->depth = 24;
 }
 
+- (void *)pixelData
+{
+	return pixels;
+}
+
+- (size_t)pixelDataSize
+{
+	return (size_t)size.width * (size_t)size.height * sizeof(FBColor);
+}
+
 #include "FrameBufferDrawing.h"
 
 @end

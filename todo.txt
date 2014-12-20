@@ -1,0 +1,259 @@
+Chicken of the VNC To Do List
+=============================
+
+- optimize performance
+    - first profile to figure where time is being spent
+    - use OpenGL for drawing
+    - rewrite network protocol stack in C++
+    - use vector processing for pixel bit manipulation (vImage)
+    - greatly reduce allocations during update processing
+
+- update French and Italian localisations to match the changes to English
+
+- add German, Japanese, Chinese, etc. localisation
+
+√ come up with a good throughput measurement and way to display on screen
+    - this is important for being able to test the results of optimisations
+    -> pixels/second
+
+√ are too many update requests being sent?
+    -> used to send 10 requests at once, changed to send only one at a time
+
+- split RFBConnectionManager class into one class for the model and one for the view manager
+
+- intermittent crash in -[RFBView mouseMoved:] when calling [_eventFilter mouseMoved: theEvent] during a force reconnect
+    - seems to be a timing issue with closing down the old connection
+    - might happen any time a connection is closed
+    - need to wait for the reader thread to terminate
+
+- try to reduce number of allocations per buffer update
+    - new NSData is allocated for every block of data passed between reader methods
+
+√ move remaining parts of connection start sequence into RFBProtocol
+
+√ move key and mouse events to RFBProtocol
+    - mostly done...
+
+√ convert most calls to terminateConnection to exception throws
+
+- reconsider ownership of event filter
+
+- move connect button out from ServerDisplay.nib into the connection dialog parent
+
+- localise zlib and tight error messages
+
+√ figure out prefs versions stuff since some menu items changed
+    - all new prefs are additive, so i don't think anything has to change
+
+- should RFBConnection and RFBConnectionController be merged back together once RFBProtocol handles all messages?
+    - or can RFBConnection's role be simplified to just network/thread management?
+
+√ figure out why .xib files don't get compiled in the xcode project and convert all .nibs to .xibs
+
+- figure out why x86_64 and ppc aren't also showing as architectures in the project config toolbar menu
+
+- merge connection error messages into opening connection panel?
+
+√ move error alert out from RFBConnection into RFBConnectionController
+
+- make client cut text use older pasteboard apis so it works on 10.5
+
+√ add next/prev connection command shortcuts to KeyEquivalentScenarios.plist for connection and fullscreen scenarios
+
+- synchronize client and server cut message handling so that we don't bother to send back the same text for which we got a server cut message
+    - just need to update the saved last pasteboard change count in the server cut handler
+
+- rewrite framebuffer class to use CoreGraphics
+
+- make the connection controller decide what frame buffer class to use instead of the prefs controller
+
+
+=== OLD COMPLETED TASKS ===
+
+√ key combos to rotate between active connections
+    - especially in fullscreen mode
+
+√ command to force reconnect
+
+√ auto-scrolling speed relative to cursor velocity, or how far deep into the scroll region the cursor is
+
+√ implement rich cursor encoding support
+
+√ figure out why my connections to machines at work sometimes go "dead" for screen updates but the mouse still works (sending works, receiving doesn't?)
+    -> was caused by calling lockFocus inappropriately in the io thread, which caused an exception
+
+√ fix problem with auto scrolling where it stops scrolling when you, say, enter the bottom scroll region to scroll down then move to the right scroll region to scroll right without exiting all scroll regions (this applies to all combinations of scroll regions)
+
+√ support autoscroll while mouse button is held down
+    - right now autoscroll is disabled if you move the mouse with the button down, so you can't drag and autoscroll
+
+√ use a sheet for setting the connection title
+
+√ add some way to deal with unintentionally invisible cursors from the server
+    -> added specific support for invisible BBEdit I-beam cursor
+
+√ handle read errors in io thread by closing the connection instead of just losing the thread
+
+√ when switching to/from a connection, send release events for all key modifiers except key caps
+
+√ add menu command to release all modifier keys
+
+√ switch to tracking areas for autoscroll (10.5 only)
+
+√ use code signing
+
+√ change 'Okay' buttons to 'OK'
+
+√ change ioThread to readerThread
+
+
+=== OLD DISCARDED TASKS ===
+
+x command to refresh the screen
+
+x add a per-server custom window title setting
+    -> setting the title already works this way, it just doesn't show in the server settings
+
+x passwords don't seem to be saved for Bonjour servers if they come and go
+    -> looks like it works fine
+
+
+------------------------------------------------------------------------------------------
+Refactoring of RFBConnection:
+
+
+RFBConnectionController responsibilities:
+- create connection
+- fullscreen
+- window title/display name
+- RFBView/scrollview
+- creates EventFilter and connects it between RFBView and RFBConnection
+
+
+RFBConnection responsibilities:
+- creating RFBProtocol
+- creating framebuffer
+- manage reader thread
+- sending data to server
+- buffer update request timing
+
+
+notes:
+- separate frame buffer from RFBView and scroll view
+- factor set title and status panels into new classes
+
+
+opening connection:
+    - RFBConnectionManager creates RFBConnectionController
+    - RFBConnectionController create RFBConnection
+    - RFBConnectionManager calls connect on RFBConnectionController
+    - RFBConnectionController calls connect on RFBConnection
+    - RFBConnection opens socket, creates reader thread, starts protocol sequence
+    - setDisplaySize:andPixelFormat: creates frame buffer and tells RFBConnectionController the display size and framebuffer so window etc is sized appropriately
+
+
+terminate connection:
+    - either controller or connection can receive -terminateConnection: msg
+        - connection passes it up to controller
+        - controller passes it down to connection
+        - both do nothing if they've already received it
+    - controller presents any required UI
+    - controller sends -connectionHasTerminated to connection
+        - connection waits for reader thread to exit and cleans up
+    - controller removes itself from manager's list
+        - manager autoreleases controller
+    - controller is dealloc'd
+        - connection is dealloc'd
+
+
+who manages auto-reconnect? *--> controller (?)
+
+
+terminate autorelease issue:
+
+    - ctrlr is alloc'd [1] in createConnectionWithServer/FH
+    - ctrlr is autoreleased [0] in connection:didCompleteWithStatus:
+
+    - when ctrlr is autoreleased:
+        - in ctrlr dealloc:
+            - sends terminateConnection: to itself
+                - ctrlr terminateConnection:
+                - conn terminateConnection:
+                - ctrlr connectionHasTerminated
+
+                    - manager removeConnection:self
+                        - ctlr is retained
+                        - ctlr is removed from list (if present)
+                        - ctlr is autoreleased
+                            *--> can't autorelease because it's already in ctlr dealloc!
+
+                - conn connectionHasTerminated
+            - connection is released
+                - conn dealloc
+
+
+quit app with connection windows open issue:
+
+    - RFBConnectionManager receives -applicationWillTerminate:
+        - releases its connection controller array
+    - only thing retaining the RFBConnectionController instances is their autoreconnect timer (!)
+    - controllers get -windowWillClose: notification
+        - send -terminateConnection: to self
+            - invalidate autoreconnect timer
+                - releases controller
+                    - controller dealloc
+            - ** next operation on self barfs **
+
+    *--> need to figure out how to retain controller cleanly
+        *--> solution: just have manager close all open connection in its -appWillTerm:
+
+
+more clearly defined roles:
+
+    - RFBConnection
+        - handles network io
+        - contains read/write methods
+        - sets up RFBProtocol
+
+    - RFBProtocol
+        - open connection and handshake sequence
+        - formatting of messages to server
+        - parsing of messages from server
+
+    - RFBConnectionController
+        - windows
+        - views
+        - fullscreen support
+
+------------------------------------------------------------------------------------------
+Background connecting:
+
+√ hide the opening connection panel before showing an error alert (if user hasn't canceled)
+
+√ need to not show error alert if a connection fails but the user has canceled it
+
+
+------------------------------------------------------------------------------------------
+About Apple ARD (and presumably VNC) authentication and encryption
+
+http://support.apple.com/kb/TA24182?viewlocale=en_US
+
+Authentication
+Authentication to Apple Remote Desktop clients uses an authentication method based on a Diffie-Hellman Key agreement protocol that creates a shared 128-bit key. This shared key is used to encrypt both the name and password using the Advanced Encryption Standard (AES). The Diffie-Hellman key agreement protocol used in Remote Desktop 3 is very similar to the one used in personal file sharing, with both of them using a 512-bit prime for the shared key calculation.
+
+Administration
+With Remote Desktop 3, keystrokes and mouse events are encrypted when you control Mac OS X client computers. Additionally, most tasks (except Control and Observe screen data), files copied via Copy Items, and Install Packages are encrypted for transit (though you may choose to encrypt these as well by changing your application preferences). This information is encrypted using the Advanced Encryption Standard (AES) with the 128-bit shared key that was derived during authentication.
+
+The following tasks do not support encrypted communication:
+
+Wake computers
+Upgrade Client Software
+Share Screen
+Encrypting Observe and Control Network Data
+Although Remote Desktop sends authentication information, keystrokes, and management commands encrypted by default, you may want additional security. You can choose to encrypt all Observe and Control traffic, at a certain performance cost.
+
+Encryption is done using an SSH tunnel between the participating computers. In order to use encryption for Observe and Control tasks, the target computers must have SSH enabled (“Remote Login? in the computer’s Sharing Preference pane). Additionally, firewalls between the participating computers must be configured to pass traffic on TCP port 22 (SSH well known port).
+
+If the you are trying to control a VNC server which is not Remote Desktop, it will not support Remote Desktop keystroke encryption. If you try to control that VNC server, you will get a warning that the keystrokes aren’t encrypted, which you will have to acknowledge before you can control the VNC server. If you chose to encrypt all network data, then you will not be able to control the VNC server, because Remote Desktop is not able to open the necessary SSH tunnel to the VNC server.
+
+If you drag and drop files when Controlling a client computer, the file copy will be encrypted if the screen sharing is encrypted, or if the option "Encrypt network data when using Copy Items" is selected in the Preferences.

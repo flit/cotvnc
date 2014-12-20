@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Chicken of the VNC</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Chicken of the VNC version __VERSION__, Copyright 2002-2006 Geekspiff.</string>
+	<string>Chicken of the VNC $__VERSION__, Copyright © 2002-2006 Geekspiff.</string>
 	<key>CFBundleIconFile</key>
 	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>__VERSION__</string>
+	<string>$__VERSION__</string>
 	<key>CFBundleSignature</key>
 	<string>CVnc</string>
 	<key>CFBundleURLTypes</key>
@@ -35,9 +35,13 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>__VERSION__</string>
-    <key>NSAppleScriptEnabled</key>
+	<string>$__VERSION__</string>
+	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
+	<key>SUFeedURL</key>
+	<string>http://immosw.com/versions/cotvnc/appcast.xml</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 	<key>NSMainNibFile</key>
 	<string>OSX_RFBViewer</string>
 	<key>NSPrincipalClass</key>

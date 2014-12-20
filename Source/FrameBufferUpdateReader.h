@@ -34,6 +34,7 @@
 	id	zlibEncodingReader;
 	id	zrleEncodingReader;
 	id	zlibHexEncodingReader;
+	id  richCursorEncodingReader;
     id	connection;
     NSRect currentRect;
     CARD16 numberOfRects;

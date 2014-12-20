@@ -22,11 +22,11 @@
 		connection = [aTarget topTarget];
 		inflateResult = inflateInit(&rawStream);
 		if(inflateResult != Z_OK) {
-			[connection terminateConnection:[NSString stringWithFormat:@"Zlib encoding: inflateInit: %s.\n", rawStream.msg]];
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"Zlib encoding: inflateInit: %s.\n", rawStream.msg] userInfo:nil];
 		}
 		inflateResult = inflateInit(&encodedStream);
 		if(inflateResult != Z_OK) {
-			[connection terminateConnection:[NSString stringWithFormat:@"Zlib encoding: inflateInit: %s.\n", encodedStream.msg]];
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"Zlib encoding: inflateInit: %s.\n", encodedStream.msg] userInfo:nil];
 		}
 	}
     return self;
@@ -78,8 +78,7 @@
 		rawStream.data_type = Z_BINARY;
 		inflateResult = inflate(&rawStream, Z_SYNC_FLUSH);
 		if(inflateResult < 0) {
-			[connection terminateConnection:[NSString stringWithFormat:@"ZlibHex inflate error: %s", rawStream.msg]];
-			return;
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"ZlibHex inflate error: %s", rawStream.msg] userInfo:nil];
 		}
 #ifdef COLLECT_STATS
 		bytesTransferred += [data length];
@@ -96,8 +95,7 @@
 		encodedStream.data_type = Z_BINARY;
 		inflateResult = inflate(&encodedStream, Z_SYNC_FLUSH);
 		if(inflateResult < 0) {
-			[connection terminateConnection:[NSString stringWithFormat:@"ZlibHex inflate error: %s", encodedStream.msg]];
-			return;
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"ZlibHex inflate error: %s", encodedStream.msg] userInfo:nil];
 		}
 		ptr = buffer;
 		bpp = [frameBuffer bytesPerPixel];

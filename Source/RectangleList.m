@@ -88,4 +88,14 @@
     }
 }
 
+- (unsigned)rectCount
+{
+	return used;
+}
+
+- (NSRect)rectAtIndex:(unsigned)rectIndex
+{
+	return rectList[rectIndex];
+}
+
 @end

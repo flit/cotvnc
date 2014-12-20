@@ -29,7 +29,7 @@
 #include <unistd.h>
 #include <vncauth.h>
 #include <d3des.h>
-
+#include <time.h>
 
 /*
  * Make sure we call srandom() only once.

@@ -32,6 +32,8 @@
 #import "ZlibEncodingReader.h"
 #import "ZlibHexEncodingReader.h"
 #import "ZRLEEncodingReader.h"
+#import "RichCursorEncodingReader.h"
+#import "ConnectionMetrics.h"
 
 #import "debug.h"
 
@@ -54,6 +56,7 @@
 		zlibEncodingReader = [[ZlibEncodingReader alloc] initTarget:self action:@selector(didRect:)];
 		zrleEncodingReader = [[ZRLEEncodingReader alloc] initTarget:self action:@selector(didRect:)];
 		zlibHexEncodingReader = [[ZlibHexEncodingReader alloc] initTarget:self action:@selector(didRect:)];
+		richCursorEncodingReader = [[RichCursorEncodingReader alloc] initTarget:self action:@selector(didRect:)];
 		rectHeaderReader = [[ByteBlockReader alloc] initTarget:self action:@selector(setRect:) size:12];
 		connection = [target topTarget];
 		[rreEncodingReader setPSThreshold:pst];
@@ -91,6 +94,7 @@
 	[zlibEncodingReader setFrameBuffer:aBuffer];
 	[zrleEncodingReader setFrameBuffer:aBuffer];
 	[zlibHexEncodingReader setFrameBuffer:aBuffer];
+	[richCursorEncodingReader setFrameBuffer:aBuffer];
 }
 
 - (void)resetReader
@@ -101,14 +105,27 @@
 - (void)setHeader:(NSData*)header
 {
     rfbFramebufferUpdateMsg msg;
+	
+	// Send an update request before we start processing this update, in order
+	// to give the server time to put the next update together.
+	[connection queueUpdateRequest];
 
 #ifdef COLLECT_STATS
     bytesTransferred += [header length];
 #endif
     memcpy(&msg.pad, [header bytes], sizeof(msg) - 1);
     numberOfRects = ntohs(msg.nRects);
-    [connection pauseDrawing];
-    [target setReader:rectHeaderReader];
+    
+    if (numberOfRects)
+    {
+        [connection pauseDrawing];
+        [target setReader:rectHeaderReader];
+    }
+    else
+    {
+        // OSXvnc can send buffer updates with 0 update rects. Just move on to the next message.
+        [self updateComplete];
+    }
 }
 
 - (void)setRect:(NSData*)rectInfo
@@ -124,12 +141,14 @@
     currentRect.origin.y = ntohs(msg->r.y);
     currentRect.size.width = ntohs(msg->r.w);
     currentRect.size.height = ntohs(msg->r.h);
-    if ((currentRect.size.width == 0) && (currentRect.size.height == 0)) {
-		// this is a hack for compatibility with OSXvnc 1.0
+    e = ntohl(msg->encoding);
+    if ((e != rfbEncodingRichCursor) && (currentRect.size.width == 0) && (currentRect.size.height == 0)) {
+		// This is a hack for compatibility with OSXvnc 1.0.
+		// However, we have to avoid it for cursor encodings since they may
+		// have a valid hotspot (represented by w and h) of (0,0).
 		[self updateComplete];
 		return;
     }
-    e = ntohl(msg->encoding);
     switch(e) {
         case rfbEncodingRaw:
 //			NSLog(@"Raw Encoding");
@@ -167,10 +186,15 @@
 //			NSLog(@"ZRLE Encoding");
 			theReader = zrleEncodingReader;
 			break;
+		case rfbEncodingRichCursor:
+//			NSLog(@"Rich Cursor Encoding");
+			theReader = richCursorEncodingReader;
+			[theReader setConnection:connection];
+			break;
     }
     if(theReader == nil) {
-        [connection terminateConnection:[NSString stringWithFormat:
-            @"Unknown rectangle encoding %d -> exiting", e]];
+        @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:
+            @"Unknown rectangle encoding %d -> exiting", e] userInfo:nil];
     } else {
         [theReader setRectangle:currentRect];
         [target setReader:theReader];
@@ -182,10 +206,13 @@
     id rlist = [aReader rectangleList];
 
 #ifdef COLLECT_STATS
+    ConnectionMetrics * metrics = [self metrics];
+    [metrics addRect:currentRect];
     bytesTransferred += [aReader bytesTransferred];
     bytesRepresented += currentRect.size.width * currentRect.size.height * [[aReader frameBuffer] bytesPerPixel];
     rectsTransferred++;
 #endif
+
     if(rlist) {
         [connection drawRectList:rlist];
     } else {

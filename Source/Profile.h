@@ -37,6 +37,18 @@ typedef enum {
 #define kShiftKeyCode 0xffe1
 #define kWindowsKeyCode 0xffeb
 
+//! @brief Pixel format values stored in the profile dictionary.
+//!
+//! These values also correspond to the color radio button tag values in the profile manager.
+enum ProfilePixelFormat
+{
+    kProfilePixelFormat_Server = 0,
+    kProfilePixelFormat_RGB323 = 1,
+    kProfilePixelFormat_RGB555 = 2,
+    kProfilePixelFormat_RGB888 = 3,
+    kProfilePixelFormat_RGB565 = 4
+};
+
 // end of Jason's addition
 
 @interface Profile : NSObject

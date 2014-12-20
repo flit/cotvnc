@@ -10,6 +10,15 @@
 #import <zlib.h>
 #import "EncodingReader.h"
 
+enum
+{
+    //! Starting size for the output buffer.
+    kZlibInitialOutputBufferSize = 256*1024,
+    
+    //! The size used to expand the output buffer each time it is too small.
+    kZlibOutputBufferChunkSize = 64*1024
+};
+
 @interface ZlibEncodingReader : EncodingReader
 {
 	unsigned char*	pixels;

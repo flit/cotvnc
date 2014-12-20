@@ -12,7 +12,7 @@
 #import "ProfileManager.h"
 #import "RFBConnectionManager.h"
 #import "ListenerController.h"
-
+#import "RFBConnection.h"
 
 @implementation AppDelegate
 
@@ -30,7 +30,6 @@
 	if ( ! [cm runFromCommandLine] && ! [cm launchedByURL] )
 		[cm runNormally];
 	
-	[mRendezvousMenuItem setState: [[PrefController sharedController] usesRendezvous] ? NSOnState : NSOffState];
 	[mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
 }
 
@@ -40,15 +39,16 @@
 	[[PrefController sharedController] showWindow];
 }
 
-
-- (IBAction)changeRendezvousUse:(id)sender
+- (BOOL) applicationShouldHandleReopen: (NSApplication *) app hasVisibleWindows: (BOOL) visibleWindows
 {
-	PrefController *prefs = [PrefController sharedController];
-	[prefs toggleUseRendezvous: sender];
+	if(!visibleWindows)
+	{
+		[self showConnectionDialog:nil];
+		return NO;
+	}
 	
-	[mRendezvousMenuItem setState: [prefs usesRendezvous] ? NSOnState : NSOffState];
+	return YES;
 }
-
 
 - (IBAction)showConnectionDialog: (id)sender
 {  [[RFBConnectionManager sharedManager] showConnectionDialog: nil];  }
@@ -68,6 +68,76 @@
 {
 	NSString *path = [[NSBundle mainBundle] pathForResource: @"index" ofType: @"html" inDirectory: @"help"];
 	[[NSWorkspace sharedWorkspace] openFile: path];
+}
+
+- (void)switchConnectionFrom:(RFBConnectionController *)fromConnection to:(RFBConnectionController *)toConnection direction:(TransitionDirection_t)direction
+{
+	if (fromConnection.isFullscreen)
+	{
+		// Handle fullscreen connections specially.
+		[toConnection takeFullscreenFromConnection:fromConnection direction:direction];
+	}
+	else
+	{
+		// Not fullscreen, so just bring the next connection up to the front.
+		[toConnection.window makeKeyAndOrderFront:nil];
+	}
+}
+
+- (IBAction)showNextConnection:(id)sender
+{
+	RFBConnectionManager * cm = [RFBConnectionManager sharedManager];
+	
+	// Get the current connection.
+	RFBConnectionController * connection = [cm connectionForWindow:[NSApp keyWindow]];
+	if (!connection)
+	{
+		return;
+	}
+	
+	// Get the next connection.
+	RFBConnectionController * nextConnection = [cm nextConnection:connection];
+	if (!nextConnection)
+	{
+		return;
+	}
+	
+	// Bring the next connection to the front.
+	[self switchConnectionFrom:connection to:nextConnection direction:kTransitionRightToLeft];
+}
+
+- (IBAction)showPreviousConnection:(id)sender
+{
+	RFBConnectionManager * cm = [RFBConnectionManager sharedManager];
+	
+	// Get the current connection.
+	RFBConnectionController * connection = [cm connectionForWindow:[NSApp keyWindow]];
+	if (!connection)
+	{
+		return;
+	}
+	
+	// Get the previous connection.
+	RFBConnectionController * prevConnection = [cm previousConnection:connection];
+	if (!prevConnection)
+	{
+		return;
+	}
+	
+	// Bring the previous connection to the front.
+	[self switchConnectionFrom:connection to:prevConnection direction:kTransitionLeftToRight];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	if ([menuItem action] == @selector(showNextConnection:) || [menuItem action] == @selector(showPreviousConnection:))
+	{
+		RFBConnectionManager * cm = [RFBConnectionManager sharedManager];
+		RFBConnectionController * theConnection = [cm connectionForWindow:[NSApp keyWindow]];
+		return [cm haveMultipleConnections] && theConnection != nil;
+	}
+	
+	return YES;
 }
 
 @end

@@ -120,12 +120,14 @@
             [self setSaveCheckboxIsVisible: NO];
 		}
 		
+        [serverName setEnabled:[mServer doYouSupport:EDIT_NAME]];
 		[hostName setEnabled: YES];
 		[password setEnabled: YES];
 		[display setEnabled: YES];
 		[shared setEnabled: YES];
 		[profilePopup setEnabled: YES];
 		
+        [serverName setStringValue:[mServer name]];
 		[hostName setStringValue:[mServer hostAndPort]];
 		[password setStringValue:[mServer password]];
         [rememberPwd setIntValue:[mServer rememberPassword]];
@@ -133,6 +135,7 @@
         [shared setIntValue:[mServer shared]];
 		[fullscreen setIntValue:[mServer fullscreen]];
 		[viewOnly setIntValue:[mServer viewOnly]];
+        [commentField setStringValue:[mServer comment]];
 		[self setProfilePopupToProfile: [mServer lastProfile]];
 		
 		[hostName    setEnabled: [mServer doYouSupport:EDIT_ADDRESS]];
@@ -146,6 +149,7 @@
     }
 	else
 	{
+        [serverName setEnabled:NO];
 		[hostName setEnabled: NO];
 		[password setEnabled: NO];
 		[rememberPwd setEnabled: NO];
@@ -154,6 +158,7 @@
 		[profilePopup setEnabled: NO];
 		[connectBtn setEnabled: NO];
 
+        [serverName setStringValue:@""];
 		[hostName setStringValue:@""];
 		[password setStringValue:@""];
 		[rememberPwd setIntValue:0];
@@ -161,6 +166,7 @@
 		[shared setIntValue:0];
 		[fullscreen setIntValue:0];
 		[viewOnly setIntValue:0];
+        [commentField setStringValue:@""];
 		[self setProfilePopupToProfile: nil];
 	}
 }
@@ -243,6 +249,25 @@
 			[mServer setPassword:[sender stringValue]];
 		}
 	}
+    else if (sender == commentField)
+    {
+        if (mServer)
+        {
+            [mServer setComment:[sender stringValue]];
+        }
+    }
+    else if (sender == serverName)
+    {
+        if (mServer && [mServer doYouSupport:EDIT_NAME])
+        {
+            [mServer setName:[sender stringValue]];
+            
+            if (mDelegate)
+            {
+                [mDelegate serverNameDidChange:mServer];
+            }
+        }
+    }
 }
 
 - (IBAction)rememberPwdChanged:(id)sender

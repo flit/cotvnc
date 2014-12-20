@@ -229,8 +229,7 @@ NSString *kPrefs_ListenerProfile_Key    = @"ListenerProfile";
     RFBConnectionManager* cm = [RFBConnectionManager sharedManager];
     [cm createConnectionWithFileHandle:incomingConnection 
         server:[ServerFromConnection createFromConnection:incomingConnection]
-        profile:listeningProfile
-        owner:cm];
+        profile:listeningProfile];
 }
 
 #pragma mark -

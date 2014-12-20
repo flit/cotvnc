@@ -56,6 +56,7 @@ typedef enum
 - (bool)viewOnly;
 - (NSString*)lastProfile;
 - (bool)addToServerListOnConnect;
+- (NSString *)comment;
 
 - (void)setName: (NSString*)name;
 - (void)setHost: (NSString*)host;
@@ -69,6 +70,7 @@ typedef enum
 - (void)setViewOnly: (bool)viewOnly;
 - (void)setLastProfile: (NSString*)lastProfile;
 - (void)setAddToServerListOnConnect: (bool)addToServerListOnConnect;
+- (void)setComment:(NSString *)comment;
 
 - (void)copyServer: (id<IServerData>)server;
 

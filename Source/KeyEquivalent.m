@@ -39,7 +39,7 @@
 	return (mModifiers == anObject->mModifiers) && ([mCharacters isEqualToString: anObject->mCharacters]);
 }
 
-- (unsigned)hash
+- (NSUInteger)hash
 {
 	return [mCharacters hash] + mModifiers;
 }

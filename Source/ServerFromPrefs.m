@@ -35,6 +35,7 @@
 #define RFB_VIEWONLY      @"ViewOnly"
 #define RFB_LAST_DISPLAY  @"Display"
 #define RFB_LAST_PROFILE  @"Profile"
+#define RFB_COMMENT       @"Comment"
 #define RFB_PORT		  5900
 
 #define KEYCHAIN_SERVICE_NAME	@"cotvnc" // This should really be the appname, but I'm too lame to know how to find that - kjw
@@ -52,13 +53,14 @@
 	{
 		[self setName:             [NSString stringWithString:host]];
 		[self setHostAndPort:      [NSString stringWithString:host]];
-		[self setPassword:         [NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]]];
+//		[self setPassword:         [NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]]];
 		[self setRememberPassword:[[prefDict objectForKey:RFB_REMEMBER] intValue] == 0 ? NO : YES];
 		[self setDisplay:         [[prefDict objectForKey:RFB_DISPLAY] intValue]];
 		[self setLastProfile:      [prefDict objectForKey:RFB_LAST_PROFILE]];
 		[self setShared:          [[prefDict objectForKey:RFB_SHARED] intValue] == 0 ? NO : YES];
 		[self setFullscreen:      [[prefDict objectForKey:RFB_FULLSCREEN] intValue] == 0 ? NO : YES];
 		[self setViewOnly:        [[prefDict objectForKey:RFB_VIEWONLY] intValue] == 0 ? NO : YES];
+        [self setComment: [prefDict objectForKey:RFB_COMMENT]];
 	}
 	
 	return self;
@@ -95,6 +97,7 @@
 	[coder encodeBool:_shared			 forKey:RFB_SHARED];
 	[coder encodeBool:_fullscreen		 forKey:RFB_FULLSCREEN];
 	[coder encodeBool:_viewOnly          forKey:RFB_VIEWONLY];
+    [coder encodeObject:_comment forKey:RFB_COMMENT];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -107,7 +110,7 @@
 	{				
 		[self setName:            [coder decodeObjectForKey:RFB_NAME]];
 		[self setHost:            [coder decodeObjectForKey:RFB_HOST]];
-		[self setPassword:        [NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]]];
+//		[self setPassword:        [NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]]];
 		[self setRememberPassword:[coder decodeBoolForKey:RFB_REMEMBER]];
 		[self setDisplay:         [coder decodeIntForKey:RFB_DISPLAY]];
 		[self setLastProfile:     [coder decodeObjectForKey:RFB_LAST_PROFILE]];
@@ -115,6 +118,7 @@
 		[self setFullscreen:      [coder decodeBoolForKey:RFB_FULLSCREEN]];
 		[self setViewOnly:  	  [coder decodeBoolForKey:RFB_VIEWONLY]];
 		[self setHostAndPort:     [coder decodeObjectForKey:RFB_HOSTANDPORT]]; // might not be present
+        [self setComment: [coder decodeObjectForKey:RFB_COMMENT]];
 	}
 	
     return self;
@@ -167,15 +171,23 @@
 	}
 }
 
+- (NSString*)password
+{
+    // Read the password directly out of the keychain.
+	return [[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name];
+}
+
 - (void)setPassword: (NSString*)password
 {
-	[super setPassword:password];
+//	[super setPassword:password];
 	
 	// only save if set to do so
 	if( YES == _rememberPassword )
 	{
 		[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_SERVICE_NAME account:_name];
 	}
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg object:self];
 }
 
 - (void)setRememberPassword: (bool)rememberPassword
@@ -185,7 +197,7 @@
 	// make sure that the saved password reflects the new remember password setting
 	if( YES == _rememberPassword )
 	{
-		[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_SERVICE_NAME account:_name];
+//		[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_SERVICE_NAME account:_name];
 	}
 	else
 	{

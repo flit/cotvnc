@@ -9,9 +9,6 @@
 #import "ZRLEEncodingReader.h"
 #import "RFBConnection.h"
 
-#define TILE_WIDTH		64
-#define TILE_HEIGHT		64
-
 @implementation ZRLEEncodingReader
 
 - (void)setUncompressedData:(unsigned char*)data length:(int)length
@@ -27,13 +24,13 @@
 	}
 	
 	unsigned char subEncoding, b;
-	FrameBufferPaletteIndex tileBuffer[TILE_HEIGHT * TILE_WIDTH];
+	FrameBufferPaletteIndex tileBuffer[rfbZRLETileHeight * rfbZRLETileWidth];
 	FrameBufferPaletteIndex* current, *eol;
 
-	for(tile.origin.y = frame.origin.y; tile.origin.y < frame.origin.y+frame.size.height; tile.origin.y += TILE_HEIGHT) {
-		tile.size.height = MIN(TILE_HEIGHT, (frame.origin.y + frame.size.height - tile.origin.y));
-		for(tile.origin.x = frame.origin.x; tile.origin.x < frame.origin.x+frame.size.width; tile.origin.x += TILE_WIDTH) {
-			tile.size.width = MIN(TILE_WIDTH, (frame.origin.x + frame.size.width - tile.origin.x));
+	for(tile.origin.y = frame.origin.y; tile.origin.y < frame.origin.y+frame.size.height; tile.origin.y += rfbZRLETileHeight) {
+		tile.size.height = MIN(rfbZRLETileHeight, (frame.origin.y + frame.size.height - tile.origin.y));
+		for(tile.origin.x = frame.origin.x; tile.origin.x < frame.origin.x+frame.size.width; tile.origin.x += rfbZRLETileWidth) {
+			tile.size.width = MIN(rfbZRLETileWidth, (frame.origin.x + frame.size.width - tile.origin.x));
 			subEncoding = *data++;
 //			NSLog(@"Subencoding = %d\n", subEncoding);
 			if(subEncoding == 0) {
@@ -117,8 +114,7 @@
 				}
 				continue;
 			}
-			[connection terminateConnection:[NSString stringWithFormat:@"ZlibHex unknown subencoding %d encountered\n", subEncoding]];
-			return;
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"ZlibHex unknown subencoding %d encountered\n", subEncoding] userInfo:nil];
 		}
 	}
     [target performSelector:action withObject:self];	

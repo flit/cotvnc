@@ -38,7 +38,7 @@ static int const kPrefsVersion = 0x00000002;
 	defaults = [NSUserDefaults standardUserDefaults];
 	defaultDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithBool: YES],			kPrefs_FullscreenWarning_Key,
-		[NSNumber numberWithFloat: 26.0],		kPrefs_AutoscrollIncrement_Key,
+		[NSNumber numberWithFloat: 42.0],		kPrefs_AutoscrollIncrement_Key,
 		[NSNumber numberWithBool: NO],			kPrefs_FullscreenScrollbars_Key,
 		[NSNumber numberWithInt: 128],			kPrefs_PSMaxRect_Key,
 		[NSNumber numberWithInt: 10000],		kPrefs_PSThreshold_Key,
@@ -125,7 +125,7 @@ static int const kPrefsVersion = 0x00000002;
 		{
 			// some menu items have changed
 			[defaults removeObjectForKey: @"KeyEquivalentScenarios"];
-			prefsVersion = 0x00000002;
+//			prefsVersion = 0x00000002;
 		}
 		
 		if ( badPrefsVersion )
@@ -182,7 +182,7 @@ static int const kPrefsVersion = 0x00000002;
 }
 
 
-- (id)defaultFrameBufferClass
+- (Class)defaultFrameBufferClass
 {
 	// we won't need this method once we move to a sane way of drawing into our local buffer
 	NSWindowDepth windowDepth = [[NSScreen deepestScreen] depth];
@@ -300,7 +300,7 @@ static int const kPrefsVersion = 0x00000002;
 - (IBAction)toggleUseRendezvous: (id)sender
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	BOOL use = ! [[defaults objectForKey: kPrefs_UseRendezvous_Key] boolValue];
+	BOOL use = ([sender state] == NSOnState) ? YES : NO;
 	[defaults setBool: use forKey: kPrefs_UseRendezvous_Key];
 
 	[[RFBConnectionManager sharedManager] useRendezvous: use];

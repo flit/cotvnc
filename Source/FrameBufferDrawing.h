@@ -307,6 +307,32 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 }
 
 /* --------------------------------------------------------------------------------- */
+- (void)putRect:(NSRect)aRect fromARGBBytes:(unsigned char*)argb
+{
+	FBColor* start;
+	unsigned int stride, i, lines, col;
+
+#ifdef PINFO
+	putRectCount++;
+	pubPixelCount += aRect.size.width * aRect.size.height;
+#endif
+
+    start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
+    lines = aRect.size.height;
+    stride = size.width - aRect.size.width;
+	while(lines--) {
+        for(i=aRect.size.width; i; i--) {
+            argb++; // skip alpha channel
+			col = *argb++ << rshift; //redClut[(maxValue * *argb++) / 255];
+			col += *argb++ << gshift; //greenClut[(maxValue * *argb++) / 255];
+			col += *argb++ << bshift; //blueClut[(maxValue * *argb++) / 255];
+			*start++ = col;
+		}
+		start += stride;
+	}
+}
+
+/* --------------------------------------------------------------------------------- */
 #define CLUT(c,p)																\
 c = redClut[(p >> pixelFormat.redShift) & pixelFormat.redMax];					\
 c += greenClut[(p >> pixelFormat.greenShift) & pixelFormat.greenMax]; 			\

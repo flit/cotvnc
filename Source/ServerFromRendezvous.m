@@ -31,7 +31,7 @@
 
 #define KEYCHAIN_ZEROCONF_SERVICE_NAME	@"cotvnc-zeroconf"
 
-+ (id<IServerData>)createWithNetService:(NSNetService*)service
++ (ServerFromRendezvous *)createWithNetService:(NSNetService*)service
 {
 	return [[[ServerFromRendezvous alloc] initWithNetService:service] autorelease];
 }
@@ -46,10 +46,7 @@
 		[service retain];
 		service_ = service;
 		[service_ setDelegate:self];
-		if ( [service respondsToSelector: @selector(resolveWithTimeout:)] )
-			[service_ resolveWithTimeout: 5.0]; // Tiger only API
-		else
-			[service_ resolve];
+        [service_ resolveWithTimeout: 5.0]; // Tiger only API
 		
 		// Set the initial name. It will have to be validated with the
 		// delegate if one is set
@@ -65,6 +62,7 @@
 			[self setFullscreen:       [[propertyDict objectForKey:@"fullscreen"] boolValue]];
 			[self setViewOnly:         [[propertyDict objectForKey:@"viewOnly"] boolValue]];
 			[self setLastProfile:       [propertyDict objectForKey:@"lastProfile"]];
+            [self setComment:[propertyDict objectForKey:@"comment"]];
 		}
 	}
 	
@@ -90,6 +88,7 @@
 		[NSNumber numberWithBool:_fullscreen],			[NSString stringWithString:@"fullscreen"],
 		[NSNumber numberWithBool:_viewOnly],          [NSString stringWithString:@"viewOnly"], 
 		_lastProfile,									[NSString stringWithString:@"lastProfile"],
+        [self comment],                                 [NSString stringWithString:@"comment"],
 		nil,											nil];
 
 	NSDictionary* defaultServerDict = [[NSUserDefaults standardUserDefaults] objectForKey:RFB_SAVED_RENDEZVOUS_SERVERS];
@@ -149,10 +148,18 @@
             {
                 _port = ntohs(sockAddr->sin_port);
                 if ( _port >= 5900 && _port <= 5909 )
+                {
                     _display = _port - 5900;
+                }
                 else
+                {
                     _display = 0;
-				return [NSString stringWithCString:inet_ntoa(sinAddr)];
+                }
+                
+                // Convert the address to an NSString. addr2ascii() returns a pointer to a static
+                // buffer, so we don't have to free any memory. Of course, it's not thread safe.
+                char * inAddr = addr2ascii(AF_INET, &sinAddr, sizeof(sinAddr), NULL);
+                return [[[NSString alloc] initWithBytes:inAddr length:strlen(inAddr) encoding:NSASCIIStringEncoding] autorelease];
             }
 		}
 		return NSLocalizedString( @"AddressResolveFailed", nil );
@@ -200,21 +207,29 @@
 														object:self];
 														
 	// Finally, load the password
-	if( YES == _rememberPassword )
-	{
-		[self setPassword:[NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_ZEROCONF_SERVICE_NAME account:[service_ name]]]];
-	}
+//	if( YES == _rememberPassword )
+//	{
+//		[self setPassword:[NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_ZEROCONF_SERVICE_NAME account:[service_ name]]]];
+//	}
+}
+
+- (NSString*)password
+{
+    // Read the password directly out of the keychain.
+	return [[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_ZEROCONF_SERVICE_NAME account:[service_ name]];
 }
 
 - (void)setPassword: (NSString*)password
 {
-	[super setPassword:password];
+//	[super setPassword:password];
 	
 	// only save if set to do so
 	if( YES == _rememberPassword && YES == bHasResolved && YES == bResloveSucceeded)
 	{
 		[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_ZEROCONF_SERVICE_NAME account:[service_ name]];
 	}
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg object:self];
 }
 
 - (void)setRememberPassword: (bool)rememberPassword
@@ -226,7 +241,7 @@
 	{
 		if( YES == _rememberPassword )
 		{
-			[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_ZEROCONF_SERVICE_NAME account:[service_ name]];
+//			[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_ZEROCONF_SERVICE_NAME account:[service_ name]];
 		}
 		else
 		{

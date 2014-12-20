@@ -219,9 +219,9 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
     int		i;
     double	rweight, gweight, bweight, gamma = 1.0/[[PrefController sharedController] gammaCorrection];
 
-    fprintf(stderr, "rfbPixelFormat redMax = %d\n", theFormat->redMax);
-    fprintf(stderr, "rfbPixelFormat greenMax = %d\n", theFormat->greenMax);
-    fprintf(stderr, "rfbPixelFormat blueMax = %d\n", theFormat->blueMax);
+//    fprintf(stderr, "rfbPixelFormat redMax = %d\n", theFormat->redMax);
+//    fprintf(stderr, "rfbPixelFormat greenMax = %d\n", theFormat->greenMax);
+//    fprintf(stderr, "rfbPixelFormat blueMax = %d\n", theFormat->blueMax);
     if(theFormat->redMax > 255)
         theFormat->redMax = 255;		/* limit at our LUT size */
     if(theFormat->greenMax > 255)
@@ -248,6 +248,11 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
     for(i=0; i<=theFormat->blueMax; i++) {
         blueClut[i] = (int)(bweight * pow((double)i / (double)theFormat->blueMax, gamma) * maxValue + 0.5) << bshift;
     }
+}
+
+- (rfbPixelFormat *)getServerPixelFormat
+{
+	return &pixelFormat;
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -387,6 +392,16 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
     return size;
 }
 
+- (void *)pixelData
+{
+	return NULL;
+}
+
+- (size_t)pixelDataSize
+{
+	return 0;
+}
+
 /* --------------------------------------------------------------------------------- */
 - (unsigned int)bytesPerPixel
 {
@@ -444,6 +459,7 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 - (void)putRect:(NSRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette {}
 - (void)putRun:(FrameBufferColor*)fbc ofLength:(int)length at:(NSRect)aRect pixelOffset:(int)offset {}
 - (void)putRect:(NSRect)aRect fromRGBBytes:(unsigned char*)rgb {}
+- (void)putRect:(NSRect)aRect fromARGBBytes:(unsigned char*)rgb {}
 /* --------------------------------------------------------------------------------- */
 
 @end

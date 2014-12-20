@@ -420,8 +420,7 @@ static ServerDataManager* gInstance = nil;
 	if( insertServer )
 	{
 		NSString* groupName;
-		NSEnumerator* groupNames = [groupsWithServer objectEnumerator];
-		while( groupName = [groupNames nextObject] )
+		for( groupName in groupsWithServer )
 		{
 			[[mGroups objectForKey:groupName] setObject:server forKey:name];
 		}

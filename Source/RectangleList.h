@@ -35,4 +35,7 @@
 - (void)putRectangle:(NSRect)aRect withColor:(float*)rgb;
 - (void)drawRectsInRect:(NSRect)frame;
 
+- (unsigned)rectCount;
+- (NSRect)rectAtIndex:(unsigned)rectIndex;
+
 @end

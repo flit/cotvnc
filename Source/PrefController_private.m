@@ -43,7 +43,7 @@ NSString *kPrefs_IntervalBeforeReconnect_Key = @"IntervalBeforeReconnect";
 	NSMutableDictionary *profiles = [defaults objectForKey: kPrefs_ConnectionProfiles_Key];
 	if ( profiles )
 	{
-		profiles = [profiles deepMutableCopy];
+		profiles = [[profiles deepMutableCopy] autorelease];
 		NSEnumerator *profileNameEnumerator = [profiles keyEnumerator];
 		NSString *profileName;
 		while ( profileName = [profileNameEnumerator nextObject] )
@@ -126,6 +126,8 @@ NSString *kPrefs_IntervalBeforeReconnect_Key = @"IntervalBeforeReconnect";
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[mAutoscrollIncrement setFloatValue: [defaults floatForKey: kPrefs_AutoscrollIncrement_Key]];
     [mFullscreenScrollbars setState: [defaults boolForKey: kPrefs_FullscreenScrollbars_Key] ? NSOnState : NSOffState];
+    
+    [m_showBonjourCheckbox setState:[defaults boolForKey:kPrefs_UseRendezvous_Key] ? NSOnState : NSOffState];
     
 	float updateDelay;
     updateDelay = [defaults floatForKey: kPrefs_FrontFrameBufferUpdateSeconds_Key];

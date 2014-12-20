@@ -3,10 +3,41 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0255F0E610E18CDD00779200 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0255F0E510E18CDC00779200 /* Sparkle.framework */; };
+		0255F0F910E18D1E00779200 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0255F0E510E18CDC00779200 /* Sparkle.framework */; };
+		0255F10010E1A22300779200 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0255F0FF10E1A22300779200 /* dsa_pub.pem */; };
+		0268704D0FD0253D00B48539 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0268704B0FD0253D00B48539 /* CoreAudio.framework */; };
+		029ECA5D10E2DE73003648D5 /* BufferPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 029ECA5B10E2DE73003648D5 /* BufferPool.h */; };
+		029ECA5E10E2DE73003648D5 /* BufferPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 029ECA5C10E2DE73003648D5 /* BufferPool.m */; };
+		029ECC9C10E9346B003648D5 /* ConnectionDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC5610E930C8003648D5 /* ConnectionDialog.xib */; };
+		029ECC9D10E9346C003648D5 /* ListenDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC5D10E931AE003648D5 /* ListenDialog.xib */; };
+		029ECC9E10E9346D003648D5 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC6410E931FC003648D5 /* Preferences.xib */; };
+		029ECC9F10E9346E003648D5 /* ProfileManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC6B10E93268003648D5 /* ProfileManager.xib */; };
+		029ECCA010E9346E003648D5 /* OSX_RFBViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC7210E9329F003648D5 /* OSX_RFBViewer.xib */; };
+		029ECCA110E9346F003648D5 /* RFBConnection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC7910E932F0003648D5 /* RFBConnection.xib */; };
+		029ECCA210E93470003648D5 /* ServerDisplay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC8010E93336003648D5 /* ServerDisplay.xib */; };
+		029ECCA310E93471003648D5 /* SetTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC8710E93381003648D5 /* SetTitle.xib */; };
+		029ECCA510E93472003648D5 /* OptionPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC8A10E9338D003648D5 /* OptionPanel.xib */; };
+		029ECCA710E93474003648D5 /* OpeningConnection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC8D10E93398003648D5 /* OpeningConnection.xib */; };
+		02C0F2250F47925F00708BE8 /* RichCursorEncodingReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 02C0F2230F47925F00708BE8 /* RichCursorEncodingReader.h */; };
+		02C0F2260F47925F00708BE8 /* RichCursorEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C0F2240F47925F00708BE8 /* RichCursorEncodingReader.m */; };
+		02CF0C5D10C33154009E03A7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CF0C5C10C33154009E03A7 /* Security.framework */; };
+		02CF0DA110C49612009E03A7 /* RFBConnectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 02CF0D9F10C49612009E03A7 /* RFBConnectionController.h */; };
+		02CF0DA210C49612009E03A7 /* RFBConnectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF0DA010C49612009E03A7 /* RFBConnectionController.m */; };
+		02CF0DAD10C4D97D009E03A7 /* KeyCodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF0DAC10C4D97D009E03A7 /* KeyCodes.m */; };
+		02CF0DAF10C4D9AD009E03A7 /* KeyCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 02CF0DAE10C4D9AD009E03A7 /* KeyCodes.h */; };
+		02CF160610CF09FD009E03A7 /* RFBConnectionInfoController.h in Headers */ = {isa = PBXBuildFile; fileRef = 02CF160410CF09FD009E03A7 /* RFBConnectionInfoController.h */; };
+		02CF160710CF09FD009E03A7 /* RFBConnectionInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF160510CF09FD009E03A7 /* RFBConnectionInfoController.m */; };
+		02CF161210CF0BBC009E03A7 /* NSString_ByteString.h in Headers */ = {isa = PBXBuildFile; fileRef = 02CF161010CF0BBC009E03A7 /* NSString_ByteString.h */; };
+		02CF161310CF0BBC009E03A7 /* NSString_ByteString.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF161110CF0BBC009E03A7 /* NSString_ByteString.m */; };
+		02CF170D10CF4A62009E03A7 /* ConnectionMetrics.h in Headers */ = {isa = PBXBuildFile; fileRef = 02CF170B10CF4A62009E03A7 /* ConnectionMetrics.h */; };
+		02CF170E10CF4A62009E03A7 /* ConnectionMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF170C10CF4A62009E03A7 /* ConnectionMetrics.m */; };
+		02CF17D310D01BA5009E03A7 /* ThroughputGraphView.h in Headers */ = {isa = PBXBuildFile; fileRef = 02CF17D110D01BA5009E03A7 /* ThroughputGraphView.h */; };
+		02CF17D410D01BA5009E03A7 /* ThroughputGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF17D210D01BA5009E03A7 /* ThroughputGraphView.m */; };
 		7F7A93E505E71B5C00E20416 /* ByteBlockReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719B033DB4A801A8010C /* ByteBlockReader.h */; };
 		7F7A93E605E71B5C00E20416 /* ByteReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719D033DB4A801A8010C /* ByteReader.h */; };
 		7F7A93E705E71B5C00E20416 /* CARD16Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719F033DB4A801A8010C /* CARD16Reader.h */; };
@@ -61,8 +92,6 @@
 		7F7A941C05E71B5C00E20416 /* rfbCursor3.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F5DC7178033DB40D01A8010C /* rfbCursor3.tiff */; };
 		7F7A941F05E71B5C00E20416 /* rfbCursor2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F5DC717B033DB40D01A8010C /* rfbCursor2.tiff */; };
 		7F7A942005E71B5C00E20416 /* rfbCursor.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F5DC717C033DB40D01A8010C /* rfbCursor.tiff */; };
-		7F7A942105E71B5C00E20416 /* RFBConnection.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5DC7185033DB44301A8010C /* RFBConnection.nib */; };
-		7F7A942205E71B5C00E20416 /* OSX_RFBViewer.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5DC7187033DB44301A8010C /* OSX_RFBViewer.nib */; };
 		7F7A942705E71B5C00E20416 /* ByteBlockReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC719C033DB4A801A8010C /* ByteBlockReader.m */; };
 		7F7A942805E71B5C00E20416 /* ByteReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC719E033DB4A801A8010C /* ByteReader.m */; };
 		7F7A942905E71B5C00E20416 /* CARD16Reader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71A0033DB4A801A8010C /* CARD16Reader.m */; };
@@ -127,7 +156,6 @@
 		7FD35C1B06CC583A00648090 /* ProfileDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD35C1906CC583A00648090 /* ProfileDataManager.m */; };
 		7FFA8FEB062BA6330008D381 /* ServerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FFA8FE9062BA6330008D381 /* ServerBase.h */; };
 		7FFA8FEC062BA6330008D381 /* ServerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFA8FEA062BA6330008D381 /* ServerBase.m */; };
-		7FFA903D062BA74F0008D381 /* ServerDisplay.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7FFA903B062BA74F0008D381 /* ServerDisplay.nib */; };
 		E21FE263062B6D310059585C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E21FE261062B6D310059585C /* Localizable.strings */; };
 		E21FE449062B79AB0059585C /* KeyEquivalentScenario.m in Sources */ = {isa = PBXBuildFile; fileRef = E21FE43D062B79AB0059585C /* KeyEquivalentScenario.m */; };
 		E21FE44A062B79AB0059585C /* KeyEquivalentEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = E21FE43E062B79AB0059585C /* KeyEquivalentEntry.h */; };
@@ -153,55 +181,84 @@
 		E2B083E30763AA7D00CE24C1 /* ServerFromConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B083E10763AA7D00CE24C1 /* ServerFromConnection.h */; };
 		E2B083EF0763AA9A00CE24C1 /* ListenerController.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B083ED0763AA9A00CE24C1 /* ListenerController.h */; };
 		E2B083F00763AA9A00CE24C1 /* ListenerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B083EE0763AA9A00CE24C1 /* ListenerController.m */; };
-		E2B083F90763AAC200CE24C1 /* ListenDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = E2B083F70763AAC200CE24C1 /* ListenDialog.nib */; };
 		E2CA651806DA451600B70BDF /* help in Resources */ = {isa = PBXBuildFile; fileRef = E2CA650906DA451500B70BDF /* help */; };
 		E2F3A2CB06D44755005EB917 /* PrefController.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3A2C906D44755005EB917 /* PrefController.h */; };
 		E2F3A2CC06D44755005EB917 /* PrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A2CA06D44755005EB917 /* PrefController.m */; };
 		E2F3A2E506D4483D005EB917 /* AppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3A2E306D4483D005EB917 /* AppDelegate.h */; };
 		E2F3A2E606D4483D005EB917 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A2E406D4483D005EB917 /* AppDelegate.m */; };
-		E2F3A34006D44E0E005EB917 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = E2F3A33E06D44E0E005EB917 /* Preferences.nib */; };
 		E2F3A3B406D45C7B005EB917 /* PrefController_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3A3B206D45C7B005EB917 /* PrefController_private.h */; };
 		E2F3A3B506D45C7B005EB917 /* PrefController_private.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A3B306D45C7B005EB917 /* PrefController_private.m */; };
-		E2F3A7E806D4A687005EB917 /* ConnectionDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = E2F3A7E606D4A687005EB917 /* ConnectionDialog.nib */; };
-		E2F3A99E06D4BFD8005EB917 /* ProfileManager.nib in Resources */ = {isa = PBXBuildFile; fileRef = E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */; };
 		E2F3AB0406D5B86A005EB917 /* ProfileManager_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3AB0206D5B86A005EB917 /* ProfileManager_private.h */; };
 		E2F3AB0506D5B86A005EB917 /* ProfileManager_private.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */; };
 		E2F3AD7106D5E11D005EB917 /* NSObject_Chicken.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */; };
 		E2F3AD7206D5E11D005EB917 /* NSObject_Chicken.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXBuildStyle section */
-		4A9504CCFFE6A4B311CA0CBA /* Development */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OPTIMIZATION_CFLAGS = "-O0";
-				ZERO_LINK = NO;
-				_CHICKEN_VERSION_ = 2.0b2;
-			};
-			name = Development;
+/* Begin PBXCopyFilesBuildPhase section */
+		0255F0FC10E18D2300779200 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0255F0F910E18D1E00779200 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4A9504CDFFE6A4B311CA0CBA /* Deployment */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEPLOYMENT_LOCATION = YES;
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				OPTIMIZATION_CFLAGS = "-O3";
-				REMOVE_CVS_FROM_RESOURCES = YES;
-				ZERO_LINK = NO;
-				_CHICKEN_VERSION_ = 2.0b1;
-			};
-			name = Deployment;
-		};
-/* End PBXBuildStyle section */
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0255F0E510E18CDC00779200 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		0255F0FF10E1A22300779200 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = Resources/dsa_pub.pem; sourceTree = "<group>"; };
+		0268704B0FD0253D00B48539 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
+		029ECA5B10E2DE73003648D5 /* BufferPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferPool.h; sourceTree = "<group>"; };
+		029ECA5C10E2DE73003648D5 /* BufferPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BufferPool.m; sourceTree = "<group>"; };
+		029ECC5710E930C8003648D5 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/ConnectionDialog.xib; sourceTree = "<group>"; };
+		029ECC5910E93186003648D5 /* French */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = French; path = Resources/French.lproj/ConnectionDialog.xib; sourceTree = "<group>"; };
+		029ECC5B10E93195003648D5 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Italian; path = Resources/Italian.lproj/ConnectionDialog.xib; sourceTree = "<group>"; };
+		029ECC5E10E931AE003648D5 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/ListenDialog.xib; sourceTree = "<group>"; };
+		029ECC6010E931C5003648D5 /* French */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = French; path = Resources/French.lproj/ListenDialog.xib; sourceTree = "<group>"; };
+		029ECC6210E931E2003648D5 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Italian; path = Resources/Italian.lproj/ListenDialog.xib; sourceTree = "<group>"; };
+		029ECC6510E931FC003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/Preferences.xib; sourceTree = "<group>"; };
+		029ECC6710E93217003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/Preferences.xib; sourceTree = "<group>"; };
+		029ECC6910E93226003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/Preferences.xib; sourceTree = "<group>"; };
+		029ECC6C10E93268003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/ProfileManager.xib; sourceTree = "<group>"; };
+		029ECC6E10E9327C003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/ProfileManager.xib; sourceTree = "<group>"; };
+		029ECC7010E9328A003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/ProfileManager.xib; sourceTree = "<group>"; };
+		029ECC7310E9329F003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/OSX_RFBViewer.xib; sourceTree = "<group>"; };
+		029ECC7510E932C3003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/OSX_RFBViewer.xib; sourceTree = "<group>"; };
+		029ECC7710E932DC003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.xib; sourceTree = "<group>"; };
+		029ECC7A10E932F0003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/RFBConnection.xib; sourceTree = "<group>"; };
+		029ECC7C10E9330C003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/RFBConnection.xib; sourceTree = "<group>"; };
+		029ECC7E10E93329003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/RFBConnection.xib; sourceTree = "<group>"; };
+		029ECC8110E93336003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/ServerDisplay.xib; sourceTree = "<group>"; };
+		029ECC8310E93341003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/ServerDisplay.xib; sourceTree = "<group>"; };
+		029ECC8510E9334E003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.xib; sourceTree = "<group>"; };
+		029ECC8810E93381003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/SetTitle.xib; sourceTree = "<group>"; };
+		029ECC8B10E9338D003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/OptionPanel.xib; sourceTree = "<group>"; };
+		029ECC8E10E93398003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/OpeningConnection.xib; sourceTree = "<group>"; };
+		029ECCAC10E9348F003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/OpeningConnection.xib; sourceTree = "<group>"; };
+		029ECCAD10E93498003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/OpeningConnection.xib; sourceTree = "<group>"; };
+		029ECCAE10E934AA003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/OptionPanel.xib; sourceTree = "<group>"; };
+		029ECCAF10E934B2003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/SetTitle.xib; sourceTree = "<group>"; };
+		029ECCB010E934B8003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/OptionPanel.xib; sourceTree = "<group>"; };
+		029ECCB110E934BF003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/SetTitle.xib; sourceTree = "<group>"; };
+		02C0F2230F47925F00708BE8 /* RichCursorEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichCursorEncodingReader.h; sourceTree = "<group>"; };
+		02C0F2240F47925F00708BE8 /* RichCursorEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichCursorEncodingReader.m; sourceTree = "<group>"; };
+		02CF0C5C10C33154009E03A7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
+		02CF0D9F10C49612009E03A7 /* RFBConnectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFBConnectionController.h; sourceTree = "<group>"; };
+		02CF0DA010C49612009E03A7 /* RFBConnectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFBConnectionController.m; sourceTree = "<group>"; };
+		02CF0DAC10C4D97D009E03A7 /* KeyCodes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyCodes.m; sourceTree = "<group>"; };
+		02CF0DAE10C4D9AD009E03A7 /* KeyCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCodes.h; sourceTree = "<group>"; };
+		02CF160410CF09FD009E03A7 /* RFBConnectionInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFBConnectionInfoController.h; sourceTree = "<group>"; };
+		02CF160510CF09FD009E03A7 /* RFBConnectionInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFBConnectionInfoController.m; sourceTree = "<group>"; };
+		02CF161010CF0BBC009E03A7 /* NSString_ByteString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSString_ByteString.h; sourceTree = "<group>"; };
+		02CF161110CF0BBC009E03A7 /* NSString_ByteString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_ByteString.m; sourceTree = "<group>"; };
+		02CF170B10CF4A62009E03A7 /* ConnectionMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionMetrics.h; sourceTree = "<group>"; };
+		02CF170C10CF4A62009E03A7 /* ConnectionMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionMetrics.m; sourceTree = "<group>"; };
+		02CF17D110D01BA5009E03A7 /* ThroughputGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThroughputGraphView.h; sourceTree = "<group>"; };
+		02CF17D210D01BA5009E03A7 /* ThroughputGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThroughputGraphView.m; sourceTree = "<group>"; };
+		02DCD4CF10BCE0EA007497B6 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		7F088F2405E1D81100336456 /* ServerDataManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerDataManager.h; sourceTree = "<group>"; };
 		7F088F2505E1D81100336456 /* ServerDataManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerDataManager.m; sourceTree = "<group>"; };
@@ -223,9 +280,8 @@
 		7FF0C9A705CDC9A0008E39DD /* CotVNC.scriptTerminology */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.scriptTerminology; name = CotVNC.scriptTerminology; path = Resources/CotVNC.scriptTerminology; sourceTree = SOURCE_ROOT; };
 		7FFA8FE9062BA6330008D381 /* ServerBase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerBase.h; sourceTree = "<group>"; };
 		7FFA8FEA062BA6330008D381 /* ServerBase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerBase.m; sourceTree = "<group>"; };
-		7FFA903C062BA74F0008D381 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
-		E21FE256062B6C8D0059585C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		E21FE262062B6D310059585C /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E21FE256062B6C8D0059585C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		E21FE262062B6D310059585C /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E21FE43D062B79AB0059585C /* KeyEquivalentScenario.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = KeyEquivalentScenario.m; sourceTree = "<group>"; };
 		E21FE43E062B79AB0059585C /* KeyEquivalentEntry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = KeyEquivalentEntry.h; sourceTree = "<group>"; };
 		E21FE43F062B79AB0059585C /* KeyEquivalent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEquivalent.m; sourceTree = "<group>"; };
@@ -242,37 +298,26 @@
 		E228FA2804439B7D00F873F6 /* Version History.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Version History.rtf"; sourceTree = "<group>"; };
 		E291FA1308815A950061216E /* EventFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = EventFilter.h; sourceTree = "<group>"; };
 		E291FA1408815A950061216E /* EventFilter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = EventFilter.m; sourceTree = "<group>"; };
-		E291FAD4088161DA0061216E /* cursors.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = cursors.plist; path = Resources/cursors.plist; sourceTree = "<group>"; };
+		E291FAD4088161DA0061216E /* cursors.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = cursors.plist; path = Resources/cursors.plist; sourceTree = "<group>"; };
 		E291FB21088168E20061216E /* QueuedEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QueuedEvent.h; sourceTree = "<group>"; };
 		E291FB22088168E20061216E /* QueuedEvent.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QueuedEvent.m; sourceTree = "<group>"; };
 		E2929DD307675DE800190669 /* MyApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyApp.h; sourceTree = "<group>"; };
 		E2929DD407675DE800190669 /* MyApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyApp.m; sourceTree = "<group>"; };
-		E2B0839C0763A51700CE24C1 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = English; path = Resources/English.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
-		E2B083A30763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = Resources/French.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
-		E2B083A40763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = Resources/French.lproj/ConnectionDialog.nib; sourceTree = "<group>"; };
-		E2B083A50763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = Resources/French.lproj/RFBConnection.nib; sourceTree = "<group>"; };
-		E2B083A60763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = French; path = Resources/French.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
-		E2B083A70763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = Resources/French.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2B083A80763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = Resources/French.lproj/Preferences.nib; sourceTree = "<group>"; };
-		E2B083A90763A79F00CE24C1 /* French */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = French; path = Resources/French.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E2B083AA0763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = Resources/French.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
-		E2B083AB0763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = Resources/French.lproj/ProfileManager.nib; sourceTree = "<group>"; };
+		E2B0839C0763A51700CE24C1 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = Resources/English.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
+		E2B083A60763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = French; path = Resources/French.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
+		E2B083A70763A79F00CE24C1 /* French */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = French; path = Resources/French.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2B083A90763A79F00CE24C1 /* French */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = French; path = Resources/French.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E2B083E00763AA7D00CE24C1 /* ServerFromConnection.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerFromConnection.m; sourceTree = "<group>"; };
 		E2B083E10763AA7D00CE24C1 /* ServerFromConnection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerFromConnection.h; sourceTree = "<group>"; };
 		E2B083ED0763AA9A00CE24C1 /* ListenerController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ListenerController.h; sourceTree = "<group>"; };
 		E2B083EE0763AA9A00CE24C1 /* ListenerController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ListenerController.m; sourceTree = "<group>"; };
-		E2B083F80763AAC200CE24C1 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/ListenDialog.nib; sourceTree = "<group>"; };
-		E2B084000763ABD300CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = Resources/French.lproj/ListenDialog.nib; sourceTree = "<group>"; };
 		E2CA650906DA451500B70BDF /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = Resources/help; sourceTree = "<group>"; };
 		E2F3A2C906D44755005EB917 /* PrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefController.h; sourceTree = "<group>"; };
 		E2F3A2CA06D44755005EB917 /* PrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefController.m; sourceTree = "<group>"; };
 		E2F3A2E306D4483D005EB917 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E2F3A2E406D4483D005EB917 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E2F3A33F06D44E0E005EB917 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/Preferences.nib; sourceTree = "<group>"; };
 		E2F3A3B206D45C7B005EB917 /* PrefController_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefController_private.h; sourceTree = "<group>"; };
 		E2F3A3B306D45C7B005EB917 /* PrefController_private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefController_private.m; sourceTree = "<group>"; };
-		E2F3A7E706D4A687005EB917 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/ConnectionDialog.nib; sourceTree = "<group>"; };
-		E2F3A99D06D4BFD8005EB917 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/ProfileManager.nib; sourceTree = "<group>"; };
 		E2F3AB0206D5B86A005EB917 /* ProfileManager_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileManager_private.h; sourceTree = "<group>"; };
 		E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileManager_private.m; sourceTree = "<group>"; };
 		E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObject_Chicken.h; sourceTree = "<group>"; };
@@ -280,16 +325,9 @@
 		E2F48D74040EDD2200BD55BA /* KeyChain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = KeyChain.h; sourceTree = "<group>"; };
 		E2F48D75040EDD2200BD55BA /* KeyChain.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = KeyChain.m; sourceTree = "<group>"; };
 		E2F48D78040EDD5100BD55BA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		E2F5464B0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Resources/Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2F5464C0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/RFBConnection.nib; sourceTree = "<group>"; };
-		E2F5464D0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Italian; path = Resources/Italian.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
-		E2F5464E0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ConnectionDialog.nib; sourceTree = "<group>"; };
-		E2F5464F0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/Preferences.nib; sourceTree = "<group>"; };
-		E2F546500768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Italian; path = Resources/Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E2F546510768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
-		E2F546520768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ProfileManager.nib; sourceTree = "<group>"; };
-		E2F546530768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
-		E2F546540768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ListenDialog.nib; sourceTree = "<group>"; };
+		E2F5464B0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Italian; path = Resources/Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2F5464D0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Italian; path = Resources/Italian.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
+		E2F546500768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Italian; path = Resources/Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E2F546570768C7C500AB2600 /* Chicken of the VNC.nibTranslate */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = "Chicken of the VNC.nibTranslate"; path = "Resources/Chicken of the VNC.nibTranslate"; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
@@ -299,13 +337,11 @@
 		F564F4B60392E07E01303550 /* ZlibEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibEncodingReader.m; sourceTree = "<group>"; };
 		F564F4B70392E07E01303550 /* ZlibEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibEncodingReader.h; sourceTree = "<group>"; };
 		F5B8B7E9036275D101000105 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
-		F5DC7173033DB3DC01A8010C /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F5DC7173033DB3DC01A8010C /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F5DC7177033DB40D01A8010C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Resources/icon.icns; sourceTree = "<group>"; };
 		F5DC7178033DB40D01A8010C /* rfbCursor3.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = rfbCursor3.tiff; path = Resources/rfbCursor3.tiff; sourceTree = "<group>"; };
 		F5DC717B033DB40D01A8010C /* rfbCursor2.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = rfbCursor2.tiff; path = Resources/rfbCursor2.tiff; sourceTree = "<group>"; };
 		F5DC717C033DB40D01A8010C /* rfbCursor.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = rfbCursor.tiff; path = Resources/rfbCursor.tiff; sourceTree = "<group>"; };
-		F5DC7186033DB44301A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/RFBConnection.nib; sourceTree = "<group>"; };
-		F5DC7188033DB44301A8010C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
 		F5DC7191033DB45F01A8010C /* ReadMe (Keymappings).txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "ReadMe (Keymappings).txt"; sourceTree = "<group>"; };
 		F5DC719B033DB4A801A8010C /* ByteBlockReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ByteBlockReader.h; sourceTree = "<group>"; };
 		F5DC719C033DB4A801A8010C /* ByteBlockReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ByteBlockReader.m; sourceTree = "<group>"; };
@@ -400,20 +436,168 @@
 				7F7A945905E71B5C00E20416 /* Cocoa.framework in Frameworks */,
 				7F7A945A05E71B5C00E20416 /* libz.dylib in Frameworks */,
 				7F7A945B05E71B5C00E20416 /* Carbon.framework in Frameworks */,
+				0268704D0FD0253D00B48539 /* CoreAudio.framework in Frameworks */,
+				02CF0C5D10C33154009E03A7 /* Security.framework in Frameworks */,
+				0255F0E610E18CDD00779200 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+		0238CB670F35080100A9C56B /* Readers */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
-				E2F48D78040EDD5100BD55BA /* Carbon.framework */,
-				F5B8B7E9036275D101000105 /* libz.dylib */,
+				F5DC719B033DB4A801A8010C /* ByteBlockReader.h */,
+				F5DC719C033DB4A801A8010C /* ByteBlockReader.m */,
+				F5DC719D033DB4A801A8010C /* ByteReader.h */,
+				F5DC719E033DB4A801A8010C /* ByteReader.m */,
+				F5DC719F033DB4A801A8010C /* CARD16Reader.h */,
+				F5DC71A0033DB4A801A8010C /* CARD16Reader.m */,
+				F5DC71A1033DB4A801A8010C /* CARD32Reader.h */,
+				F5DC71A2033DB4A801A8010C /* CARD32Reader.m */,
+				F5DC71A3033DB4A801A8010C /* CARD8Reader.h */,
+				F5DC71A4033DB4A801A8010C /* CARD8Reader.m */,
+				F5DC71A7033DB4A801A8010C /* CopyRectangleEncodingReader.h */,
+				F5DC71A8033DB4A801A8010C /* CopyRectangleEncodingReader.m */,
+				F5DC71A9033DB4A801A8010C /* CoRREEncodingReader.h */,
+				F5DC71AA033DB4A801A8010C /* CoRREEncodingReader.m */,
+				F5DC71B0033DB4A801A8010C /* EncodingReader.h */,
+				F5DC71B1033DB4A801A8010C /* EncodingReader.m */,
+				F5DC71B2033DB4A801A8010C /* FilterReader.h */,
+				F5DC71B3033DB4A801A8010C /* FilterReader.m */,
+				F5DC71B7033DB4A801A8010C /* FrameBufferUpdateReader.h */,
+				F5DC71B8033DB4A801A8010C /* FrameBufferUpdateReader.m */,
+				F5DC71BD033DB4A801A8010C /* HextileEncodingReader.h */,
+				F5DC71BE033DB4A801A8010C /* HextileEncodingReader.m */,
+				F5DC71D1033DB4A801A8010C /* NLTStringReader.h */,
+				F5DC71D2033DB4A801A8010C /* NLTStringReader.m */,
+				F5DC71D9033DB4A801A8010C /* RawEncodingReader.h */,
+				F5DC71DA033DB4A801A8010C /* RawEncodingReader.m */,
+				F5DC71E6033DB4A801A8010C /* RFBServerInitReader.h */,
+				F5DC71E7033DB4A801A8010C /* RFBServerInitReader.m */,
+				F5DC71E8033DB4A801A8010C /* RFBStringReader.h */,
+				F5DC71E9033DB4A801A8010C /* RFBStringReader.m */,
+				02C0F2230F47925F00708BE8 /* RichCursorEncodingReader.h */,
+				02C0F2240F47925F00708BE8 /* RichCursorEncodingReader.m */,
+				F5DC71EC033DB4A801A8010C /* RREEncodingReader.h */,
+				F5DC71ED033DB4A801A8010C /* RREEncodingReader.m */,
+				F5DC71EE033DB4A801A8010C /* ServerCutTextReader.h */,
+				F5DC71EF033DB4A801A8010C /* ServerCutTextReader.m */,
+				F5DC71F0033DB4A801A8010C /* SetColorMapEntriesReader.h */,
+				F5DC71F1033DB4A801A8010C /* SetColorMapEntriesReader.m */,
+				F5DC71F2033DB4A801A8010C /* TightEncodingReader.h */,
+				F5DC71F3033DB4A801A8010C /* TightEncodingReader.m */,
+				F5DC71FB033DB4A801A8010C /* ZipLengthReader.h */,
+				F5DC71FC033DB4A801A8010C /* ZipLengthReader.m */,
+				F564F4B70392E07E01303550 /* ZlibEncodingReader.h */,
+				F564F4B60392E07E01303550 /* ZlibEncodingReader.m */,
+				F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */,
+				F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */,
+				F536C26803937E5301178D82 /* ZRLEEncodingReader.h */,
+				F536C26903937E5301178D82 /* ZRLEEncodingReader.m */,
 			);
-			name = "Linked Frameworks";
+			name = Readers;
+			sourceTree = "<group>";
+		};
+		0238CB690F35080A00A9C56B /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				F5DC71A5033DB4A801A8010C /* CopyFilter.h */,
+				F5DC71A6033DB4A801A8010C /* CopyFilter.m */,
+				F5DC71B9033DB4A801A8010C /* GradientFilter.h */,
+				F5DC71BA033DB4A801A8010C /* GradientFilter.m */,
+				F5DC71D3033DB4A801A8010C /* PaletteFilter.h */,
+				F5DC71D4033DB4A801A8010C /* PaletteFilter.m */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		0238CB6A0F35081000A9C56B /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				F5DC71AC033DB4A801A8010C /* d3des.c */,
+				F5DC71AD033DB4A801A8010C /* d3des.h */,
+				F5F2D5A603B3C93B01150DB1 /* debug.h */,
+				F5F2D5A703B3C93B01150DB1 /* debug.m */,
+				E2F48D74040EDD2200BD55BA /* KeyChain.h */,
+				E2F48D75040EDD2200BD55BA /* KeyChain.m */,
+				E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */,
+				E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */,
+				F5DC71DB033DB4A801A8010C /* RectangleList.h */,
+				F5DC71DC033DB4A801A8010C /* RectangleList.m */,
+				02CF161010CF0BBC009E03A7 /* NSString_ByteString.h */,
+				02CF161110CF0BBC009E03A7 /* NSString_ByteString.m */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
+		0238CB6B0F35081600A9C56B /* FrameBuffers */ = {
+			isa = PBXGroup;
+			children = (
+				F5DC71B4033DB4A801A8010C /* FrameBuffer.h */,
+				F5DC71B5033DB4A801A8010C /* FrameBuffer.m */,
+				F5DC71B6033DB4A801A8010C /* FrameBufferDrawing.h */,
+				F5DC71BB033DB4A801A8010C /* GrayScaleFrameBuffer.h */,
+				F5DC71BC033DB4A801A8010C /* GrayScaleFrameBuffer.m */,
+				F5DC71BF033DB4A801A8010C /* HighColorFrameBuffer.h */,
+				F5DC71C0033DB4A801A8010C /* HighColorFrameBuffer.m */,
+				F5DC71CE033DB4A801A8010C /* LowColorFrameBuffer.h */,
+				F5DC71CF033DB4A801A8010C /* LowColorFrameBuffer.m */,
+				F5DC71F5033DB4A801A8010C /* TrueColorFrameBuffer.h */,
+				F5DC71F6033DB4A801A8010C /* TrueColorFrameBuffer.m */,
+			);
+			name = FrameBuffers;
+			sourceTree = "<group>";
+		};
+		0238CB6C0F35082100A9C56B /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				E2F3A2E306D4483D005EB917 /* AppDelegate.h */,
+				E2F3A2E406D4483D005EB917 /* AppDelegate.m */,
+				F5E4C9AA03416C2701A8010C /* FullscreenWindow.h */,
+				F5E4C9AB03416C2701A8010C /* FullscreenWindow.m */,
+				E2929DD307675DE800190669 /* MyApp.h */,
+				E2929DD407675DE800190669 /* MyApp.m */,
+				02CF0D9F10C49612009E03A7 /* RFBConnectionController.h */,
+				02CF0DA010C49612009E03A7 /* RFBConnectionController.m */,
+				02CF160410CF09FD009E03A7 /* RFBConnectionInfoController.h */,
+				02CF160510CF09FD009E03A7 /* RFBConnectionInfoController.m */,
+				F5DC71DF033DB4A801A8010C /* RFBConnectionManager.h */,
+				F5DC71E0033DB4A801A8010C /* RFBConnectionManager.m */,
+				02CF17D110D01BA5009E03A7 /* ThroughputGraphView.h */,
+				02CF17D210D01BA5009E03A7 /* ThroughputGraphView.m */,
+				F5DC71F9033DB4A801A8010C /* VNCViewer_main.m */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		0238CB6D0F35082F00A9C56B /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				029ECA5B10E2DE73003648D5 /* BufferPool.h */,
+				029ECA5C10E2DE73003648D5 /* BufferPool.m */,
+				02CF170B10CF4A62009E03A7 /* ConnectionMetrics.h */,
+				02CF170C10CF4A62009E03A7 /* ConnectionMetrics.m */,
+				E291FA1308815A950061216E /* EventFilter.h */,
+				E291FA1408815A950061216E /* EventFilter.m */,
+				02CF0DAE10C4D9AD009E03A7 /* KeyCodes.h */,
+				02CF0DAC10C4D97D009E03A7 /* KeyCodes.m */,
+				E291FB21088168E20061216E /* QueuedEvent.h */,
+				E291FB22088168E20061216E /* QueuedEvent.m */,
+				F5DC71DD033DB4A801A8010C /* RFBConnection.h */,
+				F5DC71DE033DB4A801A8010C /* RFBConnection.m */,
+				F5DC71E1033DB4A801A8010C /* RFBHandshaker.h */,
+				F5DC71E2033DB4A801A8010C /* RFBHandshaker.m */,
+				F5DC71E3033DB4A801A8010C /* rfbproto.h */,
+				F5DC71E4033DB4A801A8010C /* RFBProtocol.h */,
+				F5DC71E5033DB4A801A8010C /* RFBProtocol.m */,
+				F5DC71EA033DB4A801A8010C /* RFBView.h */,
+				F5DC71EB033DB4A801A8010C /* RFBView.m */,
+				F5DC71F7033DB4A801A8010C /* vncauth.c */,
+				F5DC71F8033DB4A801A8010C /* vncauth.h */,
+			);
+			name = Protocol;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -439,6 +623,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0255F0FF10E1A22300779200 /* dsa_pub.pem */,
+				02DCD4CF10BCE0EA007497B6 /* todo.txt */,
 				E291FAD4088161DA0061216E /* cursors.plist */,
 				E2F546570768C7C500AB2600 /* Chicken of the VNC.nibTranslate */,
 				E2CA650906DA451500B70BDF /* help */,
@@ -450,13 +636,16 @@
 				F5DC717C033DB40D01A8010C /* rfbCursor.tiff */,
 				F5DC717B033DB40D01A8010C /* rfbCursor2.tiff */,
 				F5DC7178033DB40D01A8010C /* rfbCursor3.tiff */,
-				E2F3A7E606D4A687005EB917 /* ConnectionDialog.nib */,
-				E2B083F70763AAC200CE24C1 /* ListenDialog.nib */,
-				E2F3A33E06D44E0E005EB917 /* Preferences.nib */,
-				E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */,
-				F5DC7187033DB44301A8010C /* OSX_RFBViewer.nib */,
-				F5DC7185033DB44301A8010C /* RFBConnection.nib */,
-				7FFA903B062BA74F0008D381 /* ServerDisplay.nib */,
+				029ECC5610E930C8003648D5 /* ConnectionDialog.xib */,
+				029ECC5D10E931AE003648D5 /* ListenDialog.xib */,
+				029ECC6410E931FC003648D5 /* Preferences.xib */,
+				029ECC6B10E93268003648D5 /* ProfileManager.xib */,
+				029ECC7210E9329F003648D5 /* OSX_RFBViewer.xib */,
+				029ECC7910E932F0003648D5 /* RFBConnection.xib */,
+				029ECC8010E93336003648D5 /* ServerDisplay.xib */,
+				029ECC8710E93381003648D5 /* SetTitle.xib */,
+				029ECC8A10E9338D003648D5 /* OptionPanel.xib */,
+				029ECC8D10E93398003648D5 /* OpeningConnection.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -464,7 +653,12 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				0255F0E510E18CDC00779200 /* Sparkle.framework */,
+				0268704B0FD0253D00B48539 /* CoreAudio.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				E2F48D78040EDD5100BD55BA /* Carbon.framework */,
+				F5B8B7E9036275D101000105 /* libz.dylib */,
+				02CF0C5C10C33154009E03A7 /* Security.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -483,10 +677,23 @@
 		7FC6DF2405C315680028A970 /* Server Management */ = {
 			isa = PBXGroup;
 			children = (
-				7FE7F83106D8008800647AA1 /* Server Models */,
-				7FE7F83006D8005600647AA1 /* GUI Controller */,
+				7FC6DF2705C315C20028A970 /* IServerData.h */,
+				E2B083ED0763AA9A00CE24C1 /* ListenerController.h */,
+				E2B083EE0763AA9A00CE24C1 /* ListenerController.m */,
+				7FFA8FE9062BA6330008D381 /* ServerBase.h */,
+				7FFA8FEA062BA6330008D381 /* ServerBase.m */,
 				7F088F2405E1D81100336456 /* ServerDataManager.h */,
 				7F088F2505E1D81100336456 /* ServerDataManager.m */,
+				7FBB0A6605F5BC9700F716C4 /* ServerDataViewController.h */,
+				7FBB0A6705F5BC9700F716C4 /* ServerDataViewController.m */,
+				E2B083E10763AA7D00CE24C1 /* ServerFromConnection.h */,
+				E2B083E00763AA7D00CE24C1 /* ServerFromConnection.m */,
+				7FC6DF6705C31AF50028A970 /* ServerFromPrefs.h */,
+				7FC6DF6805C31AF50028A970 /* ServerFromPrefs.m */,
+				7FC6DF6D05C31B0D0028A970 /* ServerFromRendezvous.h */,
+				7FC6DF6E05C31B0D0028A970 /* ServerFromRendezvous.m */,
+				7F7DE7D4080F39DF006BF1DF /* ServerStandAlone.h */,
+				7F7DE7D5080F39DF006BF1DF /* ServerStandAlone.m */,
 			);
 			name = "Server Management";
 			sourceTree = "<group>";
@@ -496,12 +703,12 @@
 			children = (
 				F5DC71D5033DB4A801A8010C /* Profile.h */,
 				F5DC71D6033DB4A801A8010C /* Profile.m */,
+				7FD35C1806CC583A00648090 /* ProfileDataManager.h */,
+				7FD35C1906CC583A00648090 /* ProfileDataManager.m */,
 				F5DC71D7033DB4A801A8010C /* ProfileManager.h */,
 				F5DC71D8033DB4A801A8010C /* ProfileManager.m */,
 				E2F3AB0206D5B86A005EB917 /* ProfileManager_private.h */,
 				E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */,
-				7FD35C1806CC583A00648090 /* ProfileDataManager.h */,
-				7FD35C1906CC583A00648090 /* ProfileDataManager.m */,
 			);
 			name = Profiles;
 			sourceTree = "<group>";
@@ -515,44 +722,6 @@
 				E2F3A3B306D45C7B005EB917 /* PrefController_private.m */,
 			);
 			name = Preferences;
-			sourceTree = "<group>";
-		};
-		7FE7F82F06D8003200647AA1 /* Connection Management */ = {
-			isa = PBXGroup;
-			children = (
-				F5DC71DF033DB4A801A8010C /* RFBConnectionManager.h */,
-				F5DC71E0033DB4A801A8010C /* RFBConnectionManager.m */,
-			);
-			name = "Connection Management";
-			sourceTree = "<group>";
-		};
-		7FE7F83006D8005600647AA1 /* GUI Controller */ = {
-			isa = PBXGroup;
-			children = (
-				E2B083ED0763AA9A00CE24C1 /* ListenerController.h */,
-				E2B083EE0763AA9A00CE24C1 /* ListenerController.m */,
-				7FBB0A6605F5BC9700F716C4 /* ServerDataViewController.h */,
-				7FBB0A6705F5BC9700F716C4 /* ServerDataViewController.m */,
-			);
-			name = "GUI Controller";
-			sourceTree = "<group>";
-		};
-		7FE7F83106D8008800647AA1 /* Server Models */ = {
-			isa = PBXGroup;
-			children = (
-				7FC6DF2705C315C20028A970 /* IServerData.h */,
-				7FFA8FE9062BA6330008D381 /* ServerBase.h */,
-				7FFA8FEA062BA6330008D381 /* ServerBase.m */,
-				E2B083E10763AA7D00CE24C1 /* ServerFromConnection.h */,
-				E2B083E00763AA7D00CE24C1 /* ServerFromConnection.m */,
-				7FC6DF6705C31AF50028A970 /* ServerFromPrefs.h */,
-				7FC6DF6805C31AF50028A970 /* ServerFromPrefs.m */,
-				7FC6DF6D05C31B0D0028A970 /* ServerFromRendezvous.h */,
-				7FC6DF6E05C31B0D0028A970 /* ServerFromRendezvous.m */,
-				7F7DE7D4080F39DF006BF1DF /* ServerStandAlone.h */,
-				7F7DE7D5080F39DF006BF1DF /* ServerStandAlone.m */,
-			);
-			name = "Server Models";
 			sourceTree = "<group>";
 		};
 		E21FE439062B79940059585C /* KeyEquivalents */ = {
@@ -588,107 +757,17 @@
 		F5DC7198033DB4A801A8010C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				7FE7F82F06D8003200647AA1 /* Connection Management */,
-				7FE7F82E06D7FFC700647AA1 /* Preferences */,
-				E21FE439062B79940059585C /* KeyEquivalents */,
-				7FD35C1706CC57FB00648090 /* Profiles */,
-				7FC6DF2405C315680028A970 /* Server Management */,
 				7FB3EA1D0804E77F003757C9 /* AppleScript Processing */,
-				E2F3A2E306D4483D005EB917 /* AppDelegate.h */,
-				E2F3A2E406D4483D005EB917 /* AppDelegate.m */,
-				F5DC719B033DB4A801A8010C /* ByteBlockReader.h */,
-				F5DC719C033DB4A801A8010C /* ByteBlockReader.m */,
-				F5DC719D033DB4A801A8010C /* ByteReader.h */,
-				F5DC719E033DB4A801A8010C /* ByteReader.m */,
-				F5DC719F033DB4A801A8010C /* CARD16Reader.h */,
-				F5DC71A0033DB4A801A8010C /* CARD16Reader.m */,
-				F5DC71A1033DB4A801A8010C /* CARD32Reader.h */,
-				F5DC71A2033DB4A801A8010C /* CARD32Reader.m */,
-				F5DC71A3033DB4A801A8010C /* CARD8Reader.h */,
-				F5DC71A4033DB4A801A8010C /* CARD8Reader.m */,
-				F5DC71A5033DB4A801A8010C /* CopyFilter.h */,
-				F5DC71A6033DB4A801A8010C /* CopyFilter.m */,
-				F5DC71A7033DB4A801A8010C /* CopyRectangleEncodingReader.h */,
-				F5DC71A8033DB4A801A8010C /* CopyRectangleEncodingReader.m */,
-				F5DC71A9033DB4A801A8010C /* CoRREEncodingReader.h */,
-				F5DC71AA033DB4A801A8010C /* CoRREEncodingReader.m */,
-				F5DC71AC033DB4A801A8010C /* d3des.c */,
-				F5DC71AD033DB4A801A8010C /* d3des.h */,
-				F5F2D5A603B3C93B01150DB1 /* debug.h */,
-				F5F2D5A703B3C93B01150DB1 /* debug.m */,
-				F5DC71B0033DB4A801A8010C /* EncodingReader.h */,
-				F5DC71B1033DB4A801A8010C /* EncodingReader.m */,
-				E291FA1308815A950061216E /* EventFilter.h */,
-				E291FA1408815A950061216E /* EventFilter.m */,
-				F5DC71B2033DB4A801A8010C /* FilterReader.h */,
-				F5DC71B3033DB4A801A8010C /* FilterReader.m */,
-				F5DC71B4033DB4A801A8010C /* FrameBuffer.h */,
-				F5DC71B5033DB4A801A8010C /* FrameBuffer.m */,
-				F5DC71B6033DB4A801A8010C /* FrameBufferDrawing.h */,
-				F5DC71B7033DB4A801A8010C /* FrameBufferUpdateReader.h */,
-				F5DC71B8033DB4A801A8010C /* FrameBufferUpdateReader.m */,
-				F5E4C9AA03416C2701A8010C /* FullscreenWindow.h */,
-				F5E4C9AB03416C2701A8010C /* FullscreenWindow.m */,
-				F5DC71B9033DB4A801A8010C /* GradientFilter.h */,
-				F5DC71BA033DB4A801A8010C /* GradientFilter.m */,
-				F5DC71BB033DB4A801A8010C /* GrayScaleFrameBuffer.h */,
-				F5DC71BC033DB4A801A8010C /* GrayScaleFrameBuffer.m */,
-				F5DC71BD033DB4A801A8010C /* HextileEncodingReader.h */,
-				F5DC71BE033DB4A801A8010C /* HextileEncodingReader.m */,
-				F5DC71BF033DB4A801A8010C /* HighColorFrameBuffer.h */,
-				F5DC71C0033DB4A801A8010C /* HighColorFrameBuffer.m */,
-				E2F48D74040EDD2200BD55BA /* KeyChain.h */,
-				E2F48D75040EDD2200BD55BA /* KeyChain.m */,
-				F5DC71CE033DB4A801A8010C /* LowColorFrameBuffer.h */,
-				F5DC71CF033DB4A801A8010C /* LowColorFrameBuffer.m */,
-				E2929DD307675DE800190669 /* MyApp.h */,
-				E2929DD407675DE800190669 /* MyApp.m */,
-				F5DC71D1033DB4A801A8010C /* NLTStringReader.h */,
-				F5DC71D2033DB4A801A8010C /* NLTStringReader.m */,
-				E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */,
-				E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */,
-				F5DC71D3033DB4A801A8010C /* PaletteFilter.h */,
-				F5DC71D4033DB4A801A8010C /* PaletteFilter.m */,
-				E291FB21088168E20061216E /* QueuedEvent.h */,
-				E291FB22088168E20061216E /* QueuedEvent.m */,
-				F5DC71D9033DB4A801A8010C /* RawEncodingReader.h */,
-				F5DC71DA033DB4A801A8010C /* RawEncodingReader.m */,
-				F5DC71DB033DB4A801A8010C /* RectangleList.h */,
-				F5DC71DC033DB4A801A8010C /* RectangleList.m */,
-				F5DC71DD033DB4A801A8010C /* RFBConnection.h */,
-				F5DC71DE033DB4A801A8010C /* RFBConnection.m */,
-				F5DC71E1033DB4A801A8010C /* RFBHandshaker.h */,
-				F5DC71E2033DB4A801A8010C /* RFBHandshaker.m */,
-				F5DC71E3033DB4A801A8010C /* rfbproto.h */,
-				F5DC71E4033DB4A801A8010C /* RFBProtocol.h */,
-				F5DC71E5033DB4A801A8010C /* RFBProtocol.m */,
-				F5DC71E6033DB4A801A8010C /* RFBServerInitReader.h */,
-				F5DC71E7033DB4A801A8010C /* RFBServerInitReader.m */,
-				F5DC71E8033DB4A801A8010C /* RFBStringReader.h */,
-				F5DC71E9033DB4A801A8010C /* RFBStringReader.m */,
-				F5DC71EA033DB4A801A8010C /* RFBView.h */,
-				F5DC71EB033DB4A801A8010C /* RFBView.m */,
-				F5DC71EC033DB4A801A8010C /* RREEncodingReader.h */,
-				F5DC71ED033DB4A801A8010C /* RREEncodingReader.m */,
-				F5DC71EE033DB4A801A8010C /* ServerCutTextReader.h */,
-				F5DC71EF033DB4A801A8010C /* ServerCutTextReader.m */,
-				F5DC71F0033DB4A801A8010C /* SetColorMapEntriesReader.h */,
-				F5DC71F1033DB4A801A8010C /* SetColorMapEntriesReader.m */,
-				F5DC71F2033DB4A801A8010C /* TightEncodingReader.h */,
-				F5DC71F3033DB4A801A8010C /* TightEncodingReader.m */,
-				F5DC71F5033DB4A801A8010C /* TrueColorFrameBuffer.h */,
-				F5DC71F6033DB4A801A8010C /* TrueColorFrameBuffer.m */,
-				F5DC71F7033DB4A801A8010C /* vncauth.c */,
-				F5DC71F8033DB4A801A8010C /* vncauth.h */,
-				F5DC71F9033DB4A801A8010C /* VNCViewer_main.m */,
-				F5DC71FB033DB4A801A8010C /* ZipLengthReader.h */,
-				F5DC71FC033DB4A801A8010C /* ZipLengthReader.m */,
-				F564F4B70392E07E01303550 /* ZlibEncodingReader.h */,
-				F564F4B60392E07E01303550 /* ZlibEncodingReader.m */,
-				F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */,
-				F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */,
-				F536C26803937E5301178D82 /* ZRLEEncodingReader.h */,
-				F536C26903937E5301178D82 /* ZRLEEncodingReader.m */,
+				0238CB6C0F35082100A9C56B /* Application */,
+				0238CB690F35080A00A9C56B /* Filters */,
+				0238CB6B0F35081600A9C56B /* FrameBuffers */,
+				E21FE439062B79940059585C /* KeyEquivalents */,
+				0238CB6A0F35081000A9C56B /* Misc */,
+				7FE7F82E06D7FFC700647AA1 /* Preferences */,
+				7FD35C1706CC57FB00648090 /* Profiles */,
+				0238CB6D0F35082F00A9C56B /* Protocol */,
+				0238CB670F35080100A9C56B /* Readers */,
+				7FC6DF2405C315680028A970 /* Server Management */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -771,6 +850,14 @@
 				7F7DE7D6080F39DF006BF1DF /* ServerStandAlone.h in Headers */,
 				E291FA1508815A950061216E /* EventFilter.h in Headers */,
 				E291FB23088168E20061216E /* QueuedEvent.h in Headers */,
+				02C0F2250F47925F00708BE8 /* RichCursorEncodingReader.h in Headers */,
+				02CF0DA110C49612009E03A7 /* RFBConnectionController.h in Headers */,
+				02CF0DAF10C4D9AD009E03A7 /* KeyCodes.h in Headers */,
+				02CF160610CF09FD009E03A7 /* RFBConnectionInfoController.h in Headers */,
+				02CF161210CF0BBC009E03A7 /* NSString_ByteString.h in Headers */,
+				02CF170D10CF4A62009E03A7 /* ConnectionMetrics.h in Headers */,
+				02CF17D310D01BA5009E03A7 /* ThroughputGraphView.h in Headers */,
+				029ECA5D10E2DE73003648D5 /* BufferPool.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,35 +870,13 @@
 			buildPhases = (
 				7F7A93E405E71B5C00E20416 /* Headers */,
 				7F7A941805E71B5C00E20416 /* Resources */,
+				0255F0FC10E18D2300779200 /* CopyFiles */,
 				7F7A942605E71B5C00E20416 /* Sources */,
 				7F7A945805E71B5C00E20416 /* Frameworks */,
-				E23631D40646E8BD000D00B6 /* ShellScript */,
 				E23631DC0646E907000D00B6 /* ShellScript */,
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.2;
-				MAC_OS_X_VERSION_MIN_REQUIRED = MAC_OS_X_VERSION_10_2;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "Chicken of the VNC";
-				SECTORDER_FLAGS = "";
-				SKIP_INSTALL = YES;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-				_CHICKEN_VERSION_ = "$(_CHICKEN_VERSION_)";
-			};
 			dependencies = (
 			);
 			name = "Chicken of the VNC";
@@ -825,12 +890,8 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = E20426EA087531990026AA26 /* Build configuration list for PBXProject "Chicken of the VNC" */;
-			buildSettings = {
-			};
-			buildStyles = (
-				4A9504CCFFE6A4B311CA0CBA /* Development */,
-				4A9504CDFFE6A4B311CA0CBA /* Deployment */,
-			);
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -841,6 +902,7 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Chicken of the VNC */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				7F7A93E305E71B5C00E20416 /* Chicken of the VNC */,
 			);
@@ -857,38 +919,29 @@
 				7F7A941C05E71B5C00E20416 /* rfbCursor3.tiff in Resources */,
 				7F7A941F05E71B5C00E20416 /* rfbCursor2.tiff in Resources */,
 				7F7A942005E71B5C00E20416 /* rfbCursor.tiff in Resources */,
-				7F7A942105E71B5C00E20416 /* RFBConnection.nib in Resources */,
-				7F7A942205E71B5C00E20416 /* OSX_RFBViewer.nib in Resources */,
 				E21FE263062B6D310059585C /* Localizable.strings in Resources */,
-				7FFA903D062BA74F0008D381 /* ServerDisplay.nib in Resources */,
-				E2F3A34006D44E0E005EB917 /* Preferences.nib in Resources */,
-				E2F3A7E806D4A687005EB917 /* ConnectionDialog.nib in Resources */,
-				E2F3A99E06D4BFD8005EB917 /* ProfileManager.nib in Resources */,
 				E2CA651806DA451600B70BDF /* help in Resources */,
 				E2B0839D0763A51700CE24C1 /* KeyEquivalentScenarios.plist in Resources */,
-				E2B083F90763AAC200CE24C1 /* ListenDialog.nib in Resources */,
 				7FB3EA8D0804ECDB003757C9 /* CotVNC.scriptTerminology in Resources */,
 				7FB3EA8E0804ECE0003757C9 /* CotVNC.scriptSuite in Resources */,
 				E291FAD5088161DA0061216E /* cursors.plist in Resources */,
+				0255F10010E1A22300779200 /* dsa_pub.pem in Resources */,
+				029ECC9C10E9346B003648D5 /* ConnectionDialog.xib in Resources */,
+				029ECC9D10E9346C003648D5 /* ListenDialog.xib in Resources */,
+				029ECC9E10E9346D003648D5 /* Preferences.xib in Resources */,
+				029ECC9F10E9346E003648D5 /* ProfileManager.xib in Resources */,
+				029ECCA010E9346E003648D5 /* OSX_RFBViewer.xib in Resources */,
+				029ECCA110E9346F003648D5 /* RFBConnection.xib in Resources */,
+				029ECCA210E93470003648D5 /* ServerDisplay.xib in Resources */,
+				029ECCA310E93471003648D5 /* SetTitle.xib in Resources */,
+				029ECCA510E93472003648D5 /* OptionPanel.xib in Resources */,
+				029ECCA710E93474003648D5 /* OpeningConnection.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E23631D40646E8BD000D00B6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"$TARGET_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents\"\n\ncat ./Info.plist \\\n| sed s/__VERSION__/$_CHICKEN_VERSION_/ \\\n> ./Info.plist.tmp \\\n&& mv -f ./Info.plist.tmp ./Info.plist\n\nTESTPATH=./Resources/*.lproj/InfoPlist.strings\nfor path in $TESTPATH ; do\n\tif [ $path != \"$TESTPATH\" ]; then\n\t\tcat \"$path\" \\\n\t\t| sed s/__VERSION__/$_CHICKEN_VERSION_/ \\\n\t\t> \"$path.tmp\" \\\n\t\t&& mv -f \"$path.tmp\" \"$path\"\n\tfi\ndone";
-		};
 		E23631DC0646E907000D00B6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -978,20 +1031,118 @@
 				7F7DE7D7080F39DF006BF1DF /* ServerStandAlone.m in Sources */,
 				E291FB1B088168BB0061216E /* EventFilter.m in Sources */,
 				E291FB24088168E20061216E /* QueuedEvent.m in Sources */,
+				02C0F2260F47925F00708BE8 /* RichCursorEncodingReader.m in Sources */,
+				02CF0DA210C49612009E03A7 /* RFBConnectionController.m in Sources */,
+				02CF0DAD10C4D97D009E03A7 /* KeyCodes.m in Sources */,
+				02CF160710CF09FD009E03A7 /* RFBConnectionInfoController.m in Sources */,
+				02CF161310CF0BBC009E03A7 /* NSString_ByteString.m in Sources */,
+				02CF170E10CF4A62009E03A7 /* ConnectionMetrics.m in Sources */,
+				02CF17D410D01BA5009E03A7 /* ThroughputGraphView.m in Sources */,
+				029ECA5E10E2DE73003648D5 /* BufferPool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		7FFA903B062BA74F0008D381 /* ServerDisplay.nib */ = {
+		029ECC5610E930C8003648D5 /* ConnectionDialog.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7FFA903C062BA74F0008D381 /* English */,
-				E2B083A30763A79F00CE24C1 /* French */,
-				E2F546510768C79D00AB2600 /* Italian */,
+				029ECC5710E930C8003648D5 /* English */,
+				029ECC5910E93186003648D5 /* French */,
+				029ECC5B10E93195003648D5 /* Italian */,
 			);
-			name = ServerDisplay.nib;
+			name = ConnectionDialog.xib;
+			sourceTree = "<group>";
+		};
+		029ECC5D10E931AE003648D5 /* ListenDialog.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC5E10E931AE003648D5 /* English */,
+				029ECC6010E931C5003648D5 /* French */,
+				029ECC6210E931E2003648D5 /* Italian */,
+			);
+			name = ListenDialog.xib;
+			sourceTree = "<group>";
+		};
+		029ECC6410E931FC003648D5 /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC6510E931FC003648D5 /* English */,
+				029ECC6710E93217003648D5 /* French */,
+				029ECC6910E93226003648D5 /* Italian */,
+			);
+			name = Preferences.xib;
+			sourceTree = "<group>";
+		};
+		029ECC6B10E93268003648D5 /* ProfileManager.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC6C10E93268003648D5 /* English */,
+				029ECC6E10E9327C003648D5 /* French */,
+				029ECC7010E9328A003648D5 /* Italian */,
+			);
+			name = ProfileManager.xib;
+			sourceTree = "<group>";
+		};
+		029ECC7210E9329F003648D5 /* OSX_RFBViewer.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC7310E9329F003648D5 /* English */,
+				029ECC7510E932C3003648D5 /* French */,
+				029ECC7710E932DC003648D5 /* Italian */,
+			);
+			name = OSX_RFBViewer.xib;
+			sourceTree = "<group>";
+		};
+		029ECC7910E932F0003648D5 /* RFBConnection.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC7A10E932F0003648D5 /* English */,
+				029ECC7C10E9330C003648D5 /* French */,
+				029ECC7E10E93329003648D5 /* Italian */,
+			);
+			name = RFBConnection.xib;
+			sourceTree = "<group>";
+		};
+		029ECC8010E93336003648D5 /* ServerDisplay.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC8110E93336003648D5 /* English */,
+				029ECC8310E93341003648D5 /* French */,
+				029ECC8510E9334E003648D5 /* Italian */,
+			);
+			name = ServerDisplay.xib;
+			sourceTree = "<group>";
+		};
+		029ECC8710E93381003648D5 /* SetTitle.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC8810E93381003648D5 /* English */,
+				029ECCAF10E934B2003648D5 /* Italian */,
+				029ECCB110E934BF003648D5 /* French */,
+			);
+			name = SetTitle.xib;
+			sourceTree = "<group>";
+		};
+		029ECC8A10E9338D003648D5 /* OptionPanel.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC8B10E9338D003648D5 /* English */,
+				029ECCAE10E934AA003648D5 /* Italian */,
+				029ECCB010E934B8003648D5 /* French */,
+			);
+			name = OptionPanel.xib;
+			sourceTree = "<group>";
+		};
+		029ECC8D10E93398003648D5 /* OpeningConnection.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029ECC8E10E93398003648D5 /* English */,
+				029ECCAC10E9348F003648D5 /* French */,
+				029ECCAD10E93498003648D5 /* Italian */,
+			);
+			name = OpeningConnection.xib;
 			sourceTree = "<group>";
 		};
 		E21FE261062B6D310059585C /* Localizable.strings */ = {
@@ -1014,46 +1165,6 @@
 			name = KeyEquivalentScenarios.plist;
 			sourceTree = "<group>";
 		};
-		E2B083F70763AAC200CE24C1 /* ListenDialog.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2B083F80763AAC200CE24C1 /* English */,
-				E2B084000763ABD300CE24C1 /* French */,
-				E2F546540768C79D00AB2600 /* Italian */,
-			);
-			name = ListenDialog.nib;
-			sourceTree = "<group>";
-		};
-		E2F3A33E06D44E0E005EB917 /* Preferences.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2F3A33F06D44E0E005EB917 /* English */,
-				E2B083A80763A79F00CE24C1 /* French */,
-				E2F5464F0768C79D00AB2600 /* Italian */,
-			);
-			name = Preferences.nib;
-			sourceTree = "<group>";
-		};
-		E2F3A7E606D4A687005EB917 /* ConnectionDialog.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2F3A7E706D4A687005EB917 /* English */,
-				E2B083A40763A79F00CE24C1 /* French */,
-				E2F5464E0768C79D00AB2600 /* Italian */,
-			);
-			name = ConnectionDialog.nib;
-			sourceTree = "<group>";
-		};
-		E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2F3A99D06D4BFD8005EB917 /* English */,
-				E2B083AB0763A79F00CE24C1 /* French */,
-				E2F546520768C79D00AB2600 /* Italian */,
-			);
-			name = ProfileManager.nib;
-			sourceTree = "<group>";
-		};
 		F5DC7172033DB3DC01A8010C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1064,177 +1175,102 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		F5DC7185033DB44301A8010C /* RFBConnection.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5DC7186033DB44301A8010C /* English */,
-				E2B083A50763A79F00CE24C1 /* French */,
-				E2F5464C0768C79D00AB2600 /* Italian */,
-			);
-			name = RFBConnection.nib;
-			sourceTree = "<group>";
-		};
-		F5DC7187033DB44301A8010C /* OSX_RFBViewer.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5DC7188033DB44301A8010C /* English */,
-				E2B083AA0763A79F00CE24C1 /* French */,
-				E2F546530768C79D00AB2600 /* Italian */,
-			);
-			name = OSX_RFBViewer.nib;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E20426E7087531990026AA26 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Immo Code Signing";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.2;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
+				OTHER_CODE_SIGN_FLAGS = "-v";
 				PRODUCT_NAME = "Chicken of the VNC";
-				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
+					"-Wno-idiomatic-parentheses",
 				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
 			};
 			name = Development;
 		};
 		E20426E8087531990026AA26 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Immo Code Signing";
 				COPY_PHASE_STRIP = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_ALTIVEC_EXTENSIONS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.2;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
+				OTHER_CODE_SIGN_FLAGS = "-v";
 				PRODUCT_NAME = "Chicken of the VNC";
-				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
+					"-Wno-idiomatic-parentheses",
 				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
 			};
 			name = Deployment;
-		};
-		E20426E9087531990026AA26 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.2;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "Chicken of the VNC";
-				SECTORDER_FLAGS = "";
-				SKIP_INSTALL = YES;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-			};
-			name = Default;
 		};
 		E20426EB087531990026AA26 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_OPTIMIZATION_LEVEL = 0;
-				ZERO_LINK = NO;
-				_CHICKEN_VERSION_ = 2.0b4;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = YES;
+				GCC_ENABLE_SSE42_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 1;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
+				SDKROOT = macosx10.6;
+				__VERSION__ = 2.5b4;
 			};
 			name = Development;
 		};
 		E20426EC087531990026AA26 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				_CHICKEN_VERSION_ = 2.0b4;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				DEAD_CODE_STRIPPING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = YES;
+				GCC_ENABLE_SSE42_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
+				SDKROOT = macosx10.6;
 			};
 			name = Deployment;
-		};
-		E20426ED087531990026AA26 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_OPTIMIZATION_LEVEL = 0;
-				_CHICKEN_VERSION_ = 2.0b4;
-			};
-			name = Default;
-		};
-		E21DEC9C097EC77E00F015DE /* Universal Fast Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.2;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "Chicken of the VNC";
-				SECTORDER_FLAGS = "";
-				SKIP_INSTALL = YES;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
-			name = "Universal Fast Development";
-		};
-		E21DEC9D097EC77E00F015DE /* Universal Fast Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_ppc = /Developer/SDKs/MacOSX10.3.9.sdk;
-				ZERO_LINK = NO;
-				_CHICKEN_VERSION_ = 2.0b4;
-			};
-			name = "Universal Fast Development";
 		};
 /* End XCBuildConfiguration section */
 
@@ -1243,23 +1279,19 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E20426E7087531990026AA26 /* Development */,
-				E21DEC9C097EC77E00F015DE /* Universal Fast Development */,
 				E20426E8087531990026AA26 /* Deployment */,
-				E20426E9087531990026AA26 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Deployment;
 		};
 		E20426EA087531990026AA26 /* Build configuration list for PBXProject "Chicken of the VNC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E20426EB087531990026AA26 /* Development */,
-				E21DEC9D097EC77E00F015DE /* Universal Fast Development */,
 				E20426EC087531990026AA26 /* Deployment */,
-				E20426ED087531990026AA26 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Deployment;
 		};
 /* End XCConfigurationList section */
 	};

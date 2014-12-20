@@ -21,6 +21,8 @@
 #import <AppKit/AppKit.h>
 #import <rfbproto.h>
 
+@class ConnectionMetrics;
+
 @interface ByteReader : NSObject
 {
     id		target;
@@ -33,5 +35,7 @@
 - (void)setReaderWithoutReset:(ByteReader*)aReader;
 - (unsigned)readBytes:(unsigned char*)theBytes length:(unsigned)aLength;
 - (id)topTarget;
+
+- (ConnectionMetrics *)metrics;
 
 @end

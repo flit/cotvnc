@@ -25,8 +25,12 @@
 @protocol IServerData;
 @protocol ConnectionDelegate;
 
+/*!
+ * @brief Controller class for the server editor view.
+ */
 @interface ServerDataViewController : NSWindowController
 {
+    IBOutlet NSTextField * serverName;
     IBOutlet NSTextField *display;
     IBOutlet NSTextField *hostName;
     IBOutlet NSTextField *password;
@@ -38,6 +42,7 @@
 	IBOutlet NSButton *save;
 	IBOutlet NSBox *box;
 	IBOutlet NSButton *connectBtn;
+    IBOutlet NSTextField * commentField;
 	
 	IBOutlet NSProgressIndicator *connectIndicator;
 	IBOutlet NSTextField *connectIndicatorText;
@@ -79,5 +84,7 @@
 @protocol ConnectionDelegate
 
 - (bool)connect:(id<IServerData>)server;
+
+- (void)serverNameDidChange:(id<IServerData>)server;
 
 @end

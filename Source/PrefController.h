@@ -17,6 +17,7 @@
 	IBOutlet NSButton *mDisplayFullscreenWarning;
 	IBOutlet NSSlider *mFrontInverseCPUSlider;
 	IBOutlet NSSlider *mOtherInverseCPUSlider;
+    IBOutlet NSButton * m_showBonjourCheckbox;
 }
 
 	// Creation
@@ -32,7 +33,7 @@
 - (float)otherFrameBufferUpdateSeconds;
 - (float)gammaCorrection;
 - (void)getLocalPixelFormat:(rfbPixelFormat*)pf;
-- (id)defaultFrameBufferClass;
+- (Class)defaultFrameBufferClass;
 - (float)maxPossibleFrameBufferUpdateSeconds;
 - (BOOL)usesRendezvous;
 - (NSDictionary *)hostInfo;

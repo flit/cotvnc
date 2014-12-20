@@ -20,8 +20,6 @@
 
 #import "ByteBlockReader.h"
 
-extern BOOL gIsJaguar;
-
 @implementation ByteBlockReader
 
 - (id)initTarget:(id)aTarget action:(SEL)anAction size:(unsigned)aSize
@@ -64,18 +62,14 @@ extern BOOL gIsJaguar;
 
 - (unsigned)readBytes:(unsigned char*)theBytes length:(unsigned)aLength
 {
-	// we can save some time here by not copying the data into a new NSData object.  Unfortunately, we can only save this time on Jaguar.  It's important to remember that all of our targets must treat this data as _READ_ONLY_!
+	// we can save some time here by not copying the data into a new NSData object.
 	
     unsigned canConsume = MIN(aLength, (size - bytesRead));
     
     memcpy(buffer + bytesRead, theBytes, canConsume);
-    if((bytesRead += canConsume) == size) {
-		if (gIsJaguar) {
-			[target performSelector:action withObject:[NSData dataWithBytesNoCopy:buffer length:size freeWhenDone: NO]];
-		}
-		else {
-			[target performSelector:action withObject:[NSData dataWithBytes:buffer length:size]];
-		}
+    if ((bytesRead += canConsume) == size)
+    {
+        [target performSelector:action withObject:[NSData dataWithBytesNoCopy:buffer length:size freeWhenDone: NO]];
     }
     return canConsume;
 }

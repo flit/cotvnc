@@ -24,8 +24,11 @@
 #import "CARD32Reader.h"
 #import "ByteBlockReader.h"
 #import "RFBStringReader.h"
+#import "IServerData.h"
 
 @implementation RFBHandshaker
+
+@synthesize connection = _connection;
 
 - (id)initTarget:(id)aTarget action:(SEL)anAction
 {
@@ -58,7 +61,7 @@
 	int protocolMinorVersion = MIN(rfbProtocolMinorVersion, [target serverMinorVersion]);
 
 	sprintf(clientData, rfbProtocolVersionFormat, rfbProtocolMajorVersion, protocolMinorVersion);
-    [target writeBytes:(unsigned char*)clientData length:sz_rfbProtocolVersionMsg];
+    [_connection writeBytes:(unsigned char*)clientData length:sz_rfbProtocolVersionMsg];
 		
 	if (protocolMinorVersion >= 7)
 		[target setReader:authCountReader];
@@ -68,9 +71,9 @@
 
 - (void)sendClientInit
 {
-    unsigned char shared = [target connectShared] ? 1 : 0;
+    unsigned char shared = _connection.controller.isConnectionShared ? 1 : 0;
 
-    [target writeBytes:&shared length:1];
+    [_connection writeBytes:&shared length:1];
     [target setReader:serverInitReader];
 }
 
@@ -98,7 +101,7 @@
 		
 		switch (availableAuthType) {
 			case rfbNoAuth: {
-				[target writeBytes:&availableAuthType length:1];
+				[_connection writeBytes:&availableAuthType length:1];
 				
 				if (MIN(rfbProtocolMinorVersion, [target serverMinorVersion]) >= 8) // For 3.8+ we need to get a result back from the server
 					[target setReader: authResultReader];
@@ -108,7 +111,7 @@
 				return;
 			}
 			case rfbVncAuth: {
-				[target writeBytes:&availableAuthType length:1];
+				[_connection writeBytes:&availableAuthType length:1];
 				[target setReader:challengeReader];
 				return;
 			}
@@ -119,17 +122,17 @@
 				else
 					errorStr = [errorStr stringByAppendingFormat:@",%@", [NSNumber numberWithChar:availableAuthType]];
 				if (availableAuthType == 30)
-					errorStr = [NSLocalizedString( @"ARDAuthWarning", nil ) stringByAppendingFormat:errorStr];
+					errorStr = [NSLocalizedString( @"ARDAuthWarning", nil ) stringByAppendingString:errorStr];
 			}
 		}
 	}
 
 
 	// No valid auth type found
-	NSLog(errorStr);
+	NSLog(@"%@", errorStr);
 	availableAuthType= 0;
-	[target writeBytes:&availableAuthType length:1];
-	[target terminateConnection:errorStr];
+	[_connection writeBytes:&availableAuthType length:1];
+    @throw [NSException exceptionWithName:kRFBConnectionException reason:errorStr userInfo:nil];
 }
 
 - (void)setAuthType:(NSNumber*)authType
@@ -148,7 +151,7 @@
 		{
 			NSString *errorStr = NSLocalizedString( @"UnknownAuthType", nil );
 			errorStr = [NSString stringWithFormat:errorStr, authType];
-            [target terminateConnection:errorStr];
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:errorStr userInfo:nil];
             break;
 		}
     }
@@ -159,8 +162,8 @@
     unsigned char bytes[CHALLENGESIZE];
 
     [theChallenge getBytes:bytes length:CHALLENGESIZE];
-    vncEncryptBytes(bytes, (char*)[[target password] cString]);
-    [target writeBytes:bytes length:CHALLENGESIZE];
+    vncEncryptBytes(bytes, (char*)[[_connection.server password] UTF8String]);
+    [_connection writeBytes:bytes length:CHALLENGESIZE];
     [target setReader:authResultReader];
 }
 
@@ -178,17 +181,17 @@
 			}
 			else {
 				errorStr = NSLocalizedString( @"AuthenticationFailed", nil );
-				[target terminateConnection:errorStr];
+				@throw [NSException exceptionWithName:kRFBConnectionException reason:errorStr userInfo:nil];
 			}
             break;
         case rfbVncAuthTooMany:
 			errorStr = NSLocalizedString( @"AuthenticationFailedTooMany", nil );
-            [target terminateConnection:errorStr];
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:errorStr userInfo:nil];
             break;
         default:
 			errorStr = NSLocalizedString( @"UnknownAuthResult", nil );
 			errorStr = [NSString stringWithFormat:errorStr, theResult];
-            [target terminateConnection:errorStr];
+            @throw [NSException exceptionWithName:kRFBConnectionException reason:errorStr userInfo:nil];
             break;
     }
 }
@@ -200,10 +203,10 @@
 
 - (void)connFailed:(NSString*)theReason
 {
-    [target terminateConnection:[NSString stringWithFormat:@"%@ - %@:\n%@",
+    @throw [NSException exceptionWithName:kRFBConnectionException reason:[NSString stringWithFormat:@"%@ - %@:\n%@",
 		NSLocalizedString( @"AuthenticationFailed", nil ),
 		NSLocalizedString(@"ServerReports", nil) , 
-		theReason]];
+		theReason] userInfo:nil];
 }
 
 @end

@@ -66,7 +66,7 @@
 
 - (void)_selectProfileAtIndex: (int)index
 {
-	[mProfileTable selectRow: index byExtendingSelection: NO];
+	[mProfileTable selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection: NO];
 	
 	NSArray *profileNames = [self _sortedProfileNames];
 	[mProfileNameField setStringValue: [profileNames objectAtIndex: index]];
@@ -79,7 +79,7 @@
 - (void)_selectProfileNamed:(NSString*)aProfile
 {
 	NSArray *profileNames = [self _sortedProfileNames];
-	int index = [profileNames indexOfObject: aProfile];
+	NSUInteger index = [profileNames indexOfObject: aProfile];
 	NSParameterAssert( NSNotFound != index );
 	[self _selectProfileAtIndex: index];
 }
@@ -91,7 +91,7 @@
     NSMutableArray* n = [[[profiles sortedKeyArray] mutableCopy] autorelease];
 	NSString *defaultProfileName = [profiles defaultProfileName];
 	
-	unsigned int idx = [n indexOfObject: defaultProfileName];
+	NSUInteger idx = [n indexOfObject: defaultProfileName];
 	NSParameterAssert( NSNotFound != idx );
 	[n removeObjectAtIndex:idx];
 	[n insertObject: defaultProfileName atIndex: 0];
