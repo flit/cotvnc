@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment version="1060" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ServerDataViewController">
+            <connections>
+                <outlet property="box" destination="23" id="45"/>
+                <outlet property="commentField" destination="133" id="135"/>
+                <outlet property="connectBtn" destination="14" id="62"/>
+                <outlet property="connectIndicator" destination="27" id="55"/>
+                <outlet property="connectIndicatorText" destination="9" id="56"/>
+                <outlet property="display" destination="18" id="80"/>
+                <outlet property="fullscreen" destination="92" id="93"/>
+                <outlet property="hostName" destination="11" id="39"/>
+                <outlet property="password" destination="7" id="81"/>
+                <outlet property="profilePopup" destination="17" id="44"/>
+                <outlet property="rememberPwd" destination="20" id="42"/>
+                <outlet property="save" destination="95" id="96"/>
+                <outlet property="serverName" destination="140" id="146"/>
+                <outlet property="shared" destination="26" id="43"/>
+                <outlet property="viewOnly" destination="98" id="109"/>
+                <outlet property="window" destination="6" id="54"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Connect" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="6" userLabel="Connect" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="472" y="378" width="336" height="409"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="832"/>
+            <value key="minSize" type="size" width="336" height="350"/>
+            <view key="contentView" id="5">
+                <rect key="frame" x="0.0" y="0.0" width="336" height="409"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box boxType="oldStyle" borderType="line" title="Box" titlePosition="noTitle" id="23">
+                        <rect key="frame" x="20" y="20" width="296" height="369"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                        <view key="contentView" id="DEw-Vy-ZYq">
+                            <rect key="frame" x="1" y="1" width="294" height="367"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button imageHugsTitle="YES" id="95">
+                                    <rect key="frame" x="0.0" y="18" width="83" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <buttonCell key="cell" type="check" title="Save Server" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="125">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="message" size="11"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="addServerChanged:" target="-2" id="97"/>
+                                    </connections>
+                                </button>
+                                <textField verticalHuggingPriority="750" id="9">
+                                    <rect key="frame" x="24" y="20" width="69" height="13"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Connecting..." id="114">
+                                        <font key="font" metaFont="system" size="10"/>
+                                        <color key="textColor" red="0.42934781" green="0.42934781" blue="0.42934781" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField toolTip="The host name or IP address of the server to which you wish to connect.  You can optionally append a port number with a colon." verticalHuggingPriority="750" id="11">
+                                    <rect key="frame" x="73" y="298" width="218" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="server address" drawsBackground="YES" id="116">
+                                        <font key="font" metaFont="message"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="89"/>
+                                        <outlet property="nextKeyView" destination="18" id="82"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="10">
+                                    <rect key="frame" x="0.0" y="237" width="68" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" alignment="right" title="Password:" id="115">
+                                        <font key="font" metaFont="message"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="25">
+                                    <rect key="frame" x="20" y="187" width="48" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" alignment="right" title="Profile:" id="122">
+                                        <font key="font" metaFont="message"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="127">
+                                    <rect key="frame" x="-2" y="83" width="70" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" alignment="right" title="Comment:" id="128">
+                                        <font key="font" metaFont="message"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="8">
+                                    <rect key="frame" x="8" y="300" width="60" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" alignment="right" title="Address:" id="113">
+                                        <font key="font" metaFont="message"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField toolTip="The display number of the server to which you wish to connect" verticalHuggingPriority="750" id="18">
+                                    <rect key="frame" x="73" y="266" width="60" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="0" placeholderString="0" drawsBackground="YES" id="120">
+                                        <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="0" negativeFormat="-0" localizesFormat="NO" hasThousandSeparators="NO" thousandSeparator="," id="49">
+                                            <attributedString key="attributedStringForNil"/>
+                                            <attributedString key="attributedStringForNotANumber">
+                                                <fragment content="NaN"/>
+                                            </attributedString>
+                                            <attributedString key="attributedStringForZero">
+                                                <fragment content="0"/>
+                                            </attributedString>
+                                            <decimal key="minimum" value="0"/>
+                                            <decimal key="maximum" value="99999"/>
+                                        </numberFormatter>
+                                        <font key="font" metaFont="cellTitle"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="90"/>
+                                        <outlet property="nextKeyView" destination="26" id="83"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="15">
+                                    <rect key="frame" x="13" y="269" width="55" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" alignment="right" title="Display:" id="118">
+                                        <font key="font" metaFont="message"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton toolTip="Select your desired connection profile." verticalHuggingPriority="750" imageHugsTitle="YES" id="17">
+                                    <rect key="frame" x="70" y="180" width="224" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="default" bezelStyle="rounded" alignment="left" lineBreakMode="clipping" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="13" id="119">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="cellTitle"/>
+                                        <menu key="menu" title="OtherViews" id="21">
+                                            <items>
+                                                <menuItem title="default" state="on" id="13"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <action selector="profileSelectionChanged:" target="-2" id="78"/>
+                                        <outlet property="nextKeyView" destination="14" id="87"/>
+                                    </connections>
+                                </popUpButton>
+                                <button toolTip="Store this password in your Keychain for automatic retrieval next time." imageHugsTitle="YES" id="20">
+                                    <rect key="frame" x="71" y="210" width="222" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Remember Password" bezelStyle="regularSquare" imagePosition="leading" alignment="left" inset="2" id="121">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="message"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="rememberPwdChanged:" target="-2" id="77"/>
+                                        <outlet property="nextKeyView" destination="17" id="86"/>
+                                    </connections>
+                                </button>
+                                <button toolTip="Connect to the server now" verticalHuggingPriority="750" imageHugsTitle="YES" id="14">
+                                    <rect key="frame" x="205" y="11" width="92" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" inset="2" id="117">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="message"/>
+                                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="connectToServer:" target="-2" id="79"/>
+                                        <outlet property="nextKeyView" destination="11" id="88"/>
+                                    </connections>
+                                </button>
+                                <box verticalHuggingPriority="750" boxType="separator" id="19">
+                                    <rect key="frame" x="-1" y="42" width="296" height="5"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                </box>
+                                <textField toolTip="The password for the server to which you wish to connect" verticalHuggingPriority="750" id="7" customClass="NSSecureTextField">
+                                    <rect key="frame" x="73" y="234" width="218" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="112">
+                                        <font key="font" metaFont="cellTitle"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="91"/>
+                                        <outlet property="nextKeyView" destination="20" id="85"/>
+                                    </connections>
+                                </textField>
+                                <button toolTip="Other clients can connect to the server at the same time as you." imageHugsTitle="YES" id="26">
+                                    <rect key="frame" x="71" y="128" width="222" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Allow other clients to connect" imagePosition="leading" alignment="left" inset="2" id="123">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="message"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="sharedChanged:" target="-2" id="75"/>
+                                        <outlet property="nextKeyView" destination="7" id="84"/>
+                                    </connections>
+                                </button>
+                                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="27">
+                                    <rect key="frame" x="3" y="20" width="16" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </progressIndicator>
+                                <button toolTip="Hide your menubar and Dock and use the entire screen." imageHugsTitle="YES" id="92">
+                                    <rect key="frame" x="71" y="108" width="222" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Fullscreen display" bezelStyle="regularSquare" imagePosition="leading" alignment="left" inset="2" id="124">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="message"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="fullscreenChanged:" target="-2" id="94"/>
+                                        <outlet property="nextKeyView" destination="133" id="138"/>
+                                    </connections>
+                                </button>
+                                <button toolTip="Keyboard and mouse events will not be sent to the server, you will only be observing." imageHugsTitle="YES" id="98">
+                                    <rect key="frame" x="71" y="148" width="222" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="View only" bezelStyle="regularSquare" imagePosition="leading" alignment="left" inset="2" id="126">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="message"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="viewOnlyChanged:" target="-2" id="110"/>
+                                    </connections>
+                                </button>
+                                <textField verticalHuggingPriority="750" id="133">
+                                    <rect key="frame" x="73" y="52" width="218" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                    <textFieldCell key="cell" controlSize="small" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="134">
+                                        <font key="font" metaFont="message" size="11"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="137"/>
+                                        <outlet property="nextKeyView" destination="14" id="139"/>
+                                    </connections>
+                                </textField>
+                                <textField toolTip="The host name or IP address of the server to which you wish to connect.  You can optionally append a port number with a colon." verticalHuggingPriority="750" id="140">
+                                    <rect key="frame" x="73" y="330" width="218" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="server name" drawsBackground="YES" id="143">
+                                        <font key="font" metaFont="message"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="144"/>
+                                        <outlet property="nextKeyView" destination="11" id="147"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="141">
+                                    <rect key="frame" x="20" y="331" width="48" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" alignment="right" title="Name:" id="142">
+                                        <font key="font" metaFont="message"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                        </view>
+                    </box>
+                </subviews>
+            </view>
+        </window>
+        <view id="12">
+            <rect key="frame" x="0.0" y="0.0" width="332" height="1"/>
+            <autoresizingMask key="autoresizingMask"/>
+        </view>
+    </objects>
+</document>

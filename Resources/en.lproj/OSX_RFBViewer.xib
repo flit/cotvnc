@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment version="1060" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="1367" id="1368"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <menu title="OSX_RFBViewer" systemMenu="main" id="29" userLabel="MainMenu">
+            <items>
+                <menuItem title="Chicken of the VNC" id="612">
+                    <menu key="submenu" title="Chicken of the VNC" systemMenu="apple" id="614">
+                        <items>
+                            <menuItem title="About Chicken of the VNC…" id="615">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="makeKeyAndOrderFront:" target="232" id="628"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="981">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Preferences…" keyEquivalent="," id="620">
+                                <connections>
+                                    <action selector="showPreferences:" target="1367" id="1373"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Check for Updates…" id="1574">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkForUpdates:" target="1573" id="1575"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="610">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Services" id="613">
+                                <menu key="submenu" title="Services" systemMenu="services" id="621"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="618">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Hide Chicken of the VNC" keyEquivalent="h" id="611">
+                                <connections>
+                                    <action selector="hide:" target="-1" id="623"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Hide Others" keyEquivalent="h" id="616">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-1" id="624"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All" id="617">
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-1" id="625"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="609">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Quit Chicken of the VNC" keyEquivalent="q" id="619">
+                                <connections>
+                                    <action selector="terminate:" target="-1" id="622"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Connection" id="52">
+                    <menu key="submenu" title="Connection" id="61">
+                        <items>
+                            <menuItem title="New Connection…" keyEquivalent="n" id="1477">
+                                <connections>
+                                    <action selector="showNewConnectionDialog:" target="1367" id="1478"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Open Connection…" keyEquivalent="o" id="53">
+                                <connections>
+                                    <action selector="showConnectionDialog:" target="1367" id="1374"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Listen for Server…" keyEquivalent="l" id="1454">
+                                <connections>
+                                    <action selector="showListenerDialog:" target="1367" id="1455"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Close Window" keyEquivalent="w" id="1295">
+                                <connections>
+                                    <action selector="performClose:" target="-1" id="1296"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1297">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Connection Profiles…" keyEquivalent="p" id="1298">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="showProfileManager:" target="1367" id="1377"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1019">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Set Connection Title…" id="165">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openNewTitlePanel:" target="-1" id="166"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Get Connection Info…" id="315">
+                                <connections>
+                                    <action selector="openOptions:" target="-1" id="316"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Force Reconnect" id="1496">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="forceReconnect:" target="-1" id="1559"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1561"/>
+                            <menuItem title="Release All Modifier Keys" id="1560">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="releaseAllModifierKeys:" target="-1" id="1562"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Special Keys" id="1456">
+                                <menu key="submenu" title="Special Keys" id="1458">
+                                    <items>
+                                        <menuItem title="Send &quot;Cmd-Option-Escape&quot;" id="1459">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="sendCmdOptEsc:" target="-1" id="1472"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Send &quot;Ctrl-Alt-Del&quot;" id="1470">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="sendCtrlAltDel:" target="-1" id="1471"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="1465">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="Send &quot;Insert&quot;" id="1473">
+                                            <connections>
+                                                <action selector="sendInsertKeyCode:" target="-1" id="1475"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Send &quot;Delete&quot;" id="1474">
+                                            <connections>
+                                                <action selector="sendDeleteKeyCode:" target="-1" id="1476"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Send &quot;Pause&quot;" id="1457">
+                                            <connections>
+                                                <action selector="sendPauseKeyCode:" target="-1" id="1466"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Send &quot;Break&quot;" id="1462">
+                                            <connections>
+                                                <action selector="sendBreakKeyCode:" target="-1" id="1467"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Send &quot;Print&quot;" id="1463">
+                                            <connections>
+                                                <action selector="sendPrintKeyCode:" target="-1" id="1468"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Send &quot;Execute&quot;" id="1464">
+                                            <connections>
+                                                <action selector="sendExecuteKeyCode:" target="-1" id="1469"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Edit" id="1303">
+                    <menu key="submenu" title="Edit" id="1307">
+                        <items>
+                            <menuItem title="Undo" keyEquivalent="z" id="1302">
+                                <connections>
+                                    <action selector="undo:" target="-1" id="1316"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Redo" keyEquivalent="Z" id="1304">
+                                <connections>
+                                    <action selector="redo:" target="-1" id="1323"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1300">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Cut" keyEquivalent="x" id="1310">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="1317"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" keyEquivalent="c" id="1314">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="1321"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="1313">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="1318"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete" id="1312">
+                                <connections>
+                                    <action selector="delete:" target="-1" id="1322"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select All" keyEquivalent="a" id="1311">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="1320"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1306">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Speech" id="1308">
+                                <menu key="submenu" title="Speech" id="1305">
+                                    <items>
+                                        <menuItem title="Start Speaking" id="1309">
+                                            <connections>
+                                                <action selector="startSpeaking:" target="-1" id="1319"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Stop Speaking" id="1301">
+                                            <connections>
+                                                <action selector="stopSpeaking:" target="-1" id="1315"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Window" id="1330">
+                    <menu key="submenu" title="Window" systemMenu="window" id="1331">
+                        <items>
+                            <menuItem title="Fullscreen Mode" keyEquivalent="~" id="1328">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullscreenMode:" target="-1" id="1335"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1333">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Minimize" keyEquivalent="m" id="1329">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="1338"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Force Screen Update" id="1332">
+                                <connections>
+                                    <action selector="manuallyUpdateFrameBuffer:" target="-1" id="1336"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1493"/>
+                            <menuItem title="Next Connection" keyEquivalent="" id="1491">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="showNextConnection:" target="-1" id="1494"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Previous Connection" keyEquivalent="" id="1492">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="showPreviousConnection:" target="-1" id="1495"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1334">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Bring All to Front" id="1327">
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="1337"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Help" id="1402">
+                    <menu key="submenu" title="Help" id="1410">
+                        <items>
+                            <menuItem title="Chicken of the VNC Help" keyEquivalent="?" id="1452">
+                                <connections>
+                                    <action selector="showHelp:" target="1367" id="1453"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+        </menu>
+        <window title="About Chicken of the VNC" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="about" animationBehavior="default" id="232" userLabel="Info" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="358" y="593" width="565" height="196"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <value key="minSize" type="size" width="246.94399999999999" height="6"/>
+            <view key="contentView" id="231">
+                <rect key="frame" x="1" y="1" width="565" height="196"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="225">
+                        <rect key="frame" x="124" y="137" width="265" height="39"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" alignment="left" title="Chicken of the VNC" id="1565">
+                            <font key="font" size="28" name="Helvetica-Bold"/>
+                            <color key="textColor" red="0.70980399999999999" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="228">
+                        <rect key="frame" x="59" y="20" width="154" height="10"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" alignment="left" title="2.0" id="1567">
+                            <font key="font" size="10" name="Helvetica"/>
+                            <color key="textColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="229">
+                        <rect key="frame" x="126" y="99" width="242" height="30"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" selectable="YES" alignment="left" id="1568">
+                            <font key="font" size="12" name="Helvetica"/>
+                            <string key="title">Administered by Jason Harris
+based on VNCViewer by Helmut Maierhofer</string>
+                            <color key="textColor" red="0.117647" green="0.19215699999999999" blue="0.45882401" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="230">
+                        <rect key="frame" x="342" y="20" width="203" height="26"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" selectable="YES" alignment="right" id="1569">
+                            <font key="font" size="10" name="Helvetica"/>
+                            <string key="title">Copyright 1998-2000 by Helmut Maierhofer
+Copyright 2002-2006 by Jason Harris</string>
+                            <color key="textColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView id="227">
+                        <rect key="frame" x="20" y="80" width="96" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSApplicationIcon" id="1566"/>
+                    </imageView>
+                    <box verticalHuggingPriority="750" boxType="separator" id="909">
+                        <rect key="frame" x="12" y="52" width="541" height="5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </box>
+                    <textField verticalHuggingPriority="750" id="911">
+                        <rect key="frame" x="125" y="63" width="334" height="28"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" selectable="YES" alignment="left" id="1570">
+                            <font key="font" size="10" name="Helvetica"/>
+                            <string key="title">released under the GNU Public License
+source code and support available at http://cotvnc.sourceforge.net</string>
+                            <color key="textColor" red="0.117647" green="0.19215699999999999" blue="0.45882401" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="1366">
+                        <rect key="frame" x="20" y="20" width="39" height="10"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" alignment="left" title="Version" id="1571">
+                            <font key="font" size="10" name="Helvetica"/>
+                            <color key="textColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="1479">
+                        <rect key="frame" x="376" y="99" width="169" height="30"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" selectable="YES" alignment="right" id="1572">
+                            <font key="font" size="12" name="Helvetica"/>
+                            <string key="title">(support@geekspiff.com)
+(helmut.maierhofer@chello.at)
+</string>
+                            <color key="textColor" red="0.117647" green="0.19215699999999999" blue="0.45882401" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
+        <customObject id="1367" userLabel="AppDelegate" customClass="AppDelegate">
+            <connections>
+                <outlet property="mInfoVersionNumber" destination="228" id="1376"/>
+            </connections>
+        </customObject>
+        <customObject id="1573" customClass="SUUpdater"/>
+        <view id="910">
+            <rect key="frame" x="0.0" y="0.0" width="435" height="1"/>
+            <autoresizingMask key="autoresizingMask"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="NSApplicationIcon" width="32" height="32"/>
+    </resources>
+</document>

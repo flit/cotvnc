@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment version="1060" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ProfileManager">
+            <connections>
+                <outlet property="mAltKey" destination="228" id="268"/>
+                <outlet property="mClickWhileHoldingEmulationModifier2" destination="319" id="448"/>
+                <outlet property="mClickWhileHoldingEmulationModifier3" destination="450" id="456"/>
+                <outlet property="mCommandKey" destination="217" id="267"/>
+                <outlet property="mControlKey" destination="227" id="269"/>
+                <outlet property="mDeleteProfileButton" destination="164" id="246"/>
+                <outlet property="mEmulationPopup2" destination="326" id="437"/>
+                <outlet property="mEmulationPopup3" destination="428" id="438"/>
+                <outlet property="mEmulationTabView2" destination="279" id="440"/>
+                <outlet property="mEmulationTabView3" destination="389" id="441"/>
+                <outlet property="mEnableCopyRect" destination="172" id="248"/>
+                <outlet property="mEncodingTableView" destination="171" id="247"/>
+                <outlet property="mMultiTapEmulationCountStepper2" destination="388" id="489"/>
+                <outlet property="mMultiTapEmulationCountStepper3" destination="446" id="490"/>
+                <outlet property="mMultiTapEmulationCountText2" destination="444" id="491"/>
+                <outlet property="mMultiTapEmulationCountText3" destination="447" id="492"/>
+                <outlet property="mMultiTapEmulationModifier2" destination="459" id="487"/>
+                <outlet property="mMultiTapEmulationModifier3" destination="471" id="484"/>
+                <outlet property="mNewProfileButton" destination="158" id="245"/>
+                <outlet property="mPixelFormatMatrix" destination="240" id="276"/>
+                <outlet property="mProfileNameField" destination="165" id="244"/>
+                <outlet property="mProfileTable" destination="163" id="243"/>
+                <outlet property="mShiftKey" destination="214" id="270"/>
+                <outlet property="mTapAndClickEmulationModifier2" destination="465" id="495"/>
+                <outlet property="mTapAndClickEmulationModifier3" destination="477" id="496"/>
+                <outlet property="mTapAndClickEmulationTimeout2" destination="292" id="498"/>
+                <outlet property="mTapAndClickEmulationTimeout3" destination="413" id="499"/>
+                <outlet property="window" destination="151" id="242"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Profile Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="profiles" animationBehavior="default" id="151" userLabel="Profiles">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="363" y="397" width="555" height="337"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="832"/>
+            <value key="minSize" type="size" width="555" height="337"/>
+            <view key="contentView" id="152">
+                <rect key="frame" x="0.0" y="0.0" width="555" height="337"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <tabView controlSize="small" id="155">
+                        <rect key="frame" x="181" y="10" width="361" height="321"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <tabViewItems>
+                            <tabViewItem label="Encodings" identifier="1" id="157">
+                                <view key="view" id="153">
+                                    <rect key="frame" x="10" y="29" width="341" height="279"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <scrollView horizontalLineScroll="16" horizontalPageScroll="10" verticalLineScroll="16" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="167">
+                                            <rect key="frame" x="46" y="84" width="248" height="178"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <clipView key="contentView" id="4ma-Pz-BSw">
+                                                <rect key="frame" x="1" y="0.0" width="231" height="177"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <subviews>
+                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="14" headerView="559" id="171">
+                                                        <rect key="frame" x="0.0" y="0.0" width="231" height="152"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <size key="intercellSpacing" width="3" height="2"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                        <tableColumns>
+                                                            <tableColumn identifier="Enabled" editable="NO" width="17.018001556396484" minWidth="10" maxWidth="1000" id="168">
+                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center">
+                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </tableHeaderCell>
+                                                                <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="170">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <connections>
+                                                                        <action selector="toggleSelectedEncodingEnabled:" target="-2" id="256"/>
+                                                                    </connections>
+                                                                </buttonCell>
+                                                            </tableColumn>
+                                                            <tableColumn identifier="Encoding" editable="NO" width="207.96800231933594" minWidth="60.967998504638672" maxWidth="1000" id="169">
+                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Encoding">
+                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </tableHeaderCell>
+                                                                <textFieldCell key="dataCell" alignment="left" id="166">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </tableColumn>
+                                                        </tableColumns>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="-2" id="254"/>
+                                                            <outlet property="delegate" destination="-2" id="255"/>
+                                                        </connections>
+                                                    </tableView>
+                                                </subviews>
+                                            </clipView>
+                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="558">
+                                                <rect key="frame" x="-100" y="-100" width="218" height="18"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
+                                            <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="557">
+                                                <rect key="frame" x="232" y="25" width="15" height="152"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
+                                            <tableHeaderView key="headerView" id="559">
+                                                <rect key="frame" x="0.0" y="0.0" width="231" height="25"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </tableHeaderView>
+                                        </scrollView>
+                                        <button imageHugsTitle="YES" id="172">
+                                            <rect key="frame" x="88" y="66" width="163" height="16"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="check" title="Enable CopyRect Encoding" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="small" inset="2" id="540">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="message" size="11"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="formDidChange:" target="-2" id="257"/>
+                                            </connections>
+                                        </button>
+                                        <textField verticalHuggingPriority="750" id="175">
+                                            <rect key="frame" x="20" y="12" width="301" height="26"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="541">
+                                                <font key="font" metaFont="system" size="10"/>
+                                                <string key="title">Drag encodings to change the preferred order.
+Use the checkbox to disable specific encodings.</string>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Emulation" identifier="2" id="156">
+                                <view key="view" id="154">
+                                    <rect key="frame" x="10" y="25" width="341" height="283"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <tabView type="noTabsBezelBorder" id="279">
+                                            <rect key="frame" x="34" y="163" width="273" height="77"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <font key="font" metaFont="message"/>
+                                            <tabViewItems>
+                                                <tabViewItem identifier="" id="313">
+                                                    <view key="view" id="314">
+                                                        <rect key="frame" x="10" y="7" width="253" height="57"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" id="315">
+                                                                <rect key="frame" x="55" y="20" width="142" height="17"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Emulation Disabled" id="520">
+                                                                    <font key="font" metaFont="message"/>
+                                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                        </subviews>
+                                                    </view>
+                                                </tabViewItem>
+                                                <tabViewItem identifier="" id="316">
+                                                    <view key="view" id="317">
+                                                        <rect key="frame" x="10" y="7" width="253" height="57"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" id="318">
+                                                                <rect key="frame" x="6" y="33" width="75" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Modifier Key:" id="521">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="319">
+                                                                <rect key="frame" x="102" y="28" width="146" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <popUpButtonCell key="cell" type="push" title="Command" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1048576" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="321" id="522">
+                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <menu key="menu" title="OtherViews" id="320">
+                                                                        <items>
+                                                                            <menuItem title="Command" state="on" tag="1048576" id="321"/>
+                                                                            <menuItem title="Option" tag="524288" id="323"/>
+                                                                            <menuItem title="Control" tag="262144" id="322"/>
+                                                                            <menuItem title="Shift" tag="131072" id="324"/>
+                                                                        </items>
+                                                                    </menu>
+                                                                </popUpButtonCell>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="457"/>
+                                                                </connections>
+                                                            </popUpButton>
+                                                        </subviews>
+                                                    </view>
+                                                </tabViewItem>
+                                                <tabViewItem identifier="" id="297">
+                                                    <view key="view" id="298">
+                                                        <rect key="frame" x="10" y="7" width="253" height="57"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" id="312">
+                                                                <rect key="frame" x="6" y="33" width="75" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Modifier Key:" id="516">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" id="307">
+                                                                <rect key="frame" x="6" y="7" width="94" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Number of Taps:" id="515">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="388">
+                                                                <rect key="frame" x="171" y="3" width="15" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <stepperCell key="cell" controlSize="small" alignment="left" minValue="1" maxValue="4" doubleValue="1" autorepeat="NO" id="517"/>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="493"/>
+                                                                </connections>
+                                                            </stepper>
+                                                            <textField verticalHuggingPriority="750" id="444">
+                                                                <rect key="frame" x="105" y="5" width="60" height="19"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="518">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="459">
+                                                                <rect key="frame" x="102" y="28" width="146" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <popUpButtonCell key="cell" type="push" title="Command" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1048576" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="463" id="519">
+                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <menu key="menu" title="OtherViews" id="460">
+                                                                        <items>
+                                                                            <menuItem title="Command" state="on" tag="1048576" id="463"/>
+                                                                            <menuItem title="Option" tag="524288" id="464"/>
+                                                                            <menuItem title="Control" tag="262144" id="462"/>
+                                                                            <menuItem title="Shift" tag="131072" id="461"/>
+                                                                        </items>
+                                                                    </menu>
+                                                                </popUpButtonCell>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="488"/>
+                                                                </connections>
+                                                            </popUpButton>
+                                                        </subviews>
+                                                    </view>
+                                                </tabViewItem>
+                                                <tabViewItem identifier="" id="280">
+                                                    <view key="view" id="281">
+                                                        <rect key="frame" x="10" y="7" width="253" height="57"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" id="295">
+                                                                <rect key="frame" x="6" y="33" width="75" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Modifier Key:" id="513">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" id="282">
+                                                                <rect key="frame" x="6" y="7" width="109" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Emulation Timeout:" id="510">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" id="292">
+                                                                <rect key="frame" x="137" y="5" width="58" height="19"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="512">
+                                                                    <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0.00" negativeFormat="-#,##0.00" thousandSeparator="," id="293">
+                                                                        <attributedString key="attributedStringForZero">
+                                                                            <fragment content="0"/>
+                                                                        </attributedString>
+                                                                        <decimal key="minimum" value="0.01"/>
+                                                                        <decimal key="maximum" value="NaN"/>
+                                                                    </numberFormatter>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="500"/>
+                                                                    <outlet property="nextKeyView" destination="413" id="502"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" id="291">
+                                                                <rect key="frame" x="200" y="7" width="48" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="seconds" id="511">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="465">
+                                                                <rect key="frame" x="102" y="28" width="146" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <popUpButtonCell key="cell" type="push" title="Command" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1048576" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="469" id="514">
+                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <menu key="menu" title="OtherViews" id="466">
+                                                                        <items>
+                                                                            <menuItem title="Command" state="on" tag="1048576" id="469"/>
+                                                                            <menuItem title="Option" tag="524288" id="470"/>
+                                                                            <menuItem title="Control" tag="262144" id="468"/>
+                                                                            <menuItem title="Shift" tag="131072" id="467"/>
+                                                                        </items>
+                                                                    </menu>
+                                                                </popUpButtonCell>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="485"/>
+                                                                </connections>
+                                                            </popUpButton>
+                                                        </subviews>
+                                                    </view>
+                                                </tabViewItem>
+                                            </tabViewItems>
+                                        </tabView>
+                                        <textField verticalHuggingPriority="750" id="325">
+                                            <rect key="frame" x="35" y="247" width="120" height="14"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Center Mouse Button:" id="523">
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="326">
+                                            <rect key="frame" x="157" y="242" width="149" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <popUpButtonCell key="cell" type="push" title="No Emulation" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="330" id="524">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <menu key="menu" title="OtherViews" id="327">
+                                                    <items>
+                                                        <menuItem title="No Emulation" state="on" id="330"/>
+                                                        <menuItem title="Modifier Click" tag="1" id="331"/>
+                                                        <menuItem title="Multi-Tap" tag="2" id="328"/>
+                                                        <menuItem title="Tap and Click" tag="3" id="329"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="formDidChange:" target="-2" id="442"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <tabView type="noTabsBezelBorder" id="389">
+                                            <rect key="frame" x="34" y="31" width="273" height="77"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <font key="font" metaFont="message"/>
+                                            <tabViewItems>
+                                                <tabViewItem identifier="" id="424">
+                                                    <view key="view" id="425">
+                                                        <rect key="frame" x="10" y="7" width="253" height="57"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" id="426">
+                                                                <rect key="frame" x="55" y="20" width="142" height="17"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Emulation Disabled" id="537">
+                                                                    <font key="font" metaFont="message"/>
+                                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                        </subviews>
+                                                    </view>
+                                                </tabViewItem>
+                                                <tabViewItem identifier="" id="402">
+                                                    <view key="view" id="403">
+                                                        <rect key="frame" x="10" y="7" width="253" height="57"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" id="404">
+                                                                <rect key="frame" x="6" y="33" width="75" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Modifier Key:" id="530">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="450">
+                                                                <rect key="frame" x="102" y="28" width="146" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <popUpButtonCell key="cell" type="push" title="Command" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1048576" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="454" id="531">
+                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <menu key="menu" title="OtherViews" id="451">
+                                                                        <items>
+                                                                            <menuItem title="Command" state="on" tag="1048576" id="454"/>
+                                                                            <menuItem title="Option" tag="524288" id="455"/>
+                                                                            <menuItem title="Control" tag="262144" id="453"/>
+                                                                            <menuItem title="Shift" tag="131072" id="452"/>
+                                                                        </items>
+                                                                    </menu>
+                                                                </popUpButtonCell>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="458"/>
+                                                                </connections>
+                                                            </popUpButton>
+                                                        </subviews>
+                                                    </view>
+                                                </tabViewItem>
+                                                <tabViewItem identifier="" id="390">
+                                                    <view key="view" id="391">
+                                                        <rect key="frame" x="10" y="7" width="253" height="57"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" id="401">
+                                                                <rect key="frame" x="6" y="33" width="75" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Modifier Key:" id="525">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" id="445">
+                                                                <rect key="frame" x="6" y="7" width="94" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Number of Taps:" id="526">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="446">
+                                                                <rect key="frame" x="171" y="3" width="15" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <stepperCell key="cell" controlSize="small" alignment="left" minValue="1" maxValue="4" doubleValue="1" autorepeat="NO" id="527"/>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="494"/>
+                                                                </connections>
+                                                            </stepper>
+                                                            <textField verticalHuggingPriority="750" id="447">
+                                                                <rect key="frame" x="105" y="5" width="60" height="19"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="528">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="471">
+                                                                <rect key="frame" x="102" y="28" width="146" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <popUpButtonCell key="cell" type="push" title="Command" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1048576" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="475" id="529">
+                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <menu key="menu" title="OtherViews" id="472">
+                                                                        <items>
+                                                                            <menuItem title="Command" state="on" tag="1048576" id="475"/>
+                                                                            <menuItem title="Option" tag="524288" id="476"/>
+                                                                            <menuItem title="Control" tag="262144" id="474"/>
+                                                                            <menuItem title="Shift" tag="131072" id="473"/>
+                                                                        </items>
+                                                                    </menu>
+                                                                </popUpButtonCell>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="486"/>
+                                                                </connections>
+                                                            </popUpButton>
+                                                        </subviews>
+                                                    </view>
+                                                </tabViewItem>
+                                                <tabViewItem identifier="" id="411">
+                                                    <view key="view" id="412">
+                                                        <rect key="frame" x="10" y="7" width="253" height="57"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" id="421">
+                                                                <rect key="frame" x="6" y="33" width="75" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Modifier Key:" id="533">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" id="423">
+                                                                <rect key="frame" x="6" y="7" width="109" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Emulation Timeout:" id="535">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" id="413">
+                                                                <rect key="frame" x="137" y="5" width="58" height="19"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="532">
+                                                                    <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0.00" negativeFormat="-#,##0.00" thousandSeparator="," id="414">
+                                                                        <attributedString key="attributedStringForZero">
+                                                                            <fragment content="0"/>
+                                                                        </attributedString>
+                                                                        <decimal key="minimum" value="0.01"/>
+                                                                        <decimal key="maximum" value="NaN"/>
+                                                                    </numberFormatter>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="501"/>
+                                                                    <outlet property="nextKeyView" destination="165" id="504"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" id="422">
+                                                                <rect key="frame" x="200" y="7" width="48" height="14"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="seconds" id="534">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="477">
+                                                                <rect key="frame" x="102" y="28" width="146" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <popUpButtonCell key="cell" type="push" title="Command" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1048576" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="481" id="536">
+                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <menu key="menu" title="OtherViews" id="478">
+                                                                        <items>
+                                                                            <menuItem title="Command" state="on" tag="1048576" id="481"/>
+                                                                            <menuItem title="Option" tag="524288" id="482"/>
+                                                                            <menuItem title="Control" tag="262144" id="480"/>
+                                                                            <menuItem title="Shift" tag="131072" id="479"/>
+                                                                        </items>
+                                                                    </menu>
+                                                                </popUpButtonCell>
+                                                                <connections>
+                                                                    <action selector="formDidChange:" target="-2" id="497"/>
+                                                                </connections>
+                                                            </popUpButton>
+                                                        </subviews>
+                                                    </view>
+                                                </tabViewItem>
+                                            </tabViewItems>
+                                        </tabView>
+                                        <textField verticalHuggingPriority="750" id="427">
+                                            <rect key="frame" x="35" y="115" width="120" height="14"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Right Mouse Button:" id="538">
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="428">
+                                            <rect key="frame" x="157" y="110" width="149" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <popUpButtonCell key="cell" type="push" title="No Emulation" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="431" id="539">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <menu key="menu" title="OtherViews" id="429">
+                                                    <items>
+                                                        <menuItem title="No Emulation" state="on" id="431"/>
+                                                        <menuItem title="Modifier Click" tag="1" id="433"/>
+                                                        <menuItem title="Multi-Tap" tag="2" id="432"/>
+                                                        <menuItem title="Tap and Click" tag="3" id="430"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="formDidChange:" target="-2" id="443"/>
+                                            </connections>
+                                        </popUpButton>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Modifiers" identifier="" id="197">
+                                <view key="view" id="198">
+                                    <rect key="frame" x="10" y="25" width="341" height="283"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="214">
+                                            <rect key="frame" x="202" y="107" width="122" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <popUpButtonCell key="cell" type="push" title="Shift" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="border" tag="2" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="203" id="544">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <menu key="menu" title="OtherViews" id="226">
+                                                    <items>
+                                                        <menuItem title="Alt (Command)" tag="3" id="220"/>
+                                                        <menuItem title="Meta (Option)" id="201"/>
+                                                        <menuItem title="Control" tag="1" id="224"/>
+                                                        <menuItem title="Shift" state="on" tag="2" id="203"/>
+                                                        <menuItem title="Windows" tag="4" id="222"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="formDidChange:" target="-2" id="275"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="217">
+                                            <rect key="frame" x="202" y="200" width="122" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <popUpButtonCell key="cell" type="push" title="Alt (Command)" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="border" tag="3" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="208" id="545">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <menu key="menu" title="OtherViews" id="207">
+                                                    <items>
+                                                        <menuItem title="Alt (Command)" state="on" tag="3" id="208"/>
+                                                        <menuItem title="Meta (Option)" id="211"/>
+                                                        <menuItem title="Control" tag="1" id="225"/>
+                                                        <menuItem title="Shift" tag="2" id="212"/>
+                                                        <menuItem title="Windows" tag="4" id="232"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="formDidChange:" target="-2" id="271"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="227">
+                                            <rect key="frame" x="202" y="138" width="122" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <popUpButtonCell key="cell" type="push" title="Control" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="border" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="223" id="547">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <menu key="menu" title="OtherViews" id="202">
+                                                    <items>
+                                                        <menuItem title="Alt (Command)" tag="3" id="215"/>
+                                                        <menuItem title="Meta (Option)" id="221"/>
+                                                        <menuItem title="Control" state="on" tag="1" id="223"/>
+                                                        <menuItem title="Shift" tag="2" id="204"/>
+                                                        <menuItem title="Windows" tag="4" id="206"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="formDidChange:" target="-2" id="274"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="228">
+                                            <rect key="frame" x="202" y="169" width="122" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <popUpButtonCell key="cell" type="push" title="Meta (Option)" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="216" id="548">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <menu key="menu" title="OtherViews" id="230">
+                                                    <items>
+                                                        <menuItem title="Alt (Command)" tag="3" id="229"/>
+                                                        <menuItem title="Meta (Option)" state="on" id="216"/>
+                                                        <menuItem title="Control" tag="1" id="209"/>
+                                                        <menuItem title="Shift" tag="2" id="210"/>
+                                                        <menuItem title="Windows" tag="4" id="218"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="formDidChange:" target="-2" id="272"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" id="234">
+                                            <rect key="frame" x="201" y="238" width="123" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Remote Keyboard" id="551">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="205">
+                                            <rect key="frame" x="58" y="112" width="33" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Shift" id="542">
+                                                <font key="font" metaFont="message"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="213">
+                                            <rect key="frame" x="51" y="174" width="47" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Option" id="543">
+                                                <font key="font" metaFont="message"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="219">
+                                            <rect key="frame" x="40" y="205" width="69" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Command" id="546">
+                                                <font key="font" metaFont="message"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="231">
+                                            <rect key="frame" x="49" y="143" width="51" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Control" id="549">
+                                                <font key="font" metaFont="message"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="233">
+                                            <rect key="frame" x="17" y="238" width="114" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Local Keyboard" id="550">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Color" identifier="" id="199">
+                                <view key="view" id="200">
+                                    <rect key="frame" x="10" y="25" width="341" height="283"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="240">
+                                            <rect key="frame" x="58" y="147" width="225" height="102"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="cellSize" width="225" height="18"/>
+                                            <size key="intercellSpacing" width="0.0" height="3"/>
+                                            <buttonCell key="prototype" type="radio" title="Radio" imagePosition="leading" alignment="left" inset="2" id="556">
+                                                <behavior key="behavior" pushIn="YES" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="message"/>
+                                            </buttonCell>
+                                            <cells>
+                                                <column>
+                                                    <buttonCell type="radio" title="Let Server Decide" imagePosition="leading" alignment="left" inset="2" id="239">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="message"/>
+                                                    </buttonCell>
+                                                    <buttonCell type="radio" title="256 Colors (RGB323)" imagePosition="leading" alignment="left" tag="1" inset="2" id="236">
+                                                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="message"/>
+                                                    </buttonCell>
+                                                    <buttonCell type="radio" title="Thousands of Colors (RGB555)" imagePosition="leading" alignment="left" tag="2" inset="2" id="237">
+                                                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="message"/>
+                                                    </buttonCell>
+                                                    <buttonCell type="radio" title="Thousands of Colors (RGB565)" imagePosition="leading" alignment="left" state="on" tag="4" inset="2" id="238">
+                                                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="message"/>
+                                                    </buttonCell>
+                                                    <buttonCell type="radio" title="Millions of Colors (RGB888)" imagePosition="leading" alignment="left" tag="3" inset="2" id="563">
+                                                        <behavior key="behavior" pushIn="YES" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="message"/>
+                                                    </buttonCell>
+                                                </column>
+                                            </cells>
+                                            <connections>
+                                                <action selector="formDidChange:" target="-2" id="277"/>
+                                            </connections>
+                                        </matrix>
+                                        <textField verticalHuggingPriority="750" id="241">
+                                            <rect key="frame" x="20" y="12" width="301" height="26"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="You can increase responsiveness by using a lower color resolution, since less data needs to be transmitted." id="552">
+                                                <font key="font" metaFont="system" size="10"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                        </tabViewItems>
+                    </tabView>
+                    <customView id="161">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="337"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="160">
+                                <rect key="frame" x="20" y="77" width="150" height="240"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <clipView key="contentView" id="uH0-cC-4WA">
+                                    <rect key="frame" x="1" y="0.0" width="133" height="239"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="562" id="163">
+                                            <rect key="frame" x="0.0" y="0.0" width="133" height="214"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                            <tableColumns>
+                                                <tableColumn width="130.47700500488281" minWidth="51.477001190185547" maxWidth="1000" id="159">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Profiles">
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" alignment="left" id="162">
+                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                </tableColumn>
+                                            </tableColumns>
+                                            <connections>
+                                                <outlet property="dataSource" destination="-2" id="249"/>
+                                                <outlet property="delegate" destination="-2" id="250"/>
+                                            </connections>
+                                        </tableView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="561">
+                                    <rect key="frame" x="-100" y="-100" width="133" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="560">
+                                    <rect key="frame" x="134" y="25" width="15" height="214"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <tableHeaderView key="headerView" id="562">
+                                    <rect key="frame" x="0.0" y="0.0" width="133" height="25"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableHeaderView>
+                            </scrollView>
+                            <button imageHugsTitle="YES" id="164">
+                                <rect key="frame" x="39" y="20" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="square" title="-" bezelStyle="shadowlessSquare" alignment="center" borderStyle="border" id="554">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                    <string key="keyEquivalent"></string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="deleteProfile:" target="-2" id="253"/>
+                                    <outlet property="nextKeyView" destination="155" id="507"/>
+                                </connections>
+                            </button>
+                            <button imageHugsTitle="YES" id="158">
+                                <rect key="frame" x="20" y="20" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="square" title="+" bezelStyle="shadowlessSquare" alignment="center" borderStyle="border" id="553">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="addProfile:" target="-2" id="252"/>
+                                    <outlet property="nextKeyView" destination="164" id="506"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" id="165">
+                                <rect key="frame" x="20" y="48" width="150" height="21"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="555">
+                                    <font key="font" metaFont="cellTitle"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="formDidChange:" target="-2" id="251"/>
+                                    <outlet property="delegate" destination="-2" id="278"/>
+                                    <outlet property="nextKeyView" destination="158" id="505"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                    </customView>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="508"/>
+            </connections>
+        </window>
+    </objects>
+</document>

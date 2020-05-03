@@ -7,22 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0255F0E610E18CDD00779200 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0255F0E510E18CDC00779200 /* Sparkle.framework */; };
-		0255F0F910E18D1E00779200 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0255F0E510E18CDC00779200 /* Sparkle.framework */; };
 		0255F10010E1A22300779200 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0255F0FF10E1A22300779200 /* dsa_pub.pem */; };
+		0257F529245F581D0090C1C9 /* KeyEquivalentScenarios.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0257F50F245F581C0090C1C9 /* KeyEquivalentScenarios.plist */; };
+		0257F52A245F581D0090C1C9 /* ProfileManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F511245F581C0090C1C9 /* ProfileManager.xib */; };
+		0257F52B245F581D0090C1C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0257F513245F581D0090C1C9 /* Localizable.strings */; };
+		0257F52C245F581D0090C1C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0257F515245F581D0090C1C9 /* InfoPlist.strings */; };
+		0257F52D245F581D0090C1C9 /* OpeningConnection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F517245F581D0090C1C9 /* OpeningConnection.xib */; };
+		0257F52E245F581D0090C1C9 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F519245F581D0090C1C9 /* Preferences.xib */; };
+		0257F52F245F581D0090C1C9 /* OSX_RFBViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F51B245F581D0090C1C9 /* OSX_RFBViewer.xib */; };
+		0257F530245F581D0090C1C9 /* ListenDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F51D245F581D0090C1C9 /* ListenDialog.xib */; };
+		0257F531245F581D0090C1C9 /* OptionPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F51F245F581D0090C1C9 /* OptionPanel.xib */; };
+		0257F532245F581D0090C1C9 /* RFBConnection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F521245F581D0090C1C9 /* RFBConnection.xib */; };
+		0257F533245F581D0090C1C9 /* SetTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F523245F581D0090C1C9 /* SetTitle.xib */; };
+		0257F534245F581D0090C1C9 /* ServerDisplay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F525245F581D0090C1C9 /* ServerDisplay.xib */; };
+		0257F535245F581D0090C1C9 /* ConnectionDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0257F527245F581D0090C1C9 /* ConnectionDialog.xib */; };
 		0268704D0FD0253D00B48539 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0268704B0FD0253D00B48539 /* CoreAudio.framework */; };
 		029ECA5D10E2DE73003648D5 /* BufferPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 029ECA5B10E2DE73003648D5 /* BufferPool.h */; };
 		029ECA5E10E2DE73003648D5 /* BufferPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 029ECA5C10E2DE73003648D5 /* BufferPool.m */; };
-		029ECC9C10E9346B003648D5 /* ConnectionDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC5610E930C8003648D5 /* ConnectionDialog.xib */; };
-		029ECC9D10E9346C003648D5 /* ListenDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC5D10E931AE003648D5 /* ListenDialog.xib */; };
-		029ECC9E10E9346D003648D5 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC6410E931FC003648D5 /* Preferences.xib */; };
-		029ECC9F10E9346E003648D5 /* ProfileManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC6B10E93268003648D5 /* ProfileManager.xib */; };
-		029ECCA010E9346E003648D5 /* OSX_RFBViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC7210E9329F003648D5 /* OSX_RFBViewer.xib */; };
-		029ECCA110E9346F003648D5 /* RFBConnection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC7910E932F0003648D5 /* RFBConnection.xib */; };
-		029ECCA210E93470003648D5 /* ServerDisplay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC8010E93336003648D5 /* ServerDisplay.xib */; };
-		029ECCA310E93471003648D5 /* SetTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC8710E93381003648D5 /* SetTitle.xib */; };
-		029ECCA510E93472003648D5 /* OptionPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC8A10E9338D003648D5 /* OptionPanel.xib */; };
-		029ECCA710E93474003648D5 /* OpeningConnection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029ECC8D10E93398003648D5 /* OpeningConnection.xib */; };
 		02C0F2250F47925F00708BE8 /* RichCursorEncodingReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 02C0F2230F47925F00708BE8 /* RichCursorEncodingReader.h */; };
 		02C0F2260F47925F00708BE8 /* RichCursorEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C0F2240F47925F00708BE8 /* RichCursorEncodingReader.m */; };
 		02CF0C5D10C33154009E03A7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CF0C5C10C33154009E03A7 /* Security.framework */; };
@@ -87,7 +88,6 @@
 		7F7A941305E71B5C00E20416 /* IServerData.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC6DF2705C315C20028A970 /* IServerData.h */; };
 		7F7A941405E71B5C00E20416 /* ServerFromPrefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC6DF6705C31AF50028A970 /* ServerFromPrefs.h */; };
 		7F7A941605E71B5C00E20416 /* ServerDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F088F2405E1D81100336456 /* ServerDataManager.h */; };
-		7F7A941905E71B5C00E20416 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5DC7172033DB3DC01A8010C /* InfoPlist.strings */; };
 		7F7A941B05E71B5C00E20416 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F5DC7177033DB40D01A8010C /* icon.icns */; };
 		7F7A941C05E71B5C00E20416 /* rfbCursor3.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F5DC7178033DB40D01A8010C /* rfbCursor3.tiff */; };
 		7F7A941F05E71B5C00E20416 /* rfbCursor2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = F5DC717B033DB40D01A8010C /* rfbCursor2.tiff */; };
@@ -156,7 +156,6 @@
 		7FD35C1B06CC583A00648090 /* ProfileDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD35C1906CC583A00648090 /* ProfileDataManager.m */; };
 		7FFA8FEB062BA6330008D381 /* ServerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FFA8FE9062BA6330008D381 /* ServerBase.h */; };
 		7FFA8FEC062BA6330008D381 /* ServerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFA8FEA062BA6330008D381 /* ServerBase.m */; };
-		E21FE263062B6D310059585C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E21FE261062B6D310059585C /* Localizable.strings */; };
 		E21FE449062B79AB0059585C /* KeyEquivalentScenario.m in Sources */ = {isa = PBXBuildFile; fileRef = E21FE43D062B79AB0059585C /* KeyEquivalentScenario.m */; };
 		E21FE44A062B79AB0059585C /* KeyEquivalentEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = E21FE43E062B79AB0059585C /* KeyEquivalentEntry.h */; };
 		E21FE44B062B79AB0059585C /* KeyEquivalent.m in Sources */ = {isa = PBXBuildFile; fileRef = E21FE43F062B79AB0059585C /* KeyEquivalent.m */; };
@@ -176,7 +175,6 @@
 		E291FB24088168E20061216E /* QueuedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E291FB22088168E20061216E /* QueuedEvent.m */; };
 		E2929DD507675DE800190669 /* MyApp.h in Headers */ = {isa = PBXBuildFile; fileRef = E2929DD307675DE800190669 /* MyApp.h */; };
 		E2929DD607675DE800190669 /* MyApp.m in Sources */ = {isa = PBXBuildFile; fileRef = E2929DD407675DE800190669 /* MyApp.m */; };
-		E2B0839D0763A51700CE24C1 /* KeyEquivalentScenarios.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2B0839B0763A51700CE24C1 /* KeyEquivalentScenarios.plist */; };
 		E2B083E20763AA7D00CE24C1 /* ServerFromConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B083E00763AA7D00CE24C1 /* ServerFromConnection.m */; };
 		E2B083E30763AA7D00CE24C1 /* ServerFromConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B083E10763AA7D00CE24C1 /* ServerFromConnection.h */; };
 		E2B083EF0763AA9A00CE24C1 /* ListenerController.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B083ED0763AA9A00CE24C1 /* ListenerController.h */; };
@@ -201,48 +199,29 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0255F0F910E18D1E00779200 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0255F0E510E18CDC00779200 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		0255F0FF10E1A22300779200 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = Resources/dsa_pub.pem; sourceTree = "<group>"; };
+		0257F510245F581C0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = Resources/en.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
+		0257F512245F581C0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/ProfileManager.xib; sourceTree = "<group>"; };
+		0257F514245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0257F516245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0257F518245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/OpeningConnection.xib; sourceTree = "<group>"; };
+		0257F51A245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/Preferences.xib; sourceTree = "<group>"; };
+		0257F51C245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/OSX_RFBViewer.xib; sourceTree = "<group>"; };
+		0257F51E245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/ListenDialog.xib; sourceTree = "<group>"; };
+		0257F520245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/OptionPanel.xib; sourceTree = "<group>"; };
+		0257F522245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/RFBConnection.xib; sourceTree = "<group>"; };
+		0257F524245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/SetTitle.xib; sourceTree = "<group>"; };
+		0257F526245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/ServerDisplay.xib; sourceTree = "<group>"; };
+		0257F528245F581D0090C1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Resources/en.lproj/ConnectionDialog.xib; sourceTree = "<group>"; };
 		0268704B0FD0253D00B48539 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		029ECA5B10E2DE73003648D5 /* BufferPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferPool.h; sourceTree = "<group>"; };
 		029ECA5C10E2DE73003648D5 /* BufferPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BufferPool.m; sourceTree = "<group>"; };
-		029ECC5710E930C8003648D5 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/ConnectionDialog.xib; sourceTree = "<group>"; };
-		029ECC5910E93186003648D5 /* French */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = French; path = Resources/French.lproj/ConnectionDialog.xib; sourceTree = "<group>"; };
-		029ECC5B10E93195003648D5 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Italian; path = Resources/Italian.lproj/ConnectionDialog.xib; sourceTree = "<group>"; };
-		029ECC5E10E931AE003648D5 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/ListenDialog.xib; sourceTree = "<group>"; };
-		029ECC6010E931C5003648D5 /* French */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = French; path = Resources/French.lproj/ListenDialog.xib; sourceTree = "<group>"; };
-		029ECC6210E931E2003648D5 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Italian; path = Resources/Italian.lproj/ListenDialog.xib; sourceTree = "<group>"; };
-		029ECC6510E931FC003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/Preferences.xib; sourceTree = "<group>"; };
-		029ECC6710E93217003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/Preferences.xib; sourceTree = "<group>"; };
-		029ECC6910E93226003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/Preferences.xib; sourceTree = "<group>"; };
-		029ECC6C10E93268003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/ProfileManager.xib; sourceTree = "<group>"; };
-		029ECC6E10E9327C003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/ProfileManager.xib; sourceTree = "<group>"; };
-		029ECC7010E9328A003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/ProfileManager.xib; sourceTree = "<group>"; };
-		029ECC7310E9329F003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/OSX_RFBViewer.xib; sourceTree = "<group>"; };
-		029ECC7510E932C3003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/OSX_RFBViewer.xib; sourceTree = "<group>"; };
-		029ECC7710E932DC003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.xib; sourceTree = "<group>"; };
-		029ECC7A10E932F0003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/RFBConnection.xib; sourceTree = "<group>"; };
-		029ECC7C10E9330C003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/RFBConnection.xib; sourceTree = "<group>"; };
-		029ECC7E10E93329003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/RFBConnection.xib; sourceTree = "<group>"; };
-		029ECC8110E93336003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/ServerDisplay.xib; sourceTree = "<group>"; };
-		029ECC8310E93341003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/ServerDisplay.xib; sourceTree = "<group>"; };
-		029ECC8510E9334E003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.xib; sourceTree = "<group>"; };
-		029ECC8810E93381003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/SetTitle.xib; sourceTree = "<group>"; };
-		029ECC8B10E9338D003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/OptionPanel.xib; sourceTree = "<group>"; };
-		029ECC8E10E93398003648D5 /* English */ = {isa = PBXFileReference; explicitFileType = file.xib; fileEncoding = 4; name = English; path = Resources/English.lproj/OpeningConnection.xib; sourceTree = "<group>"; };
-		029ECCAC10E9348F003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/OpeningConnection.xib; sourceTree = "<group>"; };
-		029ECCAD10E93498003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/OpeningConnection.xib; sourceTree = "<group>"; };
-		029ECCAE10E934AA003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/OptionPanel.xib; sourceTree = "<group>"; };
-		029ECCAF10E934B2003648D5 /* Italian */ = {isa = PBXFileReference; explicitFileType = file.xib; name = Italian; path = Resources/Italian.lproj/SetTitle.xib; sourceTree = "<group>"; };
-		029ECCB010E934B8003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/OptionPanel.xib; sourceTree = "<group>"; };
-		029ECCB110E934BF003648D5 /* French */ = {isa = PBXFileReference; explicitFileType = file.xib; name = French; path = Resources/French.lproj/SetTitle.xib; sourceTree = "<group>"; };
 		02A05AF714994F4F00800FEF /* Chicken of the VNC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Chicken of the VNC.entitlements"; sourceTree = "<group>"; };
 		02C0F2230F47925F00708BE8 /* RichCursorEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichCursorEncodingReader.h; sourceTree = "<group>"; };
 		02C0F2240F47925F00708BE8 /* RichCursorEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichCursorEncodingReader.m; sourceTree = "<group>"; };
@@ -282,7 +261,6 @@
 		7FFA8FE9062BA6330008D381 /* ServerBase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerBase.h; sourceTree = "<group>"; };
 		7FFA8FEA062BA6330008D381 /* ServerBase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerBase.m; sourceTree = "<group>"; };
 		E21FE256062B6C8D0059585C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		E21FE262062B6D310059585C /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E21FE43D062B79AB0059585C /* KeyEquivalentScenario.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = KeyEquivalentScenario.m; sourceTree = "<group>"; };
 		E21FE43E062B79AB0059585C /* KeyEquivalentEntry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = KeyEquivalentEntry.h; sourceTree = "<group>"; };
 		E21FE43F062B79AB0059585C /* KeyEquivalent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEquivalent.m; sourceTree = "<group>"; };
@@ -304,10 +282,6 @@
 		E291FB22088168E20061216E /* QueuedEvent.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QueuedEvent.m; sourceTree = "<group>"; };
 		E2929DD307675DE800190669 /* MyApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyApp.h; sourceTree = "<group>"; };
 		E2929DD407675DE800190669 /* MyApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyApp.m; sourceTree = "<group>"; };
-		E2B0839C0763A51700CE24C1 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = Resources/English.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
-		E2B083A60763A79F00CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = French; path = Resources/French.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
-		E2B083A70763A79F00CE24C1 /* French */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = French; path = Resources/French.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2B083A90763A79F00CE24C1 /* French */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = French; path = Resources/French.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E2B083E00763AA7D00CE24C1 /* ServerFromConnection.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerFromConnection.m; sourceTree = "<group>"; };
 		E2B083E10763AA7D00CE24C1 /* ServerFromConnection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerFromConnection.h; sourceTree = "<group>"; };
 		E2B083ED0763AA9A00CE24C1 /* ListenerController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ListenerController.h; sourceTree = "<group>"; };
@@ -326,9 +300,6 @@
 		E2F48D74040EDD2200BD55BA /* KeyChain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = KeyChain.h; sourceTree = "<group>"; };
 		E2F48D75040EDD2200BD55BA /* KeyChain.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = KeyChain.m; sourceTree = "<group>"; };
 		E2F48D78040EDD5100BD55BA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		E2F5464B0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Italian; path = Resources/Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E2F5464D0768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Italian; path = Resources/Italian.lproj/KeyEquivalentScenarios.plist; sourceTree = "<group>"; };
-		E2F546500768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Italian; path = Resources/Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E2F546570768C7C500AB2600 /* Chicken of the VNC.nibTranslate */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = "Chicken of the VNC.nibTranslate"; path = "Resources/Chicken of the VNC.nibTranslate"; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
@@ -338,7 +309,6 @@
 		F564F4B60392E07E01303550 /* ZlibEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibEncodingReader.m; sourceTree = "<group>"; };
 		F564F4B70392E07E01303550 /* ZlibEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibEncodingReader.h; sourceTree = "<group>"; };
 		F5B8B7E9036275D101000105 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
-		F5DC7173033DB3DC01A8010C /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F5DC7177033DB40D01A8010C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Resources/icon.icns; sourceTree = "<group>"; };
 		F5DC7178033DB40D01A8010C /* rfbCursor3.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = rfbCursor3.tiff; path = Resources/rfbCursor3.tiff; sourceTree = "<group>"; };
 		F5DC717B033DB40D01A8010C /* rfbCursor2.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = rfbCursor2.tiff; path = Resources/rfbCursor2.tiff; sourceTree = "<group>"; };
@@ -439,7 +409,6 @@
 				7F7A945B05E71B5C00E20416 /* Carbon.framework in Frameworks */,
 				0268704D0FD0253D00B48539 /* CoreAudio.framework in Frameworks */,
 				02CF0C5D10C33154009E03A7 /* Security.framework in Frameworks */,
-				0255F0E610E18CDD00779200 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,22 +601,22 @@
 				E2CA650906DA451500B70BDF /* help */,
 				F5DC7177033DB40D01A8010C /* icon.icns */,
 				E21FE256062B6C8D0059585C /* Info.plist */,
-				F5DC7172033DB3DC01A8010C /* InfoPlist.strings */,
-				E2B0839B0763A51700CE24C1 /* KeyEquivalentScenarios.plist */,
-				E21FE261062B6D310059585C /* Localizable.strings */,
 				F5DC717C033DB40D01A8010C /* rfbCursor.tiff */,
 				F5DC717B033DB40D01A8010C /* rfbCursor2.tiff */,
 				F5DC7178033DB40D01A8010C /* rfbCursor3.tiff */,
-				029ECC5610E930C8003648D5 /* ConnectionDialog.xib */,
-				029ECC5D10E931AE003648D5 /* ListenDialog.xib */,
-				029ECC6410E931FC003648D5 /* Preferences.xib */,
-				029ECC6B10E93268003648D5 /* ProfileManager.xib */,
-				029ECC7210E9329F003648D5 /* OSX_RFBViewer.xib */,
-				029ECC7910E932F0003648D5 /* RFBConnection.xib */,
-				029ECC8010E93336003648D5 /* ServerDisplay.xib */,
-				029ECC8710E93381003648D5 /* SetTitle.xib */,
-				029ECC8A10E9338D003648D5 /* OptionPanel.xib */,
-				029ECC8D10E93398003648D5 /* OpeningConnection.xib */,
+				0257F515245F581D0090C1C9 /* InfoPlist.strings */,
+				0257F513245F581D0090C1C9 /* Localizable.strings */,
+				0257F50F245F581C0090C1C9 /* KeyEquivalentScenarios.plist */,
+				0257F527245F581D0090C1C9 /* ConnectionDialog.xib */,
+				0257F51D245F581D0090C1C9 /* ListenDialog.xib */,
+				0257F517245F581D0090C1C9 /* OpeningConnection.xib */,
+				0257F51F245F581D0090C1C9 /* OptionPanel.xib */,
+				0257F51B245F581D0090C1C9 /* OSX_RFBViewer.xib */,
+				0257F519245F581D0090C1C9 /* Preferences.xib */,
+				0257F511245F581C0090C1C9 /* ProfileManager.xib */,
+				0257F521245F581D0090C1C9 /* RFBConnection.xib */,
+				0257F525245F581D0090C1C9 /* ServerDisplay.xib */,
+				0257F523245F581D0090C1C9 /* SetTitle.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -655,7 +624,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0255F0E510E18CDC00779200 /* Sparkle.framework */,
 				0268704B0FD0253D00B48539 /* CoreAudio.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				E2F48D78040EDD5100BD55BA /* Carbon.framework */,
@@ -893,6 +861,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
+				TargetAttributes = {
+					7F7A93E305E71B5C00E20416 = {
+						DevelopmentTeam = YHN98C8ZG9;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = E20426EA087531990026AA26 /* Build configuration list for PBXProject "Chicken of the VNC" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -904,6 +878,7 @@
 				French,
 				German,
 				Italian,
+				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Chicken of the VNC */;
 			projectDirPath = "";
@@ -919,28 +894,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F7A941905E71B5C00E20416 /* InfoPlist.strings in Resources */,
 				7F7A941B05E71B5C00E20416 /* icon.icns in Resources */,
+				0257F52B245F581D0090C1C9 /* Localizable.strings in Resources */,
+				0257F530245F581D0090C1C9 /* ListenDialog.xib in Resources */,
+				0257F52D245F581D0090C1C9 /* OpeningConnection.xib in Resources */,
 				7F7A941C05E71B5C00E20416 /* rfbCursor3.tiff in Resources */,
+				0257F535245F581D0090C1C9 /* ConnectionDialog.xib in Resources */,
+				0257F52E245F581D0090C1C9 /* Preferences.xib in Resources */,
+				0257F52C245F581D0090C1C9 /* InfoPlist.strings in Resources */,
+				0257F533245F581D0090C1C9 /* SetTitle.xib in Resources */,
 				7F7A941F05E71B5C00E20416 /* rfbCursor2.tiff in Resources */,
+				0257F52F245F581D0090C1C9 /* OSX_RFBViewer.xib in Resources */,
+				0257F532245F581D0090C1C9 /* RFBConnection.xib in Resources */,
 				7F7A942005E71B5C00E20416 /* rfbCursor.tiff in Resources */,
-				E21FE263062B6D310059585C /* Localizable.strings in Resources */,
 				E2CA651806DA451600B70BDF /* help in Resources */,
-				E2B0839D0763A51700CE24C1 /* KeyEquivalentScenarios.plist in Resources */,
+				0257F531245F581D0090C1C9 /* OptionPanel.xib in Resources */,
 				7FB3EA8D0804ECDB003757C9 /* CotVNC.scriptTerminology in Resources */,
+				0257F529245F581D0090C1C9 /* KeyEquivalentScenarios.plist in Resources */,
+				0257F52A245F581D0090C1C9 /* ProfileManager.xib in Resources */,
 				7FB3EA8E0804ECE0003757C9 /* CotVNC.scriptSuite in Resources */,
 				E291FAD5088161DA0061216E /* cursors.plist in Resources */,
 				0255F10010E1A22300779200 /* dsa_pub.pem in Resources */,
-				029ECC9C10E9346B003648D5 /* ConnectionDialog.xib in Resources */,
-				029ECC9D10E9346C003648D5 /* ListenDialog.xib in Resources */,
-				029ECC9E10E9346D003648D5 /* Preferences.xib in Resources */,
-				029ECC9F10E9346E003648D5 /* ProfileManager.xib in Resources */,
-				029ECCA010E9346E003648D5 /* OSX_RFBViewer.xib in Resources */,
-				029ECCA110E9346F003648D5 /* RFBConnection.xib in Resources */,
-				029ECCA210E93470003648D5 /* ServerDisplay.xib in Resources */,
-				029ECCA310E93471003648D5 /* SetTitle.xib in Resources */,
-				029ECCA510E93472003648D5 /* OptionPanel.xib in Resources */,
-				029ECCA710E93474003648D5 /* OpeningConnection.xib in Resources */,
+				0257F534245F581D0090C1C9 /* ServerDisplay.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1050,134 +1025,108 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		029ECC5610E930C8003648D5 /* ConnectionDialog.xib */ = {
+		0257F50F245F581C0090C1C9 /* KeyEquivalentScenarios.plist */ = {
 			isa = PBXVariantGroup;
 			children = (
-				029ECC5710E930C8003648D5 /* English */,
-				029ECC5910E93186003648D5 /* French */,
-				029ECC5B10E93195003648D5 /* Italian */,
-			);
-			name = ConnectionDialog.xib;
-			sourceTree = "<group>";
-		};
-		029ECC5D10E931AE003648D5 /* ListenDialog.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC5E10E931AE003648D5 /* English */,
-				029ECC6010E931C5003648D5 /* French */,
-				029ECC6210E931E2003648D5 /* Italian */,
-			);
-			name = ListenDialog.xib;
-			sourceTree = "<group>";
-		};
-		029ECC6410E931FC003648D5 /* Preferences.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC6510E931FC003648D5 /* English */,
-				029ECC6710E93217003648D5 /* French */,
-				029ECC6910E93226003648D5 /* Italian */,
-			);
-			name = Preferences.xib;
-			sourceTree = "<group>";
-		};
-		029ECC6B10E93268003648D5 /* ProfileManager.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC6C10E93268003648D5 /* English */,
-				029ECC6E10E9327C003648D5 /* French */,
-				029ECC7010E9328A003648D5 /* Italian */,
-			);
-			name = ProfileManager.xib;
-			sourceTree = "<group>";
-		};
-		029ECC7210E9329F003648D5 /* OSX_RFBViewer.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC7310E9329F003648D5 /* English */,
-				029ECC7510E932C3003648D5 /* French */,
-				029ECC7710E932DC003648D5 /* Italian */,
-			);
-			name = OSX_RFBViewer.xib;
-			sourceTree = "<group>";
-		};
-		029ECC7910E932F0003648D5 /* RFBConnection.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC7A10E932F0003648D5 /* English */,
-				029ECC7C10E9330C003648D5 /* French */,
-				029ECC7E10E93329003648D5 /* Italian */,
-			);
-			name = RFBConnection.xib;
-			sourceTree = "<group>";
-		};
-		029ECC8010E93336003648D5 /* ServerDisplay.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC8110E93336003648D5 /* English */,
-				029ECC8310E93341003648D5 /* French */,
-				029ECC8510E9334E003648D5 /* Italian */,
-			);
-			name = ServerDisplay.xib;
-			sourceTree = "<group>";
-		};
-		029ECC8710E93381003648D5 /* SetTitle.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC8810E93381003648D5 /* English */,
-				029ECCAF10E934B2003648D5 /* Italian */,
-				029ECCB110E934BF003648D5 /* French */,
-			);
-			name = SetTitle.xib;
-			sourceTree = "<group>";
-		};
-		029ECC8A10E9338D003648D5 /* OptionPanel.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC8B10E9338D003648D5 /* English */,
-				029ECCAE10E934AA003648D5 /* Italian */,
-				029ECCB010E934B8003648D5 /* French */,
-			);
-			name = OptionPanel.xib;
-			sourceTree = "<group>";
-		};
-		029ECC8D10E93398003648D5 /* OpeningConnection.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				029ECC8E10E93398003648D5 /* English */,
-				029ECCAC10E9348F003648D5 /* French */,
-				029ECCAD10E93498003648D5 /* Italian */,
-			);
-			name = OpeningConnection.xib;
-			sourceTree = "<group>";
-		};
-		E21FE261062B6D310059585C /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E21FE262062B6D310059585C /* English */,
-				E2B083A70763A79F00CE24C1 /* French */,
-				E2F5464B0768C79D00AB2600 /* Italian */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		E2B0839B0763A51700CE24C1 /* KeyEquivalentScenarios.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2B0839C0763A51700CE24C1 /* English */,
-				E2B083A60763A79F00CE24C1 /* French */,
-				E2F5464D0768C79D00AB2600 /* Italian */,
+				0257F510245F581C0090C1C9 /* en */,
 			);
 			name = KeyEquivalentScenarios.plist;
 			sourceTree = "<group>";
 		};
-		F5DC7172033DB3DC01A8010C /* InfoPlist.strings */ = {
+		0257F511245F581C0090C1C9 /* ProfileManager.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F5DC7173033DB3DC01A8010C /* English */,
-				E2B083A90763A79F00CE24C1 /* French */,
-				E2F546500768C79D00AB2600 /* Italian */,
+				0257F512245F581C0090C1C9 /* en */,
+			);
+			name = ProfileManager.xib;
+			sourceTree = "<group>";
+		};
+		0257F513245F581D0090C1C9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F514245F581D0090C1C9 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		0257F515245F581D0090C1C9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F516245F581D0090C1C9 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0257F517245F581D0090C1C9 /* OpeningConnection.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F518245F581D0090C1C9 /* en */,
+			);
+			name = OpeningConnection.xib;
+			sourceTree = "<group>";
+		};
+		0257F519245F581D0090C1C9 /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F51A245F581D0090C1C9 /* en */,
+			);
+			name = Preferences.xib;
+			sourceTree = "<group>";
+		};
+		0257F51B245F581D0090C1C9 /* OSX_RFBViewer.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F51C245F581D0090C1C9 /* en */,
+			);
+			name = OSX_RFBViewer.xib;
+			sourceTree = "<group>";
+		};
+		0257F51D245F581D0090C1C9 /* ListenDialog.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F51E245F581D0090C1C9 /* en */,
+			);
+			name = ListenDialog.xib;
+			sourceTree = "<group>";
+		};
+		0257F51F245F581D0090C1C9 /* OptionPanel.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F520245F581D0090C1C9 /* en */,
+			);
+			name = OptionPanel.xib;
+			sourceTree = "<group>";
+		};
+		0257F521245F581D0090C1C9 /* RFBConnection.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F522245F581D0090C1C9 /* en */,
+			);
+			name = RFBConnection.xib;
+			sourceTree = "<group>";
+		};
+		0257F523245F581D0090C1C9 /* SetTitle.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F524245F581D0090C1C9 /* en */,
+			);
+			name = SetTitle.xib;
+			sourceTree = "<group>";
+		};
+		0257F525245F581D0090C1C9 /* ServerDisplay.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F526245F581D0090C1C9 /* en */,
+			);
+			name = ServerDisplay.xib;
+			sourceTree = "<group>";
+		};
+		0257F527245F581D0090C1C9 /* ConnectionDialog.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0257F528245F581D0090C1C9 /* en */,
+			);
+			name = ConnectionDialog.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1187,8 +1136,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Chicken of the VNC.entitlements";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = YHN98C8ZG9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1198,8 +1149,11 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "-v";
+				PRODUCT_BUNDLE_IDENTIFIER = com.immosw.chickofthevnc;
 				PRODUCT_NAME = "Chicken of the VNC";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -1214,9 +1168,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Chicken of the VNC.entitlements";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
+				DEVELOPMENT_TEAM = YHN98C8ZG9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1225,8 +1181,11 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "-v";
+				PRODUCT_BUNDLE_IDENTIFIER = com.immosw.chickofthevnc;
 				PRODUCT_NAME = "Chicken of the VNC";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -1240,6 +1199,7 @@
 		E20426EB087531990026AA26 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -1248,7 +1208,7 @@
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				SDKROOT = macosx;
@@ -1259,6 +1219,7 @@
 		E20426EC087531990026AA26 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				DEAD_CODE_STRIPPING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1269,7 +1230,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
